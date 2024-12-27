@@ -7,14 +7,21 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const Graphs: React.FC = () => {
     const data = {
-        labels: ['July', 'August', 'September', 'October', 'November', 'December'],
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets: [
             {
                 label: 'Ventas por mes',
-                data: [6500, 5900, 8000, 8100, 5600, 18270],
+                data: [6500, 5900, 8000, 8100, 5600, 18270, 5900, 8000, 8100, 5600, 18270, 900],
                 fill: false,
                 backgroundColor: 'rgba(75,192,192,0.4)',
                 borderColor: 'rgba(75,192,192,1)',
+            },
+            {
+                label: 'Devoluciones por mes',
+                data: [2500, 1900, 3000, 4100, 560, 9270, 5300, 800, 810, 560, 170, 900],
+                fill: false,
+                backgroundColor: 'rgba(75,12,192,0.4)',
+                borderColor: 'rgba(75,12,192,1)',
             },
         ],
     };
@@ -27,7 +34,7 @@ const Graphs: React.FC = () => {
             },
             title: {
                 display: true,
-                text: 'Ventas del primer semestre de 2024',
+                text: 'Ventas del año de 2024',
             },
         },
     };
