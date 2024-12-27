@@ -1,0 +1,32 @@
+/* custom-styles.css */
+
+/* Aumenta el tamaño de las celdas */
+.rdp-day {
+    width: 4rem; /* Ancho de las celdas */
+    height: 4rem; /* Alto de las celdas */
+    font-size: 1.25rem; /* Aumentar tamaño de la fuente */
+    margin: 0.5rem; /* Añadir espacio entre celdas */
+    font-size: 1.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Aplicar fondo rojo para días deshabilitados */
+.rdp-day--disabled {
+    background-color: rgba(220, 53, 69, 0.3); /* Rojo con transparencia */
+    color: white;
+    border-radius: 0.375rem; /* Rounded-md */
+}
+
+/* Aplicar fondo verde para días habilitados */
+.rdp-day:not(.rdp-day--disabled):not(.rdp-day--outside) {
+    background-color: rgba(40, 167, 69, 0.3); /* Verde con transparencia */
+    color: white;
+    border-radius: 0.375rem; /* Rounded-md */
+}
+
+/* Estilo al pasar el mouse */
+.rdp-day:hover {
+    filter: brightness(90%);
+    cursor: pointer;
+}

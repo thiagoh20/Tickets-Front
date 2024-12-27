@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
 import { sql } from '@vercel/postgres';
 import { User, CandidatosTable, Ticket } from './definitions';
 
@@ -194,7 +197,7 @@ export async function fetchFilteredCandidatos(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const apiUrl ='http://pocki-api-env-1.eba-pprtwpab.us-east-1.elasticbeanstalk.com/api/marketing/getAllTickets';
+    const apiUrl =`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
     const { data: tickets } = await axios.get(apiUrl);
     const filteredTickets = tickets.filter((ticket: Ticket) => {
       const searchString = query.toLowerCase();
@@ -231,7 +234,7 @@ export async function fetchFilteredCandidatos(
 export async function fetchTicketsCount(query: string, grupo: string) {
   noStore();
   try {
-    const apiUrl ='http://pocki-api-env-1.eba-pprtwpab.us-east-1.elasticbeanstalk.com/api/marketing/getAllTickets';
+    const apiUrl =`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
     const { data: tickets } = await axios.get(apiUrl);
 
     const searchString = query.toLowerCase();
