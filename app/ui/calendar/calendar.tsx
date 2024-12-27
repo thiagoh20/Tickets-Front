@@ -1,9 +1,10 @@
 'use client';
-import React, { useState } from 'react';
+import axios from 'axios';
 import { DayPicker } from 'react-day-picker';
+import React, { useState, useEffect } from 'react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import 'react-day-picker/dist/style.css';
 import './custom-styles.css'; // Asegúrate de tener este archivo
-import { XMarkIcon } from '@heroicons/react/24/outline';
 
 const TicketControl = ({ park }: { park: string }) => {
   const LinkIcon = XMarkIcon;
@@ -21,29 +22,33 @@ const TicketControl = ({ park }: { park: string }) => {
     setIsModalOpen(false);
   };
 
-  const handleAction = (action: 'enable' | 'disable') => {
-    if (!selectedDay) return;
-
-    if (action === 'disable') {
-      if (
-        !disabledDays.some(
-          (disabledDay) =>
-            disabledDay.toDateString() === selectedDay.toDateString(),
-        )
-      ) {
-        setDisabledDays([...disabledDays, selectedDay]);
+  useEffect(() => {
+    const fetchDisabledDays = async () => {
+      try {
+        const response = await axios.post(
+          `http://pocki-api-env-1.eba-pprtwpab.us-east-1.elasticbeanstalk.com/api/taquilla/allDatesBlocked`,
+          { idpark: park == 'Parque Norte' ? 1 : 2 }, 
+        );
+        setDisabledDays(response?.data?.map((date: string) => new Date(new Date((date)).getTime() + 24 * 60 * 60 * 1000)));
+      } catch (error) {
+        console.error("Error fetching disabled days: ", error);
       }
-    } else if (action === 'enable') {
-      setDisabledDays(
-        disabledDays.filter(
-          (disabledDay) =>
-            disabledDay.toDateString() !== selectedDay.toDateString(),
-        ),
-      );
-    }
+    };
 
-    closeModal();
-  };
+    fetchDisabledDays();
+  }, [park, disabledDays]);
+
+  const handleBlock = async (day: Date) => {
+    try {
+      await axios.post(`http://pocki-api-env-1.eba-pprtwpab.us-east-1.elasticbeanstalk.com/api/taquilla/blockDate`,
+        { idpark: park == 'Parque Norte' ? 1 : 2, blockDate: day.toISOString().split("T")[0] },
+      )
+      .then(() => closeModal())
+      .catch((error) => { console.error("Error blocking date: ", error); });
+    } catch (error) {
+      console.error("Error fetching disabled days: ", error);
+    }
+  }
 
   const isDisabled = (day: Date) =>
     disabledDays.some(
@@ -87,13 +92,13 @@ const TicketControl = ({ park }: { park: string }) => {
             <div className="flex justify-around">
               <button
                 className="mb-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-                onClick={() => handleAction('disable')}
+                onClick={() => handleBlock(selectedDay)}
               >
                 Deshabilitar ventas
               </button>
               <button
                 className="mb-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
-                onClick={() => handleAction('enable')}
+                onClick={() => handleBlock(selectedDay)}
               >
                 Habilitar ventas
               </button>
