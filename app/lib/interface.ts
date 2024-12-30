@@ -1,10 +1,11 @@
 
 // types/next-auth.d.ts
 import NextAuth from 'next-auth';
+import { Ticket } from './definitions';
 
 declare module 'next-auth' {
   interface User {
-    rol: string; // Agrega la propiedad 'role' al tipo User
+    rol: string; 
   }
 
   interface Session {
@@ -12,7 +13,16 @@ declare module 'next-auth' {
       id: string;
       name: string;
       email: string;
-      rol: string; // Asegúrate de incluirlo también aquí
+      rol: string; 
     };
   }
+}
+
+
+export interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  status: string;
+  selectedTicket: Ticket | null;
 }

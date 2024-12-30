@@ -36,6 +36,7 @@ export default function EditInvoiceForm({
   const keyword = pathname.split('/')[2];
   const initialState = { message: null, errors: {} };
   const currentPage = searchParams.get('page') || 1;
+  
   const updateInvoiceWithId = updateCandidato.bind(null, candidato.id);
   const [state, dispatch] = useFormState(updateInvoiceWithId, initialState);
 
