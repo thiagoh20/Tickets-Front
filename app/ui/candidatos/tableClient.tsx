@@ -131,7 +131,7 @@ export default function InvoicesTableClient({
       </div>
 
       {/* Modal */}
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isModalOpen} onClose={closeModal}  status={selectedTicket?.status||""} selectedTicket={selectedTicket}>
         <h2 className="text-lg font-bold">Detalles del Ticket</h2>
         <div className="mt-4">
           {/* Datos del cliente */}

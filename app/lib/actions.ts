@@ -195,3 +195,6 @@ export async function deleteCandidato(id: string) {
     return { message: 'Database Error: Failed to Delete Candidate' };
   }
 }
+
+
+
