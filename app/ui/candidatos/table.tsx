@@ -1,12 +1,7 @@
 // components/server/InvoicesTable.tsx
 import React from 'react';
-import Image from 'next/image';
-import TicketStatus from '@/app/ui/candidatos/status';
-import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredCandidatos } from '@/app/lib/data';
-import { Ticket } from '@/app/lib/definitions';
 import InvoicesTableClient from './tableClient';
-
 
 export default async function InvoicesTable({
   query,
