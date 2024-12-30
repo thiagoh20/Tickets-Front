@@ -66,10 +66,7 @@ const Graphs = ({ park }: { park: string }) => {
     };
 
     return (
-        <div>
-            <h2>Graphs</h2>
-            <Line data={data} options={options} />
-        </div>
+        <Line data={data} options={options} />
     );
 };
 
