@@ -3,6 +3,10 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  ChartBarIcon,
+  TicketIcon,
+  ClipboardDocumentIcon,
+  Cog8ToothIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,7 +27,22 @@ const links = [
   {
     name: 'Tickets',
     href: '/dashboard/candidatos',
-    icon: UserGroupIcon,
+    icon: TicketIcon,
+  },
+  {
+    name: 'Gráficos',
+    href: '/dashboard/graphs',
+    icon: ChartBarIcon,
+  },
+  {
+    name: 'Facturas',
+    href: '/dashboard/invoices',
+    icon: ClipboardDocumentIcon,
+  },
+  {
+    name: 'Parques',
+    href: '/dashboard/parks',
+    icon: Cog8ToothIcon,
   },
 ];
 

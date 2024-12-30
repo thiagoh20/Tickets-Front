@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
 import { sql } from '@vercel/postgres';
 import { User, CandidatosTable, Ticket } from './definitions';
 
@@ -194,7 +197,7 @@ export async function fetchFilteredCandidatos(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const apiUrl ='http://pocki-api-env-1.eba-pprtwpab.us-east-1.elasticbeanstalk.com/api/marketing/getAllTickets';
+    const apiUrl =`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
     const { data: tickets } = await axios.get(apiUrl);
     const filteredTickets = tickets.filter((ticket: Ticket) => {
       const searchString = query.toLowerCase();
@@ -228,10 +231,45 @@ export async function fetchFilteredCandidatos(
   }
 }
 
+export async function fetchFilteredInvoices(
+  query: string,
+  currentPage: number,
+  grupo: string,
+) {
+  noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const apiUrl =`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllInvoices`;
+    const { data: tickets } = await axios.get(apiUrl);
+    const filteredTickets = tickets.filter((invoice: any) => {
+      const searchString = query.toLowerCase();
+      return (
+        invoice.Mes?.toLowerCase().includes(searchString) ||
+        invoice.Total?.toLowerCase().includes(searchString)
+      );
+    });
+
+    const paginatedTickets = filteredTickets.slice(
+      offset,
+      offset + ITEMS_PER_PAGE,
+    );
+    console.log(paginatedTickets);
+    return paginatedTickets;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios Error:', error.response?.data || error.message);
+      throw new Error(`Failed to fetch tickets: ${error.message}`);
+    }
+    console.error('Error:', error);
+    throw new Error('Failed to fetch tickets.');
+  }
+}
+
 export async function fetchTicketsCount(query: string, grupo: string) {
   noStore();
   try {
-    const apiUrl ='http://pocki-api-env-1.eba-pprtwpab.us-east-1.elasticbeanstalk.com/api/marketing/getAllTickets';
+    const apiUrl =`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
     const { data: tickets } = await axios.get(apiUrl);
 
     const searchString = query.toLowerCase();
