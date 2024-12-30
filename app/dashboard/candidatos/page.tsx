@@ -9,7 +9,7 @@ import { fetchTicketsCount } from '@/app/lib/data';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Cero a Siempre | Bandura',
+  title: 'Crear Ticket | ',
 };
 export default async function Page({
   searchParams,
@@ -31,7 +31,7 @@ export default async function Page({
       </div>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Buscar Ticket..." />
-        <CreateInvoice grupo={grupo} />
+        {/* <CreateInvoice grupo={grupo} /> */}
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} grupo={grupo} />

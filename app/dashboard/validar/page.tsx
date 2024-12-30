@@ -10,7 +10,7 @@ export default async function Page() {
   const breadcrumbs = [
     { label: 'Juan Pablo II', href: '/dashboard/candidatos' },
     {
-      label: 'Validar',
+      label: 'Registrar Entrada',
       href: '/dashboard/candidatos/create',
       active: true,
     }

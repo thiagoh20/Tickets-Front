@@ -6,7 +6,7 @@ export default async function Page() {
 
   const candidato = await fetchCandidatos();
   const breadcrumbs = [
-    { label: 'Cero a Siempre', href: '/dashboard/candidatos' },
+    { label: 'Crear ticket', href: '/dashboard/candidatos' },
     {
       label: 'Crear',
       href: '/dashboard/candidatos/create',
