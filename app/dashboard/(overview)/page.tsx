@@ -17,7 +17,7 @@ const Page = () => {
 
   return (
     <main className="h-full flex flex-col items-center justify-center">
-      { user == 'user' ? <Marketing /> : <TicketOffice />}
+      { user == 'use' ? <Marketing /> : <TicketOffice />}
     </main>
   );
 }

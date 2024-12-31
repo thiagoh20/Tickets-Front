@@ -21,13 +21,13 @@ const links = [
     icon: HomeIcon,
   },
   {
-    name: 'Registrar Tickets',
+    name: 'Ingresos',
     href: '/dashboard/validar',
     icon: UserGroupIcon,
   },
   {
     name: 'Tickets',
-    href: '/dashboard/candidatos',
+    href: '/dashboard/tickets',
     icon: TicketIcon,
   },
   {

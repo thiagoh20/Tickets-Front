@@ -1,32 +1,23 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Breadcrumb } from '@/app/ui/candidatos/breadcrumbs';
 import { Button } from '@/app/ui/button';
 import { createCandidato } from '@/app/lib/actions';
 import TicketOption from './TicketOption';
 import { ToastContainer, toast } from 'react-toastify';
-import { CandidatosTable } from '@/app/lib/definitions';
 import { useFormState } from 'react-dom';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import {
   IdentificationIcon,
   UserCircleIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
-// import Modal from './modalTicket';
 import { formatCurrency } from '@/app/lib/utils';
 
 export default function Form({
-  candidato,
-  grupo,
-  breadcrumbs,
+  park,
 }: {
-  candidato: CandidatosTable[];
-  grupo: string;
-  breadcrumbs: Breadcrumb[];
+  park: string;
 }) {
   const initialState = {
     message: null,
@@ -102,7 +93,7 @@ export default function Form({
     }
   }, [state]);
 
-  const ticketOptions = [
+  const ticketOptionsAP = [
     {
       title: 'Adultos - Pasaporte acuático (+140 cm)',
       description: 'Válido para visitantes de 140 centímetros de altura o más',
@@ -112,9 +103,27 @@ export default function Form({
       title: 'Niños - Pasaporte acuático (-140 cm)',
       description:
         'Válido para visitantes menores de 140 centímetros de altura',
-      price: 12000,
+      price: 13000,
     },
   ];
+
+  const ticketOptionsPN = [
+    {
+      title: 'Adultos - Pasaporte Extremo (+125 cm)',
+      description: 'Válido para visitantes de 125 centímetros de altura o más',
+      price: 44500,
+    },
+    {
+      title: 'Niños - Pasaporte Fusión (-125 cm)',
+      description:
+        'Válido para visitantes menores de 125 centímetros de altura',
+      price: 29300,
+    }
+  ];
+
+  const ticketOptions =
+    park === 'Parque Norte' ? ticketOptionsPN : ticketOptionsAP;
+
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const handleSave = () => {
@@ -129,19 +138,24 @@ export default function Form({
     }
   };
 
+  const handleReset = () => {
+    formRef.current?.reset();
+    return setReset(!reset);
+  }
+
   return (
     <>
       <ToastContainer />
       <form ref={formRef} action={dispatch}>
-        <input type="hidden" name="grupo" value={grupo} />
         <input type="hidden" name="keyword" value="exampleKeyword" />
+        <input type="hidden" name="park" value={park} />
         <input
           type="hidden"
           name="ticket"
           value={JSON.stringify(selectedTickets) || ''}
         />
 
-        <div className="rounded-md bg-gray-50 p-4 md:p-6">
+        <div className="grid grid-cols-2 gap-2 rounded-md bg-gray-50 p-4 md:p-6">
           {/* Candidato tipo de identificacion */}
           <div className="mb-4">
             <label htmlFor="tipoid" className="mb-2 block text-sm font-medium">
@@ -204,7 +218,7 @@ export default function Form({
             </div>
           </div>
           {/* Candidato Nombre */}
-          <div className="mb-4 ">
+          <div className="mb-4">
             <label htmlFor="nombre" className="mb-2 block text-sm font-medium">
               Nombre
             </label>
@@ -231,7 +245,7 @@ export default function Form({
             </div>
           </div>
           {/* Candidato Nombre */}
-          <div className="mb-4 ">
+          <div className="mb-4">
             <label
               htmlFor="apellidos"
               className="mb-2 block text-sm font-medium"
@@ -260,95 +274,47 @@ export default function Form({
               </div>
             </div>
           </div>
-          <div className="rounded-md bg-gray-50 p-4 md:p-4">
+            <div className="rounded-md bg-gray-100 p-6 shadow-md md:p-8 h-[20rem] overflow-y-auto">
             {/* Otros campos */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               {ticketOptions.map((ticket, index) => (
                 <TicketOption
                   key={index}
                   title={ticket.title}
-                  description={ticket.description}
                   price={ticket.price}
                   onQuantityChange={handleQuantityChange}
                   reset={reset}
                 />
               ))}
             </div>
-            <div id="customer-error" aria-live="polite" aria-atomic="true">
+            <div
+              id="customer-error"
+              aria-live="polite"
+              aria-atomic="true"
+              className="mt-4"
+            >
               {state?.errors?.ticket &&
                 state?.errors.ticket.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
+                  <p className="text-sm text-red-500" key={error}>
                     {error}
                   </p>
                 ))}
             </div>
           </div>
-          <div className="flex justify-start text-xl font-semibold text-gray-900">
-            <h2>Total Precio: {formatCurrency(totalPrice)}</h2>
+          <div className="mt-6 flex items-center justify-center text-xl font-semibold text-gray-900">
+            <h2>Precio Total: &nbsp; &nbsp;</h2>
+            <span>{formatCurrency(totalPrice)}</span>
           </div>
-          <div className="mt-6 flex justify-start gap-4">
-            <Link
-              href={breadcrumbs[1].href}
-              className="flex h-10 items-center rounded-lg bg-gray-200 px-4 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
-            >
-              Cancel
-            </Link>
-            <Button type="submit" onClick={handleSave}>
+          <div className="mt-8 flex justify-end gap-4">
+            <Button type="button" onClick={handleReset} className="h-10 px-6 bg-gray-400">
+              Cancelar
+            </Button>
+            <Button type="submit" onClick={handleSave} className="h-10 px-6">
               Guardar
             </Button>
           </div>
         </div>
       </form>
-
-      {/* <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        status={'Valido'}
-        selectedTicket={tickett}
-      >
-        <h2 className="text-lg font-bold">Detalles del Ticket</h2>
-        <div className="mt-4">
-         
-          <h3 className="text-md font-semibold">Datos del Cliente</h3>
-          <ul className="mt-2 text-sm text-gray-700">
-            <li>
-              <strong>Nombre:</strong> {}
-            </li>
-            <li>
-              <strong>Tipo de Identificación:</strong>
-              {}
-            </li>
-            <li>
-              <strong>Número de Identificación:</strong> {}
-            </li>
-            
-          </ul>
-        
-          <h3 className="text-md mt-4 font-semibold">Resumen</h3>
-          <ul className="mt-2 text-sm text-gray-700">
-            <li>
-              <strong>Adultos:</strong>
-              <span className="text-lg font-bold text-blue-600">
-                {' '}
-                {}{' '}
-              </span>
-              ({})
-            </li>
-            <li>
-              <strong>Niños:</strong>
-              <span className="text-lg font-bold text-green-600">
-                {' '}
-                {}{' '}
-              </span>
-              ({})
-            </li>
-            <li>
-              <strong>Factura Electrónica:</strong>{' '}
-              {}
-            </li>
-          </ul>
-        </div>
-      </Modal> */}
     </>
   );
 }
