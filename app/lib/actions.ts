@@ -76,7 +76,7 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Faltan campos. Error al crear Ticket.',
+      message: 'Faltan campos.',
     };
   }
 

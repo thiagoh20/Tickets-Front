@@ -5,6 +5,7 @@ import { Breadcrumb } from '@/app/ui/candidatos/breadcrumbs';
 import { Button } from '@/app/ui/button';
 import { createCandidato } from '@/app/lib/actions';
 import TicketOption from './TicketOption';
+import { ToastContainer, toast } from 'react-toastify';
 import { CandidatosTable } from '@/app/lib/definitions';
 import { useFormState } from 'react-dom';
 import {
@@ -13,8 +14,8 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
-import Modal from './modalTicket';
-import { formatCurrency, formatDateToLocal } from '@/app/lib/utils';
+// import Modal from './modalTicket';
+import { formatCurrency } from '@/app/lib/utils';
 
 export default function Form({
   candidato,
@@ -36,12 +37,12 @@ export default function Form({
     { title: string; quantity: number; totalPrice: number }[]
   >([]);
   let updatedTotalPrice = 0;
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  // const [isModalOpen, setIsModalOpen] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
- 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  // };
   useEffect(() => {
     setTotalPrice(updatedTotalPrice);
   }, [updatedTotalPrice]);
@@ -64,34 +65,39 @@ export default function Form({
         (acc, ticket) => acc + ticket.totalPrice,
         0,
       );
-      
+
       setTotalPrice(updatedTotalPrice);
       return updatedTickets;
     });
   };
-  const tickett = {
-    idticket: 8,
-    id_park: 2,
-    namepark: 'Juan Pablo II',
-    ticket_code: 'MSZ1001',
-    type_pay: 'PSE',
-    type_money: 'COP',
-    name: 'Juan',
-    lastname: 'Florez Vargas',
-    email_person: 'florezju@gmail.com',
-    phone_number: '3097545231',
-    identity_type: 'CC',
-    identity_number: '109482484',
-    date_ticket: '2025-01-02T00:00:00.000Z',
-    status: 'Valido',
-    type_ticket_adults: 'Pasaporte Acuatico Adulto',
-    count_adult: 3,
-    type_ticket_kids: ' Pasaporte Acuatico Niño',
-    count_kid: 5,
-    invoice_electronic: 0,
-    created_at: '2024-12-28T07:13:26.000Z',
-    price_ticket: '119000.00',
+  const notify = (state: any) => {
+    if (state.message === 'Faltan campos.') {
+      toast.error(state.message, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.success(state.message, {
+        position: 'top-center',
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
+  useEffect(() => {
+    if (state?.message) {
+      notify(state);
+    }
+  }, [state]);
 
   // console.log(selectedTickets);
   const ticketOptions = [
@@ -110,6 +116,7 @@ export default function Form({
 
   return (
     <>
+      <ToastContainer />
       <form action={dispatch}>
         <input type="hidden" name="grupo" value={grupo} />
         <input type="hidden" name="keyword" value="exampleKeyword" />
@@ -261,7 +268,7 @@ export default function Form({
             </div>
           </div>
           <div className="flex justify-start text-xl font-semibold text-gray-900">
-            <h2>Total Precio: {formatCurrency (totalPrice)}</h2>
+            <h2>Total Precio: {formatCurrency(totalPrice)}</h2>
           </div>
           <div className="mt-6 flex justify-start gap-4">
             <Link
@@ -270,24 +277,63 @@ export default function Form({
             >
               Cancel
             </Link>
-            <Button type="submit">Guardar</Button>
-            {state?.message && (
-              <p className="mt-2 text-sm text-lime-500" key={state?.message}>
-                {state?.message}
-              </p>
-            )}
+            <Button type="submit" onClick={notify}>
+              Guardar
+            </Button>
+            
           </div>
         </div>
       </form>
-      {/* Modal */}
-      <Modal
+
+      {/* <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
         status={'Valido'}
         selectedTicket={tickett}
       >
         <h2 className="text-lg font-bold">Detalles del Ticket</h2>
-      </Modal>
+        <div className="mt-4">
+         
+          <h3 className="text-md font-semibold">Datos del Cliente</h3>
+          <ul className="mt-2 text-sm text-gray-700">
+            <li>
+              <strong>Nombre:</strong> {}
+            </li>
+            <li>
+              <strong>Tipo de Identificación:</strong>
+              {}
+            </li>
+            <li>
+              <strong>Número de Identificación:</strong> {}
+            </li>
+            
+          </ul>
+        
+          <h3 className="text-md mt-4 font-semibold">Resumen</h3>
+          <ul className="mt-2 text-sm text-gray-700">
+            <li>
+              <strong>Adultos:</strong>
+              <span className="text-lg font-bold text-blue-600">
+                {' '}
+                {}{' '}
+              </span>
+              ({})
+            </li>
+            <li>
+              <strong>Niños:</strong>
+              <span className="text-lg font-bold text-green-600">
+                {' '}
+                {}{' '}
+              </span>
+              ({})
+            </li>
+            <li>
+              <strong>Factura Electrónica:</strong>{' '}
+              {}
+            </li>
+          </ul>
+        </div>
+      </Modal> */}
     </>
   );
 }
