@@ -29,9 +29,9 @@ const TicketOption = ({
     if (reset) {
       setQuantity(0);
       setTotalPrice(0);
-      onQuantityChange(title, 0, 0);
+     
     }
-  }, [reset, title, onQuantityChange]);
+  }, [reset, title ]);
 
   const handleIncrease = () => {
     const newQuantity = quantity + 1;
