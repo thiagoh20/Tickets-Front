@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Breadcrumb } from '@/app/ui/candidatos/breadcrumbs';
 import { Button } from '@/app/ui/button';
@@ -8,6 +8,8 @@ import TicketOption from './TicketOption';
 import { ToastContainer, toast } from 'react-toastify';
 import { CandidatosTable } from '@/app/lib/definitions';
 import { useFormState } from 'react-dom';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import {
   IdentificationIcon,
   UserCircleIcon,
@@ -31,6 +33,7 @@ export default function Form({
     errors: {},
   };
   const [state, dispatch] = useFormState(createCandidato, initialState);
+  const [reset, setReset] = useState(false);
   const pathname = usePathname();
   const keyword = pathname.split('/')[2];
   const [selectedTickets, setSelectedTickets] = useState<
@@ -99,7 +102,6 @@ export default function Form({
     }
   }, [state]);
 
-  // console.log(selectedTickets);
   const ticketOptions = [
     {
       title: 'Adultos - Pasaporte acuático (+140 cm)',
@@ -113,11 +115,24 @@ export default function Form({
       price: 12000,
     },
   ];
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const handleSave = () => {
+    notify;
+    if (state.message != 'Faltan campos.') {
+      setTimeout(() => {
+        if (formRef.current) {
+          formRef.current.reset();
+          setReset(!reset);
+        }
+      }, 1000);
+    }
+  };
 
   return (
     <>
       <ToastContainer />
-      <form action={dispatch}>
+      <form ref={formRef} action={dispatch}>
         <input type="hidden" name="grupo" value={grupo} />
         <input type="hidden" name="keyword" value="exampleKeyword" />
         <input
@@ -255,6 +270,7 @@ export default function Form({
                   description={ticket.description}
                   price={ticket.price}
                   onQuantityChange={handleQuantityChange}
+                  reset={reset}
                 />
               ))}
             </div>
@@ -272,15 +288,14 @@ export default function Form({
           </div>
           <div className="mt-6 flex justify-start gap-4">
             <Link
-              href={breadcrumbs[0].href}
+              href={breadcrumbs[1].href}
               className="flex h-10 items-center rounded-lg bg-gray-200 px-4 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
             >
               Cancel
             </Link>
-            <Button type="submit" onClick={notify}>
+            <Button type="submit" onClick={handleSave}>
               Guardar
             </Button>
-            
           </div>
         </div>
       </form>

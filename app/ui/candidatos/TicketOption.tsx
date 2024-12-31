@@ -5,7 +5,8 @@ interface TicketOptionProps {
   title: string;
   description: string;
   price: number;
-  onQuantityChange: (title: string, quantity: number, totalPrice:number) => void; // Agregar un callback para enviar datos al componente padre
+  onQuantityChange: (title: string, quantity: number, totalPrice:number) => void; 
+  reset:boolean;
 }
 
 const TicketOption = ({
@@ -13,6 +14,7 @@ const TicketOption = ({
   description,
   price,
   onQuantityChange,
+  reset
 }: TicketOptionProps) => {
   const [quantity, setQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -21,8 +23,15 @@ const TicketOption = ({
   useEffect(() => {
     setTotalPrice(price * quantity);
     onQuantityChange(title, quantity, price * quantity);
-  }, [quantity, price, totalPrice, title]); // Dependencias correctas
-
+  }, [quantity, price, totalPrice, title]); 
+  // Dependencias correctas
+  useEffect(() => {
+    if (reset) {
+      setQuantity(0);
+      setTotalPrice(0);
+      onQuantityChange(title, 0, 0);
+    }
+  }, [reset, title, onQuantityChange]);
 
   const handleIncrease = () => {
     const newQuantity = quantity + 1;

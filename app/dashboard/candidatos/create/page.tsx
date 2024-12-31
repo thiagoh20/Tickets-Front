@@ -6,10 +6,10 @@ export default async function Page() {
 
   const candidato = await fetchCandidatos();
   const breadcrumbs = [
-    { label: 'Crear ticket', href: '/dashboard/candidatos' },
+    { label: 'Crear ticket', href: '/dashboard/candidatos', active: true },
     {
       label: 'Crear',
-      href: '/dashboard/candidatos/create',
+      href: '/dashboard/validar',
       active: true,
     }
   ];

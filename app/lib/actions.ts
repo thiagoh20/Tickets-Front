@@ -42,9 +42,7 @@ const FormSchemaa = z.object({
   tipoid: z.string().nonempty({ message: 'Tipo de documento es Requerido.' }),
   nombre: z.string().nonempty({ message: 'Nombre es Requerido.' }),
   apellidos: z.string().min(1, { message: 'Apellido es requerido.' }),
-  ticket: z
-    .string()
-    .min(3, { message: 'Seleccione un pasaporte como minimo' }),
+  ticket: z.string().min(3, { message: 'Seleccione un pasaporte como minimo' }),
 });
 
 export type Statee = {
@@ -79,9 +77,7 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
       message: 'Faltan campos.',
     };
   }
-
   const { id, tipoid, nombre, apellidos, ticket } = validatedFields.data;
-
   try {
     let parsedTicket: any;
     if (ticket) {
@@ -99,7 +95,6 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
       });
     }
 
-    console.log(parsedTicket);
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/buyTicketsPresencial`,
       {
@@ -113,19 +108,20 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
         kids_count: kidsCount,
       },
     );
+
     return {
       message: response.data.message,
     };
-    console.log(response);
   } catch (error) {
     return {
       message: 'Database Error: Failed to Create Candidate.',
     };
   }
-
-  revalidatePath('/dashboard/validar');
-  redirect('/dashboard/validar');
+  revalidatePath('/dashboard/candidatos');
+  redirect('/dashboard/candidatos');
 }
+
+function redirije() {}
 
 const UpdateCandidato = FormSchemaa.omit({ id: true });
 
