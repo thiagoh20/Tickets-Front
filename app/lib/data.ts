@@ -221,7 +221,6 @@ export async function fetchFilteredCandidatos(
       offset,
       offset + ITEMS_PER_PAGE,
     );
-    console.log(paginatedTickets);
     return paginatedTickets;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -271,7 +270,6 @@ export async function fetchFilteredInvoices(
 export async function fetchTicketsCount(query: string, grupo: string) {
   noStore();
   try {
-    console.log(process.env.NEXT_PUBLIC_BACK_LINK)
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
     const { data: tickets } = await axios.post(apiUrl, {
           idpark: 2

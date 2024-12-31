@@ -1,5 +1,6 @@
 'use client';
 
+import { validateTicket } from '@/app/lib/actions';
 import { ModalProps } from '@/app/lib/interface';
 import React from 'react';
 
@@ -9,9 +10,9 @@ export default function Modal({
   children,
   status,
   selectedTicket,
+  onValidate,
 }: ModalProps) {
   if (!isOpen) return null;
- 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -22,7 +23,7 @@ export default function Modal({
             <>
               <button
                 className="flex-1 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
-                
+                onClick={onValidate}
               >
                 Validar Entrada
               </button>
