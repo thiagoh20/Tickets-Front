@@ -1,4 +1,11 @@
 
+export const formatCurrency = (amount: number) => {
+  return (amount / 1).toLocaleString('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+  });
+};
+
 export const formatDateToLocal = (
   dateStr: string | null,
   locale: string = 'es-CO'

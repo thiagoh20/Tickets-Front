@@ -20,7 +20,7 @@ const links = [
     icon: HomeIcon,
   },
   {
-    name: 'Validar Tickets',
+    name: 'Registrar Tickets',
     href: '/dashboard/validar',
     icon: UserGroupIcon,
   },

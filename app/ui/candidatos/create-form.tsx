@@ -14,6 +14,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
 import Modal from './modalTicket';
+import { formatCurrency, formatDateToLocal } from '@/app/lib/utils';
 
 export default function Form({
   candidato,
@@ -34,18 +35,24 @@ export default function Form({
   const [selectedTickets, setSelectedTickets] = useState<
     { title: string; quantity: number; totalPrice: number }[]
   >([]);
-
+  let updatedTotalPrice = 0;
   const [isModalOpen, setIsModalOpen] = useState(true);
-
+  const [totalPrice, setTotalPrice] = useState(0);
+ 
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  useEffect(() => {
+    setTotalPrice(updatedTotalPrice);
+  }, [updatedTotalPrice]);
+
   const handleQuantityChange = (
     title: string,
     quantity: number,
     totalPrice: number,
   ) => {
     // Actualizar el estado con el título y la cantidad seleccionada
+    let updatedTotalPrice = 0;
     setSelectedTickets((prevState) => {
       const updatedTickets = prevState.filter(
         (ticket) => ticket.title !== title,
@@ -53,32 +60,38 @@ export default function Form({
       if (quantity > 0) {
         updatedTickets.push({ title, quantity, totalPrice });
       }
+      updatedTotalPrice = updatedTickets.reduce(
+        (acc, ticket) => acc + ticket.totalPrice,
+        0,
+      );
+      
+      setTotalPrice(updatedTotalPrice);
       return updatedTickets;
     });
   };
-  const tickett={
+  const tickett = {
     idticket: 8,
     id_park: 2,
-    namepark: "Juan Pablo II",
-    ticket_code: "MSZ1001",
-    type_pay: "PSE",
-    type_money: "COP",
-    name: "Juan",
-    lastname: "Florez Vargas",
-    email_person: "florezju@gmail.com",
-    phone_number: "3097545231",
-    identity_type: "CC",
-    identity_number: "109482484",
-    date_ticket: "2025-01-02T00:00:00.000Z",
-    status: "Valido",
-    type_ticket_adults: "Pasaporte Acuatico Adulto",
+    namepark: 'Juan Pablo II',
+    ticket_code: 'MSZ1001',
+    type_pay: 'PSE',
+    type_money: 'COP',
+    name: 'Juan',
+    lastname: 'Florez Vargas',
+    email_person: 'florezju@gmail.com',
+    phone_number: '3097545231',
+    identity_type: 'CC',
+    identity_number: '109482484',
+    date_ticket: '2025-01-02T00:00:00.000Z',
+    status: 'Valido',
+    type_ticket_adults: 'Pasaporte Acuatico Adulto',
     count_adult: 3,
-    type_ticket_kids:" Pasaporte Acuatico Niño",
+    type_ticket_kids: ' Pasaporte Acuatico Niño',
     count_kid: 5,
     invoice_electronic: 0,
-    created_at: "2024-12-28T07:13:26.000Z",
-    price_ticket: "119000.00",
-}
+    created_at: '2024-12-28T07:13:26.000Z',
+    price_ticket: '119000.00',
+  };
 
   // console.log(selectedTickets);
   const ticketOptions = [
@@ -247,6 +260,9 @@ export default function Form({
                 ))}
             </div>
           </div>
+          <div className="flex justify-start text-xl font-semibold text-gray-900">
+            <h2>Total Precio: {formatCurrency (totalPrice)}</h2>
+          </div>
           <div className="mt-6 flex justify-start gap-4">
             <Link
               href={breadcrumbs[0].href}
@@ -267,7 +283,7 @@ export default function Form({
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
-        status={"Valido"}
+        status={'Valido'}
         selectedTicket={tickett}
       >
         <h2 className="text-lg font-bold">Detalles del Ticket</h2>

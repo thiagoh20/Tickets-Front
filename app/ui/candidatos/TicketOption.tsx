@@ -1,3 +1,4 @@
+import { formatCurrency } from '@/app/lib/utils';
 import { useState, useEffect } from 'react';
 
 interface TicketOptionProps {
@@ -42,10 +43,10 @@ const TicketOption = ({
       <div>
         <h3 className="text-lg font-semibold">{title}</h3>
         <p className="text-sm text-gray-500">{description}</p>
-        <p className="mt-2 text-base font-medium text-gray-900">{price}</p>
+        <p className="mt-2 text-base font-medium text-gray-900">{formatCurrency(price)}</p>
       </div>
       <div className="mt-2 text-lg font-semibold text-gray-900">
-        Total: ${totalPrice.toFixed(2)} {/* Mostrar el precio total */}
+        Total: {formatCurrency(totalPrice)} {/* Mostrar el precio total */}
       </div>
       <div className="flex items-center">
         <a
