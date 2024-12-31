@@ -27,8 +27,8 @@ const Page = () => {
         </button>
       </div>
       <div className="flex-grow w-full max-w-6xl mx-auto mt-8">
-        {park === 'PN' && <Graphs park="Parque Norte" />}
-        {park === 'AP' && <Graphs park="Aeroparque" />}
+        {park === 'PN' && <Graphs metric="interactions" park="Parque Norte" />}
+        {park === 'AP' && <Graphs metric="interactions" park="Aeroparque" />}
       </div>
     </div>
   );
