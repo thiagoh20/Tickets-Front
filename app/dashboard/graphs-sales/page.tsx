@@ -1,5 +1,5 @@
 "use client";
-import TicketControl from '@/app/ui/calendar/calendar';
+import Graphs from '@/app/ui/graphs';
 import React, { useState } from 'react';
 
 const Page = () => {
@@ -7,7 +7,7 @@ const Page = () => {
 
   return (
     <div className="h-full flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-2xl font-bold my-[2.5%]">Control de tickets del {park == 'PN' ? 'Parque Norte' : 'Aeroparque'}</h1>
+      <h1 className="text-2xl font-bold my-[2.5%]">Métricas del {park == 'PN' ? 'Parque Norte' : 'Aeroparque'}</h1>
       <div className="flex items-center p-2 justify-between w-full max-w-sm mx-auto space-x-2">
         <button
           onClick={() => setPark('PN')}
@@ -27,8 +27,8 @@ const Page = () => {
         </button>
       </div>
       <div className="flex-grow w-full max-w-6xl mx-auto mt-8">
-        {park === 'PN' && <TicketControl park="Parque Norte" />}
-        {park === 'AP' && <TicketControl park="Aeroparque" />}
+        {park === 'PN' && <Graphs metric="sales" park="Parque Norte" />}
+        {park === 'AP' && <Graphs metric="sales" park="Aeroparque" />}
       </div>
     </div>
   );

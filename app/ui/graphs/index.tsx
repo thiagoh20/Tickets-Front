@@ -1,30 +1,56 @@
 "use client"
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const Graphs: React.FC = () => {
-    const data = {
+
+const Graphs = ({ metric, park }: { metric: string, park: string }) => {
+
+    const [data, setData] = useState({
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets: [
             {
-                label: 'Ventas por mes',
+                label: metric == 'sales' ? 'Ventas por mes' : 'Interacciones por mes',
                 data: [6500, 5900, 8000, 8100, 5600, 18270, 5900, 8000, 8100, 5600, 18270, 900],
                 fill: false,
                 backgroundColor: 'rgba(75,192,192,0.4)',
                 borderColor: 'rgba(75,192,192,1)',
             },
-            {
-                label: 'Devoluciones por mes',
-                data: [2500, 1900, 3000, 4100, 560, 9270, 5300, 800, 810, 560, 170, 900],
-                fill: false,
-                backgroundColor: 'rgba(75,12,192,0.4)',
-                borderColor: 'rgba(75,12,192,1)',
-            },
         ],
-    };
+    });
+    
+    useEffect(() => {
+        const fetchInvoices = async () => {
+            try {
+                let endpoint: string;
+
+                if (metric === 'sales') {
+                    endpoint = 'getSalesByMonthPark';
+                } else {
+                    endpoint = 'getInteractionsPark';
+                }
+
+                const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/${endpoint}`, { idpark: park == 'Parque Norte' ? 1 : 2 })
+                setData({ 
+                    ...data, 
+                    labels: response.data.map((invoice: any) => invoice.Mes),
+                    datasets: [
+                        { 
+                            ...data.datasets[0], 
+                            data: response.data.map((invoice: any) => invoice.Total) 
+                        }
+                    ] 
+                });
+            } catch (error) {
+                console.error('Failed to fetch card data:', error);
+            }
+        };
+
+        fetchInvoices();
+    }, [data, park, metric]);
 
     const options = {
         responsive: true,
@@ -34,16 +60,13 @@ const Graphs: React.FC = () => {
             },
             title: {
                 display: true,
-                text: 'Ventas del año de 2024',
+                text: metric == 'sales' ? 'Ventas del último año' : 'Interacciones del último año',
             },
         },
     };
 
     return (
-        <div>
-            <h2>Graphs</h2>
-            <Line data={data} options={options} />
-        </div>
+        <Line data={data} options={options} />
     );
 };
 

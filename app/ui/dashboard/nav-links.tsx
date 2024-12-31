@@ -7,6 +7,7 @@ import {
   TicketIcon,
   ClipboardDocumentIcon,
   Cog8ToothIcon,
+  ChartPieIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -30,9 +31,14 @@ const links = [
     icon: TicketIcon,
   },
   {
-    name: 'Gráficos',
-    href: '/dashboard/graphs',
+    name: 'Ventas',
+    href: '/dashboard/graphs-sales',
     icon: ChartBarIcon,
+  },
+  {
+    name: 'Interacciones',
+    href: '/dashboard/graphs-interactions',
+    icon: ChartPieIcon,
   },
   {
     name: 'Facturas',

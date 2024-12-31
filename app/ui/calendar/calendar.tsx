@@ -57,7 +57,6 @@ const TicketControl = ({ park }: { park: string }) => {
 
   return (
     <div className="flex flex-col items-center p-4">
-      <h2 className="mb-4 text-2xl font-bold">Control de Tickets {park}</h2>
       <DayPicker
         mode="single"
         onDayClick={(day) => day && openModal(day)}
