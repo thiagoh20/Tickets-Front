@@ -60,9 +60,6 @@ const CreateCandidato = FormSchemaa.omit({});
 
 export async function createCandidato(prevState: Statee, formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
-
-  console.log(formObject);
-
   const validatedFields = CreateCandidato.safeParse({
     id: formObject.id,
     tipoid: formObject.tipoid,
@@ -121,7 +118,19 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
   redirect('/dashboard/candidatos');
 }
 
-function redirije() {}
+export async function validateTicket(ticketCode: any) {
+  try {
+
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/validateTicket`,
+      ticketCode,
+    );
+    return response.data.message;
+  } catch (error) {
+    console.error('Error al validar el ticket:', error);
+    throw error; // Propagar el error
+  }
+}
 
 const UpdateCandidato = FormSchemaa.omit({ id: true });
 

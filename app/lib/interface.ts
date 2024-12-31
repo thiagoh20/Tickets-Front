@@ -25,4 +25,5 @@ export interface ModalProps {
   children: React.ReactNode;
   status: string;
   selectedTicket: Ticket | null;
+  onValidate: () => void;
 }

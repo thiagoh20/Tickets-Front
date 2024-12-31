@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import TicketStatus from '@/app/ui/candidatos/status';
 import { Ticket } from '@/app/lib/definitions';
 import { formatDateToLocal } from '@/app/lib/utils';
 import Modal from './modalTicket';
+import { validateTicket } from '@/app/lib/actions';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface InvoicesTableClientProps {
   tickets: Ticket[];
@@ -27,9 +29,52 @@ export default function InvoicesTableClient({
     setIsModalOpen(false);
     setSelectedTicket(null);
   };
+  const handleValidateTicket = async () => {
+    if (selectedTicket) {
+      try {
+        const data = {
+          type_document: selectedTicket.identity_type,
+          document: selectedTicket.identity_number,
+          park: selectedTicket.namepark,
+        };
+        const response = await validateTicket(data);
+        notify({ message: response }); // Usar notify en lugar de alert
+        closeModal(); // Cierra el modal después de la validación
+      } catch (error) {
+        notify({ message: 'Error al validar el ticket' }); // Usar notify en lugar de alert
+      }
+    } else {
+      notify({ message: 'Faltan campos.' }); // Manejar el caso en que falten campos
+    }
+  };
+
+  const notify = (state: any) => {
+    if (state.message === 'El ticket existe pero se encuentra vencido') {
+      toast.error(state.message, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.success(state.message, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   return (
     <>
+      <ToastContainer />
       <div className="mt-6 flow-root">
         <div className="inline-block min-w-full align-middle">
           <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
@@ -131,7 +176,13 @@ export default function InvoicesTableClient({
       </div>
 
       {/* Modal */}
-      <Modal isOpen={isModalOpen} onClose={closeModal}  status={selectedTicket?.status||""} selectedTicket={selectedTicket}>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        status={selectedTicket?.status || ''}
+        selectedTicket={selectedTicket || null}
+        onValidate={handleValidateTicket}
+      >
         <h2 className="text-lg font-bold">Detalles del Ticket</h2>
         <div className="mt-4">
           {/* Datos del cliente */}
