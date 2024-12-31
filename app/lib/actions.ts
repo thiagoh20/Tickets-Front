@@ -95,10 +95,10 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/buyTicketsPresencial`,
       {
-        idpark: 2,
+        idpark: formObject.park == 'Parque Norte' ? 1 : 2,
         name: nombre,
         lastname: apellidos,
-        phone_number: '2222222222',
+        phone_number: '',
         identity_type: tipoid,
         identity_number: id,
         adults_count: adultsCount,
