@@ -18,7 +18,7 @@ export function CreateInvoice({
       href={href}
       className="flex h-10 items-center rounded-lg bg-black px-4 text-sm font-medium text-white transition-colors hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400/30"
     >
-      <span className="hidden md:block">Validar Tickets</span>{' '}
+      <span className="hidden md:block">Registrar Tickets</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
     </Link>
   );
