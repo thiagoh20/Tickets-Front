@@ -11,7 +11,7 @@ const TicketOffice = () => {
           <p className="text-lg font-semibold">Validar Tickets</p>
         </div>
       </Link>
-      <Link href="/dashboard/candidatos">
+      <Link href="/dashboard/tickets">
         <div className="flex h-full items-center bg-gray-200 p-4">
           <TicketIcon width={300} className="mr-2 text-blue-500" />
           <p className="text-lg font-semibold">Tickets</p>
