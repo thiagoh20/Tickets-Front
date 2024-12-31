@@ -40,6 +40,9 @@ export default function InvoicesTableClient({
         const response = await validateTicket(data);
         notify({ message: response }); // Usar notify en lugar de alert
         closeModal(); // Cierra el modal después de la validación
+        setTimeout(() => {
+          window.location.reload(); // Recargar la página después de una pausa breve
+        }, 1000); 
       } catch (error) {
         notify({ message: 'Error al validar el ticket' }); // Usar notify en lugar de alert
       }
