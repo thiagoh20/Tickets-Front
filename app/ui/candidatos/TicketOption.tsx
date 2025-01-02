@@ -58,19 +58,19 @@ const TicketOption = ({
         Total: {formatCurrency(totalPrice)}
       </div>
       <div className="flex items-center space-x-2">
-        <button
+        <a
           onClick={handleDecrease}
-          className="flex h-8 w-8 items-center justify-center rounded-full border bg-gray-100 text-gray-700 hover:bg-gray-200"
+          className="flex cursor-pointer h-8 w-8 items-center justify-center rounded-full border bg-gray-100 text-gray-700 hover:bg-gray-200"
         >
           -
-        </button>
+        </a>
         <span className="text-lg font-medium">{quantity}</span>
-        <button
+        <a
           onClick={handleIncrease}
-          className="flex h-8 w-8 items-center justify-center rounded-full border bg-gray-100 text-gray-700 hover:bg-gray-200"
+          className="flex cursor-pointer h-8 w-8 items-center justify-center rounded-full border bg-gray-100 text-gray-700 hover:bg-gray-200"
         >
           +
-        </button>
+        </a>
       </div>
     </div>
   );
