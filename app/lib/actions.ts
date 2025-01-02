@@ -93,7 +93,7 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
     }
 
     const response = await axios.post(
-      `/api/taquilla/buyTicketsPresencial`,
+      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/buyTicketsPresencial`,
       {
         idpark: formObject.park == 'Parque Norte' ? 1 : 2,
         name: nombre,
@@ -122,7 +122,7 @@ export async function validateTicket(ticketCode: any) {
   try {
 
     const response = await axios.post(
-      `/api/taquilla/validateTicket`,
+      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/validateTicket`,
       ticketCode,
     );
     return response.data.message;
