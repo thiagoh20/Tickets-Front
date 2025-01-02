@@ -105,21 +105,36 @@ export default function Form({
         'Válido para visitantes menores de 140 centímetros de altura',
       price: 13000,
     },
+    {
+        title: 'Ingreso general',
+        description: 'Válido solo para acceso a zonas verdes',
+        price: 7000,
+    },
   ];
 
   const ticketOptionsPN = [
     {
-      title: 'Adultos - Pasaporte Extremo (+125 cm)',
-      description: 'Válido para visitantes de 125 centímetros de altura o más',
+      title: 'Adultos - Pasaporte Extremo - Entrada General',
+      description: 'Válido para visitantes de 125 cm de altura o más',
       price: 44500,
     },
     {
-      title: 'Niños - Pasaporte Fusión (-125 cm)',
-      description:
-        'Válido para visitantes menores de 125 centímetros de altura',
+      title: 'Pasaporte Aventura',
+      description: 'Válido para el uso de 10 atracciones seleccionadas',
+      price: 37700,
+    },
+    {
+      title: 'Pasaporte Fusión',
+      description: 'Válido para visitantes de 125 cm de altura o menos',
       price: 29300,
-    }
+    },
+    {
+      title: 'Ingreso sin atracciones',
+      description: 'Ingreso solo para recorrer el lugar, sin uso de atracciones',
+      price: 7000,
+    },
   ];
+
 
   const ticketOptions =
     park === 'Parque Norte' ? ticketOptionsPN : ticketOptionsAP;
