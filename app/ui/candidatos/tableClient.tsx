@@ -122,6 +122,9 @@ export default function InvoicesTableClient({
             <table className="hidden min-w-full text-gray-900 md:table">
               <thead className="rounded-lg text-left text-sm font-normal">
                 <tr>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Parque
+                  </th>
                   <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                     Nombre
                   </th>
@@ -154,9 +157,14 @@ export default function InvoicesTableClient({
                           width={28}
                           height={28}
                           alt={`profile picture`}
-                        />
-                        <p>{ticket.name + ' ' + ticket.lastname}</p>
+                          />
+                          <p>
+                            {ticket.namepark}
+                          </p>
                       </div>
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {ticket.name + ' ' + ticket.lastname}
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                       {ticket.identity_type + ': ' + ticket.identity_number}

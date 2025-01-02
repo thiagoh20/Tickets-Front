@@ -198,9 +198,7 @@ export async function fetchFilteredCandidatos(
 
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
-    const { data: tickets } = await axios.post(apiUrl, {
-      idpark: 2
-});
+    const { data: tickets } = await axios.post(apiUrl);
     const filteredTickets = tickets.filter((ticket: Ticket) => {
       const searchString = query.toLowerCase();
       return (
@@ -271,9 +269,7 @@ export async function fetchTicketsCount(query: string, grupo: string) {
   noStore();
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
-    const { data: tickets } = await axios.post(apiUrl, {
-          idpark: 2
-  });
+    const { data: tickets } = await axios.post(apiUrl);
 
     const searchString = query.toLowerCase();
     const count = tickets.filter((ticket: Ticket) => {
