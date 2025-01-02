@@ -33,7 +33,7 @@ const Graphs = ({ metric, park }: { metric: string, park: string }) => {
                     endpoint = 'getInteractionsPark';
                 }
 
-                const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/${endpoint}`, { idpark: park == 'Parque Norte' ? 1 : 2 })
+                const response = await axios.post(`/api/marketing/${endpoint}`, { idpark: park == 'Parque Norte' ? 1 : 2 })
                 setData({ 
                     ...data, 
                     labels: response.data.map((invoice: any) => invoice.Mes),

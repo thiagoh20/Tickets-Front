@@ -26,7 +26,7 @@ const TicketControl = ({ park }: { park: string }) => {
     const fetchDisabledDays = async () => {
       try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/allDatesBlocked`,
+          `/api/taquilla/allDatesBlocked`,
           { idpark: park == 'Parque Norte' ? 1 : 2 }, 
         );
         setDisabledDays(response?.data?.map((date: string) => new Date(new Date((date)).getTime() + 24 * 60 * 60 * 1000)));
@@ -40,7 +40,7 @@ const TicketControl = ({ park }: { park: string }) => {
 
   const handleBlock = async (day: Date) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/blockDate`,
+      await axios.post(`/api/taquilla/blockDate`,
         { idpark: park == 'Parque Norte' ? 1 : 2, blockDate: day.toISOString().split("T")[0] },
       )
       .then(() => closeModal())

@@ -197,7 +197,7 @@ export async function fetchFilteredCandidatos(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
+    const apiUrl = `/api/marketing/getAllTickets`;
     const { data: tickets } = await axios.post(apiUrl);
     const filteredTickets = tickets.filter((ticket: Ticket) => {
       const searchString = query.toLowerCase();
@@ -239,7 +239,7 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const apiUrl =`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllInvoices`;
+    const apiUrl =`/api/marketing/getAllInvoices`;
     const { data: tickets } = await axios.get(apiUrl);
     const filteredTickets = tickets.filter((invoice: any) => {
       const searchString = query.toLowerCase();
@@ -268,7 +268,7 @@ export async function fetchFilteredInvoices(
 export async function fetchTicketsCount(query: string, grupo: string) {
   noStore();
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
+    const apiUrl = `/api/marketing/getAllTickets`;
     const { data: tickets } = await axios.post(apiUrl);
 
     const searchString = query.toLowerCase();

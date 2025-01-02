@@ -9,7 +9,7 @@ const Modal = ({ closeModal, invoice, park }: { park: string, invoice: any, clos
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/generateInovice`, 
+        const response = await axios.post(`/api/marketing/generateInovice`, 
           { 
             idpark: park == 'Parque Norte' ? 1 : 2,
             month: invoice.Mes.split(' ')[0],

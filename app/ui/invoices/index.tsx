@@ -22,7 +22,7 @@ const Invoices: React.FC<{ park: string }> = ({ park }: { park: string }) => {
     useEffect(() => {
         const fetchDisabledDays = async () => {
             try {
-                await axios.post(`${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getInvoicesPark`, { idpark: park == 'Parque Norte' ? 1 : 2 })
+                await axios.post(`/api/marketing/getInvoicesPark`, { idpark: park == 'Parque Norte' ? 1 : 2 })
                 .then((response) => setData(response.data))
                 .catch((error) => { console.error("Error fetching disabled days: ", error); });
             } catch (error) {
