@@ -13,7 +13,7 @@ async function getUser(
 ): Promise<User | undefined> {
   try {
     const response = await axios.post<ApiResponse>(
-      `/api/taquilla/loginUser`,
+      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/loginUser`,
       { email, password },
     );
 
