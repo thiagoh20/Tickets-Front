@@ -138,6 +138,9 @@ export default function InvoicesTableClient({
                     Estado
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
+                    Factura Electrónica
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
                     Fecha
                   </th>
                 </tr>
@@ -174,6 +177,9 @@ export default function InvoicesTableClient({
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                       <TicketStatus status={ticket.status} />
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {!!ticket.invoice_electronic ? 'Sí' : 'No'}
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                       {formatDateToLocal(ticket.date_ticket)}

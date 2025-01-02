@@ -297,6 +297,7 @@ export default function Form({
                   key={index}
                   title={ticket.title}
                   price={ticket.price}
+                  description={ticket.description}
                   onQuantityChange={handleQuantityChange}
                   reset={reset}
                 />
