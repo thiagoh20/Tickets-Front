@@ -21,11 +21,6 @@ const links = [
     icon: HomeIcon,
   },
   {
-    name: 'Ingresos',
-    href: '/dashboard/validar',
-    icon: UserGroupIcon,
-  },
-  {
     name: 'Tickets',
     href: '/dashboard/tickets',
     icon: TicketIcon,
