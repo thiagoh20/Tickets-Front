@@ -8,6 +8,7 @@ import {
   ClipboardDocumentIcon,
   Cog8ToothIcon,
   ChartPieIcon,
+  CurrencyDollarIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -44,6 +45,11 @@ const links = [
     name: 'Parques',
     href: '/dashboard/parks',
     icon: Cog8ToothIcon,
+  },
+  {
+    name: 'Pasaportes',
+    href: '/dashboard/portfolio',
+    icon: CurrencyDollarIcon,
   },
 ];
 
