@@ -53,7 +53,7 @@ const links = [
   },
 ];
 
-export default function NavLinks() {
+export default function NavLinks(rol:any) {
   const pathname = usePathname();
   return (
     <>
