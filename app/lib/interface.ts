@@ -1,24 +1,27 @@
-
 // types/next-auth.d.ts
 import NextAuth from 'next-auth';
+import {JWT} from 'next-auth/jwt';
 import { Ticket } from './definitions';
 
 declare module 'next-auth' {
-  interface User {
-    rol: string; 
-  }
-
   interface Session {
     user: {
-      id: string;
-      name: string;
-      email: string;
-      rol: string; 
+      role?: string;
     };
+  }
+  interface User {
+    role?: string;
   }
 }
 
-
+declare module 'next-auth/jwt' {
+  interface JWT {
+    user: {
+      role?: string;
+    };
+  }
+ 
+}
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
