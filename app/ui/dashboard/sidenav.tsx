@@ -6,6 +6,7 @@ import { signOut } from '@/auth';
 import DownloadExcelButton from './buttonDescarga';
 
 export default function SideNav(rol:any) {
+  console.log("1dsfsdf",rol.rol)
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <Link className="mb-2 px-2 flex h-20 items-center justify-center rounded-md md:h-40" href="/">
@@ -13,7 +14,7 @@ export default function SideNav(rol:any) {
       </Link>
 
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <NavLinks rol />
+        <NavLinks rol={rol?.rol} />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
         <form action={async () => {
           'use server';
