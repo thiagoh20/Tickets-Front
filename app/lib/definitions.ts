@@ -22,7 +22,7 @@ export type Ticket = {
 };
 
 export type User = {
-  id: string;
+  id_user: string;
   name: string;
   email: string;
   password: string;
@@ -41,7 +41,7 @@ export type ApiResponse = {
       rol: string;
       created_at: string;
       updated_at: string;
-  }[];
+  };
 };
 
 

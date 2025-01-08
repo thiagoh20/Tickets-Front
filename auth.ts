@@ -6,7 +6,6 @@ import type { User, ApiResponse } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import axios from 'axios';
 
-
 async function getUser(
   email: string,
   password: string,
@@ -16,14 +15,11 @@ async function getUser(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/loginUser`,
       { email, password },
     );
-
     const apiResponse = response.data;
-
-    if (apiResponse.user.length > 0) {
-      const user = apiResponse.user[0];
-      console.log(user);
+    if (apiResponse.user) {
+      const user = apiResponse.user;
       return {
-        id: user.id_user.toString(),
+        id_user: user?.id_user.toString(),
         name: user.name,
         email: user.email,
         password: user.password,
@@ -42,6 +38,7 @@ async function getUser(
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  secret: process.env.NEXTAUTH_SECRET || 'some-random-secret-key',
   providers: [
     Credentials({
       async authorize(credentials) {
@@ -53,17 +50,12 @@ export const { auth, signIn, signOut } = NextAuth({
           const { email, password } = parsedCredentials.data;
           const user = await getUser(email, password);
           if (!user) return null;
-          const passwordsMatch = await bcrypt.compare(password, user.password);
-          if (!passwordsMatch) {
-            console.log('Invalid password');
-            return null;
-          }
-
+         
           return {
-            id: user.id,
+            id_user: user.id_user,
             name: user.name,
             email: user.email,
-            rol: user?.rol,
+            role: user?.rol,
           };
         }
         console.log('Invalid credentials');
@@ -71,4 +63,20 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  session: { strategy: 'jwt' },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (session.user && typeof token.role === 'string') {
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
 });
