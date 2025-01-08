@@ -6,7 +6,7 @@ import { signOut } from '@/auth';
 import DownloadExcelButton from './buttonDescarga';
 
 export default function SideNav(rol:any) {
-  console.log("1dsfsdf",rol.rol)
+  
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <Link className="mb-2 px-2 flex h-20 items-center justify-center rounded-md md:h-40" href="/">

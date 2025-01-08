@@ -61,7 +61,7 @@ const links = [
 
 export default function NavLinks(rol: any) {
   const pathname = usePathname();
-  console.log(rol.rol)
+ 
   return (
     <>
       {links
