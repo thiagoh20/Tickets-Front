@@ -63,19 +63,7 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  session: { strategy: 'jwt', },
-   cookies: {
-    sessionToken: {
-      name: '__Secure-next-auth.session-token',
-      options: {
-        httpOnly: true,
-        sameSite: 'none',
-        path: '/', 
-        secure:false,
-        domain: undefined, 
-      },
-    },
-  },
+ 
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -91,5 +79,5 @@ export const { auth, signIn, signOut } = NextAuth({
       return session;
     },
   },
-  debug:true
+
 });
