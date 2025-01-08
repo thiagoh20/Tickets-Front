@@ -5,21 +5,17 @@ type Role = 'administrador' | 'supervisor' | 'marketing' | 'taquillero';
 
 export async function middleware(req: any) {
   const secret = process.env.NEXTAUTH_SECRET || 'some-random-secret-key';
-  const token = await getToken({ req, secret }); // Obtiene el token JWT
-  const url = req.nextUrl; // URL actual de la solicitud
-
-  // Si el token no existe, redirige a la página de inicio
+  const token = await getToken({ req, secret });
+  const url = req.nextUrl; 
   if (!token) {
     if (url.pathname !== '/') {
-      return NextResponse.redirect(new URL('/', req.url)); // Evita un bucle de redirección
+      return NextResponse.redirect(new URL('/', req.url)); 
     }
     return NextResponse.next();
   }
-
   const role = token.role as Role;
-  const pathname = url.pathname; // Ruta solicitada
+  const pathname = url.pathname; 
 
-  // Define reglas basadas en roles
   const roleAccess: Record<Role, string[]> = {
     administrador: [
       '/dashboard',
@@ -47,7 +43,6 @@ export async function middleware(req: any) {
   if (!isAllowed) {
     return NextResponse.redirect(new URL('/dashboard/tickets', req.url));
   }
-
   return NextResponse.next();
 }
 
