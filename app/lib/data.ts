@@ -191,7 +191,7 @@ export async function fetchCandidatoById(id: string) {
 export async function fetchFilteredCandidatos(
   query: string,
   currentPage: number,
-  grupo: string,
+  role: string, 
 ) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -199,10 +199,15 @@ export async function fetchFilteredCandidatos(
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
     const { data: tickets } = await axios.post(apiUrl);
+
     const filteredTickets = tickets.filter((ticket: Ticket) => {
+      
+      if (role === 'taquillero' && !query.trim()) {
+        return false;
+      }
+
       const searchString = query.toLowerCase();
       return (
-        // ticket.grupo === grupo &&
         ticket.name?.toLowerCase().includes(searchString) ||
         ticket.lastname?.toLowerCase().includes(searchString) ||
         ticket.email_person?.toLowerCase().includes(searchString) ||
@@ -265,7 +270,7 @@ export async function fetchFilteredInvoices(
   }
 }
 
-export async function fetchTicketsCount(query: string, grupo: string) {
+export async function fetchTicketsCount(query: string, role: string) {
   noStore();
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
@@ -273,6 +278,9 @@ export async function fetchTicketsCount(query: string, grupo: string) {
 
     const searchString = query.toLowerCase();
     const count = tickets.filter((ticket: Ticket) => {
+      if (role === 'taquillero' && !query.trim()) {
+        return false;
+      }
       return (
         // ticket.grupo === grupo &&
         ticket.name?.toLowerCase().includes(searchString) ||

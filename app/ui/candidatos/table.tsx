@@ -6,13 +6,13 @@ import InvoicesTableClient from './tableClient';
 export default async function InvoicesTable({
   query,
   currentPage,
-  grupo,
+  role,
 }: {
   query: string;
   currentPage: number;
-  grupo: string;
+  role: string;
 }) {
-  const tickets = await fetchFilteredCandidatos(query, currentPage, grupo);
+  const tickets = await fetchFilteredCandidatos(query, currentPage, role);
 
   return <InvoicesTableClient tickets={tickets} />;
 }

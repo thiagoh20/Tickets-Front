@@ -7,6 +7,7 @@ import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchTicketsCount } from '@/app/lib/data';
 import { Metadata } from 'next';
+import { auth } from '@/auth';
 
 export const metadata: Metadata = {
   title: 'Crear Ticket | ',
@@ -20,10 +21,11 @@ export default async function Page({
     grupo?: string;
   };
 }) {
+   const session = await auth();
   const grupo = "Cero a Siempre"
-  const query = searchParams?.query || '';
+  const query = searchParams?.query && searchParams.query.length > 3 ? searchParams.query : '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchTicketsCount(query, grupo);
+  const totalPages = await fetchTicketsCount(query, session?.user?.role||"");
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -34,7 +36,7 @@ export default async function Page({
         {/* <CreateInvoice grupo={grupo} /> */}
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} grupo={grupo} />
+        <Table query={query} currentPage={currentPage} role={session?.user?.role||""} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
