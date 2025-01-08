@@ -42,12 +42,12 @@ export default function InvoicesTableClient({
         closeModal(); // Cierra el modal después de la validación
         setTimeout(() => {
           window.location.reload(); // Recargar la página después de una pausa breve
-        }, 1000); 
+        }, 1000);
       } catch (error) {
-        notify({ message: 'Error al validar el ticket' }); // Usar notify en lugar de alert
+        notify({ message: 'Error al validar el ticket' }); 
       }
     } else {
-      notify({ message: 'Faltan campos.' }); // Manejar el caso en que falten campos
+      notify({ message: 'Faltan campos.' }); 
     }
   };
 
@@ -131,9 +131,7 @@ export default function InvoicesTableClient({
                   <th scope="col" className="px-3 py-5 font-medium">
                     Identificación
                   </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
-                    Entradas
-                  </th>
+                 
                   <th scope="col" className="px-3 py-5 font-medium">
                     Estado
                   </th>
@@ -160,10 +158,8 @@ export default function InvoicesTableClient({
                           width={28}
                           height={28}
                           alt={`profile picture`}
-                          />
-                          <p>
-                            {ticket.namepark}
-                          </p>
+                        />
+                        <p>{ticket.namepark}</p>
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
@@ -172,9 +168,7 @@ export default function InvoicesTableClient({
                     <td className="whitespace-nowrap px-3 py-3">
                       {ticket.identity_type + ': ' + ticket.identity_number}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-3">
-                      {ticket.count_adult + ticket.count_kid}
-                    </td>
+                   
                     <td className="whitespace-nowrap px-3 py-3">
                       <TicketStatus status={ticket.status} />
                     </td>
@@ -246,24 +240,16 @@ export default function InvoicesTableClient({
           {/* Resumen */}
           <h3 className="text-md mt-4 font-semibold">Resumen</h3>
           <ul className="mt-2 text-sm text-gray-700">
-            <li>
-              <strong>Adultos:</strong>
-              <span className="text-lg font-bold text-blue-600">
-                {' '}
-                {selectedTicket?.count_adult}{' '}
-              </span>
-              ({selectedTicket?.type_ticket_adults})
-            </li>
-            <li>
-              <strong>Niños:</strong>
-              <span className="text-lg font-bold text-green-600">
-                {' '}
-                {selectedTicket?.count_kid}{' '}
-              </span>
-              ({selectedTicket?.type_ticket_kids})
-            </li>
-            <li>
-              <strong>Factura Electrónica:</strong>{' '}
+            {selectedTicket?.ticket_info?.map((info, index) => (
+              <li key={index}>
+                <strong>Tipo:</strong> {info?.type}, <strong>Cantidad:</strong>{' '}
+                <span className="text-2xl font-bold text-green-600">
+                  {info?.count}{' '}
+                </span>
+              </li>
+            ))}
+            <li className="mt-2">
+              <strong >Factura Electrónica:</strong>{' '}
               {selectedTicket?.invoice_electronic === 1 ? 'Sí' : 'No'}
             </li>
           </ul>

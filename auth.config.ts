@@ -20,14 +20,14 @@ export const authConfig = {
   },
   providers: [],
   session: { strategy: 'jwt', maxAge: 1 * 24 * 60 * 60 },
-  cookies: {
-    sessionToken: {
-      name: `__Secure-next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'none',
-      },
-    },
-  },
+  // cookies: {
+  //   sessionToken: {
+  //     name: `__Secure-next-auth.session-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       secure: true,
+  //       sameSite: 'none',
+  //     },
+  //   },
+  // },
 } satisfies NextAuthConfig;

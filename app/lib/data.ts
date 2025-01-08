@@ -48,7 +48,6 @@ export async function fetchCardDataCandidatos(grupo: string) {
 export async function fetchCardDataCandidatosTotal(grupo: string) {
   noStore();
   try {
-   
     const totalCandidatosPromise = sql`SELECT COUNT(*) FROM candidato and `;
     const candidatosEnProcesoPromise = sql`SELECT COUNT(*) FROM candidato WHERE estado_proceso = 'En Proceso'`;
     const candidatosEnviadosPromise = sql`SELECT COUNT(*) FROM candidato WHERE estado_proceso = 'Enviado'`;
@@ -81,7 +80,6 @@ export async function fetchCardDataCandidatosTotal(grupo: string) {
 export async function fetchCardData() {
   noStore();
   try {
-   
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
@@ -153,7 +151,6 @@ export async function getUser(email: string) {
 export async function fetchCandidatoById(id: string) {
   noStore();
   try {
-    
     const data = await sql<CandidatosTable>`
       SELECT
         candidato.id,
@@ -173,35 +170,32 @@ export async function fetchCandidatoById(id: string) {
       WHERE candidato.id = ${id};
     `;
 
-   
     const candidato = data.rows.map((candidato) => ({
       ...candidato,
-     
     }));
 
-   
-    return candidato[0]; 
+    return candidato[0];
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch candidate.');
   }
 }
 
-
 export async function fetchFilteredCandidatos(
   query: string,
   currentPage: number,
-  role: string, 
+  role: string,
 ) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
-    const { data: tickets } = await axios.post(apiUrl);
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsTwo`;
+    const { data: tickets } = await axios.post(apiUrl, {
+      idpark: 0,
+    });
 
     const filteredTickets = tickets.filter((ticket: Ticket) => {
-      
       if (role === 'taquillero' && !query.trim()) {
         return false;
       }
@@ -214,9 +208,7 @@ export async function fetchFilteredCandidatos(
         ticket.phone_number?.toLowerCase().includes(searchString) ||
         ticket.date_ticket?.toLowerCase().includes(searchString) ||
         ticket.status?.toLowerCase().includes(searchString) ||
-        ticket.identity_number?.toLowerCase().includes(searchString) ||
-        ticket.type_ticket_kids?.toLowerCase().includes(searchString) ||
-        ticket.type_ticket_adults?.toLowerCase().includes(searchString)
+        ticket.identity_number?.toLowerCase().includes(searchString)
       );
     });
 
@@ -244,7 +236,7 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const apiUrl =`/api/marketing/getAllInvoices`;
+    const apiUrl = `/api/marketing/getAllInvoices`;
     const { data: tickets } = await axios.get(apiUrl);
     const filteredTickets = tickets.filter((invoice: any) => {
       const searchString = query.toLowerCase();
@@ -273,8 +265,10 @@ export async function fetchFilteredInvoices(
 export async function fetchTicketsCount(query: string, role: string) {
   noStore();
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTickets`;
-    const { data: tickets } = await axios.post(apiUrl);
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsTwo`;
+    const { data: tickets } = await axios.post(apiUrl, {
+      idpark: 0,
+    });
 
     const searchString = query.toLowerCase();
     const count = tickets.filter((ticket: Ticket) => {
@@ -282,18 +276,15 @@ export async function fetchTicketsCount(query: string, role: string) {
         return false;
       }
       return (
-        // ticket.grupo === grupo &&
         ticket.name?.toLowerCase().includes(searchString) ||
         ticket.lastname?.toLowerCase().includes(searchString) ||
         ticket.email_person?.toLowerCase().includes(searchString) ||
         ticket.phone_number?.toLowerCase().includes(searchString) ||
         ticket.date_ticket?.toLowerCase().includes(searchString) ||
         ticket.status?.toLowerCase().includes(searchString) ||
-        ticket.identity_number?.toLowerCase().includes(searchString) ||
-        ticket.type_ticket_kids?.toLowerCase().includes(searchString) ||
-        ticket.type_ticket_adults?.toLowerCase().includes(searchString)
+        ticket.identity_number?.toLowerCase().includes(searchString) 
       );
-    }).length; 
+    }).length;
 
     const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
     return totalPages;

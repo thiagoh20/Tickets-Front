@@ -19,6 +19,11 @@ export type Ticket = {
   count_kid: number;
   invoice_electronic: number;
   created_at: string;
+  ticket_info: TicketInfo[];
+};
+export type TicketInfo = {
+  type: string;
+  count: number;
 };
 
 export type User = {
