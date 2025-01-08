@@ -14,13 +14,20 @@ export const formatDateToLocal = (
     return ''; 
   }
   const date = new Date(dateStr);
+  const utcDate = new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate()
+  );
+
   const options: Intl.DateTimeFormatOptions = {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
   };
+
   const formatter = new Intl.DateTimeFormat(locale, options);
-  return formatter.format(date);
+  return formatter.format(utcDate);
 };
 
 
