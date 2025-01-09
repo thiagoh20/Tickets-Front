@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: {
     template: '%s | Tickets',
-    default: 'Aeroparque Dashboard',
+    default: 'Metro Parques Dashboard',
   },
   description: 'Sistema de Tickets ',
 };
