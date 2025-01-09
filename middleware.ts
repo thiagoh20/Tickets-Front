@@ -9,7 +9,7 @@ export async function middleware(req: any) {
   const url = req.nextUrl; 
   if (!token) {
     if (url.pathname !== '/') {
-      return NextResponse.redirect(new URL('/', req.url)); 
+      return NextResponse.redirect(new URL('/dashboard', req.url)); 
     }
     return NextResponse.next();
   }
@@ -41,7 +41,7 @@ export async function middleware(req: any) {
   );
 
   if (!isAllowed) {
-    return NextResponse.redirect(new URL('/dashboard/tickets', req.url));
+    return NextResponse.redirect(new URL('/dashboard', req.url));
   }
   return NextResponse.next();
 }
