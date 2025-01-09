@@ -4,8 +4,9 @@ import Image from 'next/image';
 export default function AcmeLogo() {
   return (
     <div
-      className={`flex items-center align-top leading-none text-white`}>
-      <Image src={'/customers/Metroparques.png'} alt="Metroparques.png" width={600} height={600} />
+      className={`flex items-center   text-white`}>
+      <Image src={'/customers/descarga.png'} alt="Metroparques.png" width={50} height={50} />
+      <p className="text-xl"> Metro Parques</p>
     </div>
   );
 }
