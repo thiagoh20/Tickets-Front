@@ -9,6 +9,7 @@ import {
   Cog8ToothIcon,
   ChartPieIcon,
   CurrencyDollarIcon,
+  PlusCircleIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -56,6 +57,12 @@ const links = [
     href: '/dashboard/portfolio',
     icon: CurrencyDollarIcon,
     roles: [ 'administrador','supervisor', 'marketing'],
+  },
+  {
+    name: 'Registrar',
+    href: '/dashboard/register',
+    icon: PlusCircleIcon,
+    roles: ['administrador', 'marketing'],
   },
 ];
 
