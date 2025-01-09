@@ -28,7 +28,6 @@ async function getUser(
         updated_at: user.updated_at,
       };
     }
-
     return undefined;
   } catch (error) {
     console.error('Failed to fetch user:', error);

@@ -22,3 +22,8 @@ export const authConfig = {
   session: { strategy: 'jwt', maxAge: 1 * 24 * 60 * 60 },
  
 } satisfies NextAuthConfig;
+import NextAuth from 'next-auth';
+
+
+
+export default NextAuth(authConfig).auth;
