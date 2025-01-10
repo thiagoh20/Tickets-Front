@@ -1,4 +1,3 @@
-
 export type Ticket = {
   idticket: number;
   namepark: string;
@@ -27,28 +26,27 @@ export type TicketInfo = {
 };
 
 export type User = {
-  id_user: string;
+  idUser: string;
   name: string;
   email: string;
   password: string;
-  rol: string; 
-  created_at?: string;
-  updated_at?: string;
+  rol: string;
+  park: string;
+  changePass?: string;
 };
 
 export type ApiResponse = {
   message: string;
   user: {
-      id_user: number;
-      name: string;
-      email: string;
-      password: string;
-      rol: string;
-      created_at: string;
-      updated_at: string;
+    id_user: string;
+    name: string;
+    email: string;
+    password: string;
+    rol: string;
+    idpark: string;
+    changePass?: string;
   };
 };
-
 
 export type CandidatosTable = {
   id: string;
