@@ -2,33 +2,40 @@ import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
-import type { User, ApiResponse } from '@/app/lib/definitions';
+import type { User, ApiResponse, LoginResponse } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import axios from 'axios';
 
 async function getUser(
   email: string,
   password: string,
-): Promise<User | undefined> {
+): Promise<LoginResponse | undefined> {
   try {
     const response = await axios.post<ApiResponse>(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/loginUser`,
       { email, password },
     );
+
     const apiResponse = response.data;
+    const { message } = apiResponse;
+
     if (apiResponse.user) {
       const user = apiResponse.user;
       return {
-        idUser: user?.id_user.toString(),
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        rol: user.rol,
-        park: user.idpark,
-        changePass: "0",
+        user: {
+          idUser: user.id_user.toString(),
+          name: user.name,
+          email: user.email,
+          password: user.password,
+          rol: user.rol,
+          park: user.idpark,
+          changePass: user.changepassword,
+          statusprofile: user.statusprofile,
+        },
+        message,
       };
     }
-    return undefined;
+    return { message };
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
@@ -47,19 +54,22 @@ export const { auth, signIn, signOut } = NextAuth({
 
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
-          const user = await getUser(email, password);
-          if (!user) return null;
+          const response = await getUser(email, password);
 
+          if (!response?.user) return null;
+
+          if (response.user.statusprofile === 'Disable') {
+            throw new Error('User is disabled.');
+          }
           return {
-            idUser: user.idUser,
-            name: user.name,
-            email: user.email,
-            role: user?.rol,
-            park: user?.park,
-            changePass:user?.changePass,
+            idUser: response.user.idUser,
+            name: response.user.name,
+            email: response.user.email,
+            role: response.user?.rol,
+            park: response.user?.park,
+            changePass: response.user?.changePass,
           };
         }
-        console.log('Invalid credentials');
         return null;
       },
     }),
@@ -71,7 +81,7 @@ export const { auth, signIn, signOut } = NextAuth({
         token.idUser = user.idUser;
         token.role = user.role;
         token.park = user.park;
-        token.changePass=user.changePass;
+        token.changePass = user.changePass;
       }
       return token;
     },
@@ -81,7 +91,7 @@ export const { auth, signIn, signOut } = NextAuth({
         (session.user as any).role = token.role;
         (session.user as any).park = token.park;
         (session.user as any).idUser = token.idUser;
-        (session.user as any).changePass=token.changePass;
+        (session.user as any).changePass = token.changePass;
       }
       return session;
     },

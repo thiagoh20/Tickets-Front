@@ -27,12 +27,15 @@ export async function authenticate(
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
+        case 'CallbackRouteError': 
+          return 'Cuenta inhabilitada';
         case 'CredentialsSignin':
           return 'Usuario invalido.';
         default:
           return 'Algo salió mal.';
       }
     }
+
     throw error;
   }
 }
@@ -120,7 +123,6 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
 
 export async function validateTicket(ticketCode: any) {
   try {
-
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/validateTicket`,
       ticketCode,
