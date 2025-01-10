@@ -19,13 +19,13 @@ async function getUser(
     if (apiResponse.user) {
       const user = apiResponse.user;
       return {
-        id_user: user?.id_user.toString(),
+        idUser: user?.id_user.toString(),
         name: user.name,
         email: user.email,
         password: user.password,
         rol: user.rol,
-        created_at: user.created_at,
-        updated_at: user.updated_at,
+        park: user.idpark,
+        changePass: "0",
       };
     }
     return undefined;
@@ -49,12 +49,14 @@ export const { auth, signIn, signOut } = NextAuth({
           const { email, password } = parsedCredentials.data;
           const user = await getUser(email, password);
           if (!user) return null;
-         
+
           return {
-            id_user: user.id_user,
+            idUser: user.idUser,
             name: user.name,
             email: user.email,
             role: user?.rol,
+            park: user?.park,
+            changePass:user?.changePass,
           };
         }
         console.log('Invalid credentials');
@@ -62,21 +64,26 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
- 
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.idUser = user.idUser;
         token.role = user.role;
+        token.park = user.park;
+        token.changePass=user.changePass;
       }
       return token;
     },
 
     async session({ session, token }) {
       if (session.user && typeof token.role === 'string') {
-        session.user.role = token.role;
+        (session.user as any).role = token.role;
+        (session.user as any).park = token.park;
+        (session.user as any).idUser = token.idUser;
+        (session.user as any).changePass=token.changePass;
       }
       return session;
     },
   },
-
 });
