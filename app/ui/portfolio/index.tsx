@@ -10,7 +10,7 @@ const Passports = ({ park }: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACK_LINK}/api/tickets/porfolio/${park == 'Parque Norte' ? 1 : 2}`);
+        const response = await axios.get(`/api/tickets/porfolio/${park == 'Parque Norte' ? 1 : 2}`);
         setPassports(response.data);
       } catch (err) {
         console.error(err);
