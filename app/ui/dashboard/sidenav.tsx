@@ -20,10 +20,10 @@ export default function SideNav(user: any) {
           />
         </div>
         <div className="ml-4 text-white">
-          <p className="text-xl font-semibold tracking-wide">
+          <p className="text-xl font-semibold tracking-wide capitalize">
             {user?.user?.name}
           </p>
-          <p className="text-xs opacity-80">{user?.user?.role}</p>
+          <p className="text-xs opacity-80 capitalize">{user?.user?.role}</p>
         </div>
       </div>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
