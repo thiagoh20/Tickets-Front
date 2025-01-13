@@ -10,12 +10,12 @@ export default function SideNav(user: any) {
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <div className="mb-4 flex transform items-center justify-start rounded-lg bg-gradient-to-r from-gray-300 to-gray-500 p-4 shadow-lg transition-all duration-300 ease-in-out ">
-        <div className="flex h-10 w-8 flex-shrink-0 items-center justify-center rounded-full">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gray-50">
           <Image
             src={'/customers/usuario.png'}
             className="rounded-full"
-            width={50}
-            height={50}
+            width={100}
+            height={100}
             alt={`profile picture`}
           />
         </div>

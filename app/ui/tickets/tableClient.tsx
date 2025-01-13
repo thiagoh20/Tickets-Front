@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
-import TicketStatus from '@/app/ui/candidatos/status';
+import TicketStatus from '@/app/ui/tickets/status';
 import { Ticket } from '@/app/lib/definitions';
 import { formatDateToLocal } from '@/app/lib/utils';
 import Modal from './modalTicket';

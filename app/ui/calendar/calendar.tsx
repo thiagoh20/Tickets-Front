@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import 'react-day-picker/dist/style.css';
 import './custom-styles.css'; // Asegúrate de tener este archivo
+import { es } from "date-fns/locale";
 
 const TicketControl = ({ park }: { park: string }) => {
   const LinkIcon = XMarkIcon;
@@ -25,13 +26,17 @@ const TicketControl = ({ park }: { park: string }) => {
   useEffect(() => {
     const fetchDisabledDays = async () => {
       try {
-        const response = await axios.post(
-          `/api/taquilla/allDatesBlocked`,
-          { idpark: park == 'Parque Norte' ? 1 : 2 }, 
+        const response = await axios.post(`/api/taquilla/allDatesBlocked`, {
+          idpark: park == 'Parque Norte' ? 1 : 2,
+        });
+        setDisabledDays(
+          response?.data?.map(
+            (date: string) =>
+              new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000),
+          ),
         );
-        setDisabledDays(response?.data?.map((date: string) => new Date(new Date((date)).getTime() + 24 * 60 * 60 * 1000)));
       } catch (error) {
-        console.error("Error fetching disabled days: ", error);
+        console.error('Error fetching disabled days: ', error);
       }
     };
 
@@ -40,15 +45,19 @@ const TicketControl = ({ park }: { park: string }) => {
 
   const handleBlock = async (day: Date) => {
     try {
-      await axios.post(`/api/taquilla/blockDate`,
-        { idpark: park == 'Parque Norte' ? 1 : 2, blockDate: day.toISOString().split("T")[0] },
-      )
-      .then(() => closeModal())
-      .catch((error) => { console.error("Error blocking date: ", error); });
+      await axios
+        .post(`/api/taquilla/blockDate`, {
+          idpark: park == 'Parque Norte' ? 1 : 2,
+          blockDate: day.toISOString().split('T')[0],
+        })
+        .then(() => closeModal())
+        .catch((error) => {
+          console.error('Error blocking date: ', error);
+        });
     } catch (error) {
-      console.error("Error fetching disabled days: ", error);
+      console.error('Error fetching disabled days: ', error);
     }
-  }
+  };
 
   const isDisabled = (day: Date) =>
     disabledDays.some(
@@ -60,6 +69,9 @@ const TicketControl = ({ park }: { park: string }) => {
       <DayPicker
         mode="single"
         onDayClick={(day) => day && openModal(day)}
+        startMonth={new Date()}
+        locale={es}
+        disabled={disabledDays}
         modifiers={{
           booked: disabledDays,
         }}

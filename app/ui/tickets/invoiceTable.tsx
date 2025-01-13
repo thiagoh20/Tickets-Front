@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import TicketStatus from '@/app/ui/candidatos/status';
+import TicketStatus from '@/app/ui/tickets/status';
 import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredInvoices } from '@/app/lib/data';
 import { Ticket } from '@/app/lib/definitions';

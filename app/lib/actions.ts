@@ -169,45 +169,16 @@ const UpdateCandidato = FormSchemaa.omit({ id: true });
 //   }
 
 //   const {
-//     tipoid,
-//     nombre,
-//     celular,
-//     cargo,
-//     correo,
-//     motivo,
-//     estado_proceso,
-//     fecha_envio,
-//     fecha_ingreso,
-//     grupo,
-//     page,
-//     keyword,
-//     estadoCandidato,
-//     user_creo,
+    
 //   } = validatedFields.data;
 
 //   try {
-//     await sql`
-//       UPDATE candidato
-//       SET tipoid = ${tipoid},
-//           nombre = ${nombre},
-//           celular = ${celular},
-//           cargo = ${cargo},
-//           correo = ${correo},
-//           motivo = ${motivo},
-//           estado_proceso = ${estado_proceso},
-//           fecha_envio= ${fecha_envio || null},
-//           fecha_ingreso=${fecha_ingreso || null},
-//           grupo = ${grupo},
-//           estadoCandidato = 1,
-//           user_creo = 1
-//       WHERE id = ${id}
-//     `;
+    
 //   } catch (error) {
 //     return { message: 'Database Error: Failed to Update Candidate.' };
 //   }
 
-//   revalidatePath('/dashboard/' + keyword + '?page=' + page);
-//   redirect('/dashboard/' + keyword + '?page=' + page);
+  
 // }
 
 export async function deleteCandidato(id: string) {

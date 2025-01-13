@@ -52,6 +52,19 @@ export type ApiResponse = {
    message: string;
 };
 
+export type UserProfile = {
+  id_user: number;
+  name: string;
+  email: string;
+  password: string;
+  rol: string;
+  created_at: string;
+  updated_at: string;
+  idpark: number;
+  changepassword: number;
+  statusprofile: 'Enable' | 'Disable';  // solo "Enable" o "Disable"
+};
+
 export type CandidatosTable = {
   id: string;
   tipoid: string;
@@ -67,4 +80,9 @@ export type CandidatosTable = {
   usuario_activo: string;
   estadoCandidato: number;
   user_creo: number;
+};
+
+export type CustomerField = {
+  id: string;
+  name: string;
 };

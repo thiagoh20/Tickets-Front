@@ -64,6 +64,12 @@ const links = [
     icon: PlusCircleIcon,
     roles: ['administrador', 'marketing'],
   },
+  {
+    name: 'Usuarios Sistema',
+    href: '/dashboard/candidatos',
+    icon: UserGroupIcon,
+    roles: ['administrador',],
+  },
 ];
 
 export default function NavLinks(rol: any) {
