@@ -4,6 +4,7 @@ import { Breadcrumb } from '@/app/ui/candidatos/breadcrumbs';
 import Link from 'next/link';
 import {
   AtSymbolIcon,
+  BuildingOffice2Icon,
   CalendarDaysIcon,
   CheckIcon,
   ClipboardDocumentCheckIcon,
@@ -32,9 +33,10 @@ export default function Form({
   const initialState = { message: null, errors: {}, fecha_envio: null };
   const [state, dispatch] = useFormState(createCandidato, initialState);
   const [estadoProceso, setEstadoProceso] = useState<string>('');
+  const [selectedRole, setSelectedRole] = useState<string>('');
 
-  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEstadoProceso(event.target.value);
+  const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedRole(event.target.value);
   };
   const notify = (state: any) => {
     if (state.message === 'Faltan campos.') {
@@ -70,7 +72,7 @@ export default function Form({
     <div>
       <ToastContainer />
       <form action={dispatch}>
-        <input type="hidden" name="grupo" />
+        <input type="hidden" name="parck" value={'3'} />
         <div className="rounded-md bg-gray-50 p-4 md:p-6">
           {/* Candidato Nombre */}
           <div className="mb-4">
@@ -102,14 +104,17 @@ export default function Form({
 
           {/* Candidato Cargo */}
           <div className="mb-4">
-            <label htmlFor="Usuario" className="mb-2 block text-sm font-medium">
+            <label
+              htmlFor="nombreUser"
+              className="mb-2 block text-sm font-medium"
+            >
               Nombre de Usuario
             </label>
             <div className="relative mt-2 rounded-md">
               <div className="relative">
                 <input
-                  id="Usuario"
-                  name="Usuario"
+                  id="nombreUser"
+                  name="nombreUser"
                   type="text"
                   min={3}
                   placeholder="Usuario"
@@ -119,27 +124,28 @@ export default function Form({
                 <ClipboardDocumentCheckIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
               <div id="amount-error" aria-live="polite" aria-atomic="true">
-                {/* {state.errors?.cargo &&
-                  state.errors.cargo.map((error: string) => (
+                {state.errors?.nombreUser &&
+                  state.errors.nombreUser.map((error: string) => (
                     <p className="mt-2 text-sm text-red-500" key={error}>
                       {error}
                     </p>
-                  ))} */}
+                  ))}
               </div>
             </div>
           </div>
           {/* Candidato tipo de identificacion */}
           <div className="mb-4">
-            <label htmlFor="Rol" className="mb-2 block text-sm font-medium">
+            <label htmlFor="rol" className="mb-2 block text-sm font-medium">
               Rol del Perfil
             </label>
             <div className="relative">
               <select
-                id="Rol"
-                name="Rol"
+                id="rol"
+                name="rol"
                 className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 defaultValue=""
                 aria-describedby="customer-error"
+                onChange={handleRoleChange}
               >
                 <option value="" disabled>
                   Selecione Rol del Usuario
@@ -160,14 +166,45 @@ export default function Form({
               <UserIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
             </div>
             <div id="customer-error" aria-live="polite" aria-atomic="true">
-              {state.errors?.tipoid &&
-                state.errors.tipoid.map((error: string) => (
+              {state.errors?.rol &&
+                state.errors.rol.map((error: string) => (
                   <p className="mt-2 text-sm text-red-500" key={error}>
                     {error}
                   </p>
                 ))}
             </div>
           </div>
+          {/* Lista de parques (solo para "taquillero" o "supervisor") */}
+          {(selectedRole === 'taquillero' || selectedRole === 'supervisor') && (
+            <div className="mb-4">
+              <label htmlFor="parck" className="mb-2 block text-sm font-medium">
+                Seleccione el parque
+              </label>
+              <div className="relative">
+                <select
+                  id="parck"
+                  name="parck"
+                  className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm"
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Seleccione el Parque
+                  </option>
+                  <option value="1">Aero Parque Juan Pablo ll</option>
+                  <option value="2">Parque Norte</option>
+                </select>
+                <BuildingOffice2Icon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+              </div>
+              <div id="customer-error" aria-live="polite" aria-atomic="true">
+                {state.errors?.parck &&
+                  state.errors.parck.map((error: string) => (
+                    <p className="mt-2 text-sm text-red-500" key={error}>
+                      {error}
+                    </p>
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
         <div className="mt-6 flex justify-end gap-4">
           <Link

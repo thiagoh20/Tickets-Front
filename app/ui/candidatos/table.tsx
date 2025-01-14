@@ -4,10 +4,8 @@ import {
   DeleteInvoice,
   UpdatePass,
 } from '@/app/ui/candidatos/buttons';
-
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredUsers, fetchFilteredUsersPage } from '@/app/lib/data';
-import userStatus from './status';
 import UserStatus from './status';
 
 export default async function InvoicesTable({
@@ -18,7 +16,7 @@ export default async function InvoicesTable({
   currentPage: number;
 }) {
   const candidatos = await fetchFilteredUsers(query, currentPage);
-  console.log(candidatos);
+  
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">

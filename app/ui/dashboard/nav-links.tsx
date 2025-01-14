@@ -59,12 +59,6 @@ const links = [
     roles: [ 'administrador','supervisor', 'marketing'],
   },
   {
-    name: 'Registrar',
-    href: '/dashboard/register',
-    icon: PlusCircleIcon,
-    roles: ['administrador', 'marketing'],
-  },
-  {
     name: 'Usuarios Sistema',
     href: '/dashboard/candidatos',
     icon: UserGroupIcon,
