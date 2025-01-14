@@ -117,8 +117,8 @@ export default async function InvoicesTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-1 pr-3">
                     <div className="flex justify-end gap-1">
-                      <UpdateInvoice id={candidatos.id} page={currentPage} />
-                      <UpdatePass id={candidatos.id} />
+                      {/* <UpdateInvoice id={candidatos.id} page={currentPage} />
+                      <UpdatePass id={candidatos.id} /> */}
                       <DeleteInvoice id={candidatos.id} />
                     </div>
                   </td>
