@@ -250,7 +250,6 @@ export async function fetchFilteredInvoices(
       offset,
       offset + ITEMS_PER_PAGE,
     );
-    console.log(paginatedTickets);
     return paginatedTickets;
   } catch (error) {
     if (axios.isAxiosError(error)) {

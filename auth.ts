@@ -75,25 +75,6 @@ export const { auth, signIn, signOut } = NextAuth({
     }),
   ],
 
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.idUser = user.idUser;
-        token.role = user.role;
-        token.park = user.park;
-        token.changePass = user.changePass;
-      }
-      return token;
-    },
 
-    async session({ session, token }) {
-      if (session.user && typeof token.role === 'string') {
-        (session.user as any).role = token.role;
-        (session.user as any).park = token.park;
-        (session.user as any).idUser = token.idUser;
-        (session.user as any).changePass = token.changePass;
-      }
-      return session;
-    },
-  },
+    
 });
