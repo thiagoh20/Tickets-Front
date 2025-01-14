@@ -20,7 +20,7 @@ const links = [
     name: 'Home',
     href: '/dashboard',
     icon: HomeIcon,
-    roles: ['administrador', 'supervisor', 'marketing'],
+    roles: ['administrador', 'supervisor', 'marketing','taquillero'],
   },
   {
     name: 'Tickets',
