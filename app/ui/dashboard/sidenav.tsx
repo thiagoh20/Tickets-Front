@@ -10,12 +10,12 @@ export default function SideNav(user: any) {
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <div className="mb-4 flex transform items-center justify-start rounded-lg bg-gradient-to-r from-gray-300 to-gray-500 p-4 shadow-lg transition-all duration-300 ease-in-out ">
-        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-white">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-gray-50">
           <Image
             src={'/customers/usuario.png'}
             className="rounded-full"
-            width={58}
-            height={58}
+            width={100}
+            height={100}
             alt={`profile picture`}
           />
         </div>
@@ -28,7 +28,7 @@ export default function SideNav(user: any) {
       </div>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks rol={user?.user?.role} />
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-100 md:block"></div>
+        <div className="hidden h-auto w-full grow rounded-md  md:block"></div>
 
         <form
           action={async () => {

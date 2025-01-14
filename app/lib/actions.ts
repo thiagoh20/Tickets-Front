@@ -27,31 +27,34 @@ export async function authenticate(
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
+        case 'CallbackRouteError':
+          return 'Cuenta inhabilitada';
         case 'CredentialsSignin':
           return 'Usuario invalido.';
         default:
           return 'Algo salió mal.';
       }
     }
+
     throw error;
   }
 }
 
 const FormSchemaa = z.object({
-  id: z.string().nonempty({ message: 'Número de documento es Requerido.' }),
-  tipoid: z.string().nonempty({ message: 'Tipo de documento es Requerido.' }),
+  nombreUser: z
+    .string()
+    .nonempty({ message: 'Nombre de usuario es Requerido.' }),
   nombre: z.string().nonempty({ message: 'Nombre es Requerido.' }),
-  apellidos: z.string().min(1, { message: 'Apellido es requerido.' }),
-  ticket: z.string().min(3, { message: 'Seleccione un pasaporte como minimo' }),
+  rol: z.string().min(1, { message: 'Rol del usurio es requerido.' }),
+  parck: z.string().min(1, { message: 'Seleccione un parque.' }),
 });
 
 export type Statee = {
   errors?: {
-    id?: string[];
-    tipoid?: string[];
     nombre?: string[];
-    apellidos?: string[];
-    ticket?: string[];
+    nombreUser?: string[];
+    rol?: string[];
+    parck?: string[];
   };
   message?: string | null;
 };
@@ -61,11 +64,10 @@ const CreateCandidato = FormSchemaa.omit({});
 export async function createCandidato(prevState: Statee, formData: FormData) {
   const formObject = Object.fromEntries(formData.entries());
   const validatedFields = CreateCandidato.safeParse({
-    id: formObject.id,
-    tipoid: formObject.tipoid,
     nombre: formObject.nombre,
-    apellidos: formObject.apellidos,
-    ticket: formObject.ticket,
+    nombreUser: formObject.nombreUser,
+    rol: formObject.rol,
+    parck: formObject.parck,
   });
 
   if (!validatedFields.success) {
@@ -74,53 +76,33 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
       message: 'Faltan campos.',
     };
   }
-  const { id, tipoid, nombre, apellidos, ticket } = validatedFields.data;
+  const { nombre, nombreUser, rol, parck } = validatedFields.data;
   try {
-    let parsedTicket: any;
-    if (ticket) {
-      parsedTicket = JSON.parse(ticket);
-    }
-    let adultsCount = 0;
-    let kidsCount = 0;
-    if (parsedTicket && Array.isArray(parsedTicket)) {
-      parsedTicket.forEach((item: any) => {
-        if (item.title.includes('Adultos')) {
-          adultsCount += item.quantity;
-        } else if (item.title.includes('Niños')) {
-          kidsCount += item.quantity;
-        }
-      });
-    }
-
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/buyTicketsPresencial`,
+      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/createUser`,
       {
-        idpark: formObject.park == 'Parque Norte' ? 1 : 2,
         name: nombre,
-        lastname: apellidos,
-        phone_number: '',
-        identity_type: tipoid,
-        identity_number: id,
-        adults_count: adultsCount,
-        kids_count: kidsCount,
+        email: nombreUser,
+        password: 'Metropaques300++',
+        rol: rol,
+        idparck: parck,
       },
     );
-
+    revalidatePath('/dashboard/candidatos');
+    redirect('/dashboard/candidatos');
     return {
       message: response.data.message,
     };
   } catch (error) {
     return {
-      message: 'Database Error: Failed to Create Candidate.',
+      message: 'Database Error: error al crear el usuario.',
     };
   }
-  revalidatePath('/dashboard/candidatos');
-  redirect('/dashboard/candidatos');
+ 
 }
 
 export async function validateTicket(ticketCode: any) {
   try {
-
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/validateTicket`,
       ticketCode,
@@ -132,7 +114,7 @@ export async function validateTicket(ticketCode: any) {
   }
 }
 
-const UpdateCandidato = FormSchemaa.omit({ id: true });
+// const UpdateCandidato = FormSchemaa.omit({ id: true });
 
 // export async function updateCandidato(
 //   id: string,
@@ -167,45 +149,15 @@ const UpdateCandidato = FormSchemaa.omit({ id: true });
 //   }
 
 //   const {
-//     tipoid,
-//     nombre,
-//     celular,
-//     cargo,
-//     correo,
-//     motivo,
-//     estado_proceso,
-//     fecha_envio,
-//     fecha_ingreso,
-//     grupo,
-//     page,
-//     keyword,
-//     estadoCandidato,
-//     user_creo,
+
 //   } = validatedFields.data;
 
 //   try {
-//     await sql`
-//       UPDATE candidato
-//       SET tipoid = ${tipoid},
-//           nombre = ${nombre},
-//           celular = ${celular},
-//           cargo = ${cargo},
-//           correo = ${correo},
-//           motivo = ${motivo},
-//           estado_proceso = ${estado_proceso},
-//           fecha_envio= ${fecha_envio || null},
-//           fecha_ingreso=${fecha_ingreso || null},
-//           grupo = ${grupo},
-//           estadoCandidato = 1,
-//           user_creo = 1
-//       WHERE id = ${id}
-//     `;
+
 //   } catch (error) {
 //     return { message: 'Database Error: Failed to Update Candidate.' };
 //   }
 
-//   revalidatePath('/dashboard/' + keyword + '?page=' + page);
-//   redirect('/dashboard/' + keyword + '?page=' + page);
 // }
 
 export async function deleteCandidato(id: string) {

@@ -24,6 +24,7 @@ export type TicketInfo = {
   type: string;
   count: number;
 };
+export type LoginResponse = { user?: User; message: string };
 
 export type User = {
   idUser: string;
@@ -33,19 +34,35 @@ export type User = {
   rol: string;
   park: string;
   changePass?: string;
+  statusprofile?: string;
 };
 
 export type ApiResponse = {
-  message: string;
-  user: {
+
+  user?: {
     id_user: string;
     name: string;
     email: string;
     password: string;
     rol: string;
     idpark: string;
-    changePass?: string;
-  };
+    changepassword?: string;
+    statusprofile?: string;
+  }; 
+   message: string;
+};
+
+export type UserProfile = {
+  id_user: number;
+  name: string;
+  email: string;
+  password: string;
+  rol: string;
+  created_at: string;
+  updated_at: string;
+  idpark: number;
+  changepassword: number;
+  statusprofile: 'Enable' | 'Disable';  // solo "Enable" o "Disable"
 };
 
 export type CandidatosTable = {
@@ -63,4 +80,9 @@ export type CandidatosTable = {
   usuario_activo: string;
   estadoCandidato: number;
   user_creo: number;
+};
+
+export type CustomerField = {
+  id: string;
+  name: string;
 };

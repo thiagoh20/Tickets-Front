@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 import { sql } from '@vercel/postgres';
-import { User, CandidatosTable, Ticket } from './definitions';
+import { User, CandidatosTable, Ticket, UserProfile } from './definitions';
 
 import { unstable_noStore as noStore } from 'next/cache';
 import axios from 'axios';
@@ -250,7 +250,6 @@ export async function fetchFilteredInvoices(
       offset,
       offset + ITEMS_PER_PAGE,
     );
-    console.log(paginatedTickets);
     return paginatedTickets;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -282,7 +281,7 @@ export async function fetchTicketsCount(query: string, role: string) {
         ticket.phone_number?.toLowerCase().includes(searchString) ||
         ticket.date_ticket?.toLowerCase().includes(searchString) ||
         ticket.status?.toLowerCase().includes(searchString) ||
-        ticket.identity_number?.toLowerCase().includes(searchString) 
+        ticket.identity_number?.toLowerCase().includes(searchString)
       );
     }).length;
 
@@ -291,5 +290,63 @@ export async function fetchTicketsCount(query: string, role: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of candidates.');
+  }
+}
+
+export async function fetchFilteredUsers(
+  query: string,
+  currentPage: number,
+ 
+) {
+  noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla`;
+    const { data: users } = await axios.get(apiUrl);
+
+    const filteredUsers = users.filter((user: UserProfile) => {
+      const searchString = query.toLowerCase();
+      return (
+        user.name?.toLowerCase().includes(searchString) ||
+        user.email?.toLowerCase().includes(searchString) ||
+        user.rol?.toLowerCase().includes(searchString) ||
+        user.statusprofile?.toLowerCase().includes(searchString)
+      );
+    });
+
+    const paginatedUsers = filteredUsers.slice(offset, offset + ITEMS_PER_PAGE);
+    return paginatedUsers;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios Error:', error.response?.data || error.message);
+      throw new Error(`Failed to fetch Users: ${error.message}`);
+    }
+    console.error('Error:', error);
+    throw new Error('Failed to fetch Users.');
+  }
+}
+
+export async function fetchFilteredUsersPage(query: string) {
+  noStore();
+  try {
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla`;
+    const { data: users } = await axios.get(apiUrl);
+
+    const count = users.filter((user: UserProfile) => {
+      const searchString = query.toLowerCase();
+      return (
+        user.name?.toLowerCase().includes(searchString) ||
+        user.email?.toLowerCase().includes(searchString) ||
+        user.rol?.toLowerCase().includes(searchString) ||
+        user.statusprofile?.toLowerCase().includes(searchString)
+      );
+    }).length;
+
+    const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of Users.');
   }
 }

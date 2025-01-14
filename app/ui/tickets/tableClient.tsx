@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
-import TicketStatus from '@/app/ui/candidatos/status';
+import TicketStatus from '@/app/ui/tickets/status';
 import { Ticket } from '@/app/lib/definitions';
 import { formatDateToLocal } from '@/app/lib/utils';
 import Modal from './modalTicket';
@@ -55,7 +55,7 @@ export default function InvoicesTableClient({
     if (state.message === 'El ticket existe pero se encuentra vencido') {
       toast.error(state.message, {
         position: 'top-center',
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -65,7 +65,7 @@ export default function InvoicesTableClient({
     } else {
       toast.success(state.message, {
         position: 'top-center',
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,

@@ -50,19 +50,19 @@ const links = [
     name: 'Parques',
     href: '/dashboard/parks',
     icon: Cog8ToothIcon,
-    roles: ['administrador', 'supervisor', 'marketing'],
+    roles: ['administrador', 'marketing'],
   },
   {
     name: 'Pasaportes',
     href: '/dashboard/portfolio',
     icon: CurrencyDollarIcon,
-    roles: [ 'administrador','supervisor', 'marketing'],
+    roles: [ 'administrador', 'marketing'],
   },
   {
-    name: 'Registrar',
-    href: '/dashboard/register',
-    icon: PlusCircleIcon,
-    roles: ['administrador', 'marketing'],
+    name: 'Usuarios Sistema',
+    href: '/dashboard/candidatos',
+    icon: UserGroupIcon,
+    roles: ['administrador',],
   },
 ];
 
