@@ -42,6 +42,7 @@ export const authConfig = {
           '/dashboard/parks',
           '/dashboard/portfolio',
           '/dashboard/candidatos',
+          '/dashboard/candidatos/create',
         ],
         taquillero: ['/dashboard', '/dashboard/tickets'],
         supervisor: [
