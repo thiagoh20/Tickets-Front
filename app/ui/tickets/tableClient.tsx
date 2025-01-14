@@ -12,11 +12,10 @@ import { toast, ToastContainer } from 'react-toastify';
 
 interface InvoicesTableClientProps {
   tickets: Ticket[];
+  idUser:string;
 }
 
-export default function InvoicesTableClient({
-  tickets,
-}: InvoicesTableClientProps) {
+export default function InvoicesTableClient({ tickets,idUser}: InvoicesTableClientProps) {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,12 +35,13 @@ export default function InvoicesTableClient({
           type_document: selectedTicket.identity_type,
           document: selectedTicket.identity_number,
           park: selectedTicket.namepark,
+          id_user: idUser,
         };
         const response = await validateTicket(data);
-        notify({ message: response }); // Usar notify en lugar de alert
-        closeModal(); // Cierra el modal después de la validación
+        notify({ message: response }); 
+        closeModal(); 
         setTimeout(() => {
-          window.location.reload(); // Recargar la página después de una pausa breve
+          window.location.reload(); 
         }, 1000);
       } catch (error) {
         notify({ message: 'Error al validar el ticket' }); 
