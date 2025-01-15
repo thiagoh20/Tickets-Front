@@ -2,7 +2,7 @@ import { CheckIcon, ClockIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 
 export default function UserStatus({ status }: { status: string }) {
-  console.log(status);
+ 
   return (
     <span
       className={clsx(

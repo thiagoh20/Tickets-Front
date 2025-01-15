@@ -19,6 +19,8 @@ export type Ticket = {
   invoice_electronic: number;
   created_at: string;
   ticket_info: TicketInfo[];
+  price_ticket: number;
+  id_operation:number;
 };
 export type TicketInfo = {
   type: string;

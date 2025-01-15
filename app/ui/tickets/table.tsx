@@ -12,7 +12,6 @@ export default async function InvoicesTable({
   currentPage: number;
   role: any;
 }) {
-  console.log(role)
   const tickets = await fetchFilteredCandidatos(query, currentPage, role?.role);
 
   return <InvoicesTableClient tickets={tickets} idUser={role.idUser} />;

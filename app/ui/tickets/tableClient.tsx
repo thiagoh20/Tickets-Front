@@ -5,17 +5,20 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import TicketStatus from '@/app/ui/tickets/status';
 import { Ticket } from '@/app/lib/definitions';
-import { formatDateToLocal } from '@/app/lib/utils';
+import { formatCurrency, formatDateToLocal } from '@/app/lib/utils';
 import Modal from './modalTicket';
 import { validateTicket } from '@/app/lib/actions';
 import { toast, ToastContainer } from 'react-toastify';
 
 interface InvoicesTableClientProps {
   tickets: Ticket[];
-  idUser:string;
+  idUser: string;
 }
 
-export default function InvoicesTableClient({ tickets,idUser}: InvoicesTableClientProps) {
+export default function InvoicesTableClient({
+  tickets,
+  idUser,
+}: InvoicesTableClientProps) {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -38,16 +41,16 @@ export default function InvoicesTableClient({ tickets,idUser}: InvoicesTableClie
           id_user: idUser,
         };
         const response = await validateTicket(data);
-        notify({ message: response }); 
-        closeModal(); 
+        notify({ message: response });
+        closeModal();
         setTimeout(() => {
-          window.location.reload(); 
-        }, 1000);
+          window.location.reload();
+        }, 3000);
       } catch (error) {
-        notify({ message: 'Error al validar el ticket' }); 
+        notify({ message: 'Error al validar el ticket' });
       }
     } else {
-      notify({ message: 'Faltan campos.' }); 
+      notify({ message: 'Faltan campos.' });
     }
   };
 
@@ -131,10 +134,16 @@ export default function InvoicesTableClient({ tickets,idUser}: InvoicesTableClie
                   <th scope="col" className="px-3 py-5 font-medium">
                     Identificación
                   </th>
-                 
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    # Orden
+                  </th>
+                  <th scope="col" className="px-3 py-5 font-medium">
+                    Valor $
+                  </th>
                   <th scope="col" className="px-3 py-5 font-medium">
                     Estado
                   </th>
+
                   <th scope="col" className="px-3 py-5 font-medium">
                     Factura Electrónica
                   </th>
@@ -168,9 +177,15 @@ export default function InvoicesTableClient({ tickets,idUser}: InvoicesTableClie
                     <td className="whitespace-nowrap px-3 py-3">
                       {ticket.identity_type + ': ' + ticket.identity_number}
                     </td>
-                   
+
                     <td className="whitespace-nowrap px-3 py-3">
-                      <TicketStatus status={ticket.status} />
+                    {ticket?.id_operation }
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                      {formatCurrency(ticket.price_ticket)}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3">
+                    <TicketStatus status={ticket.status} />
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                       {!!ticket.invoice_electronic ? 'Sí' : 'No'}
@@ -249,7 +264,7 @@ export default function InvoicesTableClient({ tickets,idUser}: InvoicesTableClie
               </li>
             ))}
             <li className="mt-2">
-              <strong >Factura Electrónica:</strong>{' '}
+              <strong>Factura Electrónica:</strong>{' '}
               {selectedTicket?.invoice_electronic === 1 ? 'Sí' : 'No'}
             </li>
           </ul>

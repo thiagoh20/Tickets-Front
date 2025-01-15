@@ -9,7 +9,7 @@ const DownloadExcelButton = () => {
         setLoading(true);
         try {
             const response = await fetch(`${window.location.origin}/dashboard/generar-excel`);
-            console.log(response)
+           
             if (!response.ok) {
                 throw new Error('Error al generar el archivo');
             }
