@@ -42,7 +42,6 @@ const RegisterPage: React.FC = () => {
         e.preventDefault();
         if (validate()) {
             const response = await axios.post(`/api/taquilla/createUser`, formData)
-            console.log(response.data)
             notify(response.data.message)
         }
     };

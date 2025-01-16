@@ -184,7 +184,7 @@ export async function fetchCandidatoById(id: string) {
 export async function fetchFilteredCandidatos(
   query: string,
   currentPage: number,
-  role: string,
+  user: any,
 ) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -192,11 +192,11 @@ export async function fetchFilteredCandidatos(
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsTwo`;
     const { data: tickets } = await axios.post(apiUrl, {
-      idpark: 0,
+      idpark: user?.park,
     });
 
     const filteredTickets = tickets.filter((ticket: Ticket) => {
-      if (role === 'taquillero' && !query.trim()) {
+      if (user?.role === 'taquillero' && !query.trim()) {
         return false;
       }
 
@@ -261,17 +261,18 @@ export async function fetchFilteredInvoices(
   }
 }
 
-export async function fetchTicketsCount(query: string, role: string) {
+export async function fetchTicketsCount(query: string, user: any) {
   noStore();
+  console.log(user);
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsTwo`;
     const { data: tickets } = await axios.post(apiUrl, {
-      idpark: 0,
+      idpark: user?.park,
     });
 
     const searchString = query.toLowerCase();
     const count = tickets.filter((ticket: Ticket) => {
-      if (role === 'taquillero' && !query.trim()) {
+      if (user?.role === 'taquillero' && !query.trim()) {
         return false;
       }
       return (
@@ -289,15 +290,11 @@ export async function fetchTicketsCount(query: string, role: string) {
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of candidates.');
+    throw new Error('Failed to fetch total number of tickets.');
   }
 }
 
-export async function fetchFilteredUsers(
-  query: string,
-  currentPage: number,
- 
-) {
+export async function fetchFilteredUsers(query: string, currentPage: number) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 

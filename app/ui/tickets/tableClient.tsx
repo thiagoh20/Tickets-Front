@@ -12,12 +12,12 @@ import { toast, ToastContainer } from 'react-toastify';
 
 interface InvoicesTableClientProps {
   tickets: Ticket[];
-  idUser: string;
+  user: any;
 }
 
 export default function InvoicesTableClient({
   tickets,
-  idUser,
+  user,
 }: InvoicesTableClientProps) {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,8 +37,8 @@ export default function InvoicesTableClient({
         const data = {
           type_document: selectedTicket.identity_type,
           document: selectedTicket.identity_number,
-          park: selectedTicket.namepark,
-          id_user: idUser,
+          park:user?.park,
+          id_user:user?.idUser,
         };
         const response = await validateTicket(data);
         notify({ message: response });
@@ -143,7 +143,6 @@ export default function InvoicesTableClient({
                   <th scope="col" className="px-3 py-5 font-medium">
                     Estado
                   </th>
-
                   <th scope="col" className="px-3 py-5 font-medium">
                     Factura Electrónica
                   </th>

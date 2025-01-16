@@ -103,7 +103,6 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
 
 export async function validateTicket(ticketCode: any) {
   try {
-  
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/validateTicket`,
       ticketCode,

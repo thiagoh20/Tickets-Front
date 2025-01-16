@@ -25,7 +25,7 @@ export default async function Page({
   const grupo = "Cero a Siempre"
   const query = searchParams?.query && searchParams.query.length > 3 ? searchParams.query : '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchTicketsCount(query, session?.user?.role||"");
+  const totalPages = await fetchTicketsCount(query, session?.user||"");
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -36,7 +36,7 @@ export default async function Page({
         {/* <CreateInvoice grupo={grupo} /> */}
       </div>
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} role={session?.user||""} />
+        <Table query={query} currentPage={currentPage} user={session?.user||""} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
