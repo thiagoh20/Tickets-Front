@@ -92,7 +92,7 @@ export default async function InvoicesTable({
             <tbody className="bg-white">
               {candidatos?.map((candidatos: any) => (
                 <tr
-                  key={candidatos.id}
+                  key={candidatos.id_user}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
@@ -123,14 +123,14 @@ export default async function InvoicesTable({
                     <div className="flex justify-end gap-1">
                       {candidatos.statusprofile === 'Habilitado' && (
                         <>
-                          <Desabled id={candidatos.id} />
-                          <DeleteInvoice id={candidatos.id} />
+                          <Desabled id={candidatos.id_user} />
+                          <DeleteInvoice id={candidatos.id_user} />
                         </>
                       )}
                       {candidatos.statusprofile === 'Deshabilitado' && (
                         <>
-                          <Enable id={candidatos.id} />
-                          <DeleteInvoice id={candidatos.id} />
+                          <Enable id={candidatos.id_user} />
+                          <DeleteInvoice id={candidatos.id_user} />
                         </>
                       )}
                     </div>
