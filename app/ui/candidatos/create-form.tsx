@@ -79,7 +79,7 @@ export default function Form({
   }, [state]);
 
   useEffect(() => {
-    if (selectedRole === 'Administrador' || selectedRole === 'marketing') {
+    if (selectedRole === 'administrador' || selectedRole === 'marketing') {
       setSelectedPark('3'); // 3 representa "Todos los parques"
     } else {
       setSelectedPark('');
@@ -176,7 +176,7 @@ export default function Form({
                 <option key={'marketing'} value={'marketing'}>
                   Marketing
                 </option>
-                <option key={'Administrador'} value={'Administrador'}>
+                <option key={'administrador'} value={'administrador'}>
                   Administrador
                 </option>
               </select>
@@ -194,7 +194,7 @@ export default function Form({
           {/* Lista de parques (solo para "taquillero" o "supervisor") */}
           {(selectedRole === 'taquillero' ||
             selectedRole === 'supervisor' ||
-            selectedRole === 'Administrador' ||
+            selectedRole === 'administrador' ||
             selectedRole === 'marketing') && (
             <div className="mb-4">
               <label htmlFor="parck" className="mb-2 block text-sm font-medium">
