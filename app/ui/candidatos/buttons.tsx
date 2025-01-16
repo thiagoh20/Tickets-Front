@@ -6,6 +6,7 @@ import {
   PlusIcon,
   TrashIcon,
   UserMinusIcon,
+  UserPlusIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { deleteCandidato } from '@/app/lib/actions';
@@ -37,7 +38,7 @@ export function UpdateInvoice({ id, page }: { id: string; page: number }) {
   );
 }
 
-export function DeleteInvoice({ id }: { id: string }) {
+export function Enable({ id }: { id: string }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -66,11 +67,11 @@ export function DeleteInvoice({ id }: { id: string }) {
       {confirmDelete ? (
         <div className="flex items-center space-x-2">
           <button
-            className="flex items-center rounded-md bg-red-500 px-4 py-2 text-sm text-white transition-colors hover:bg-red-400"
+            className="flex items-center rounded-md bg-green-500 px-4 py-2 text-sm text-white transition-colors hover:bg-green-400"
             onClick={handleConfirmDelete}
           >
-            <UserMinusIcon className="mr-2 w-5" />
-            Desahabilitar
+            <UserPlusIcon className="mr-2 w-5" />
+            Habilitar
           </button>
 
           <button
@@ -83,10 +84,67 @@ export function DeleteInvoice({ id }: { id: string }) {
       ) : (
         <form>
           <button
-            className="rounded-md border bg-red-200 p-2 hover:bg-red-300 "
+            className="rounded-md border bg-green-500/20 p-2 hover:bg-green-200 "
             onClick={handleDeleteClick}
           >
-            <span className=" ">Desahabilitar User</span>
+            <span className=" ">Habilitar User</span>
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
+
+export function Desabled({ id }: { id: string }) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setConfirmDelete(true); // Mostrar confirmación de eliminación
+  };
+
+  const handleConfirmDelete = () => {
+    console.log(id);
+    //   deleteCandidato(id)
+    //     .then(() => {
+    //       window.location.reload(); // Recargar la página después de eliminar
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error eliminando el candidato: ', error);
+    //     }); // Llamar a la acción de eliminar
+    //   setConfirmDelete(false); // Ocultar confirmación
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmDelete(false); // Cancelar eliminación
+  };
+
+  return (
+    <div>
+      {confirmDelete ? (
+        <div className="flex items-center space-x-2">
+          <button
+            className="flex items-center rounded-md  bg-yellow-400 px-4 py-2 text-sm text-white transition-colors hover:bg-yellow-500"
+            onClick={handleConfirmDelete}
+          >
+            <UserMinusIcon className="mr-2 w-5" />
+            Deshabilitar
+          </button>
+
+          <button
+            className="rounded-md border p-2 hover:bg-gray-100"
+            onClick={handleCancelDelete}
+          >
+            Cancelar
+          </button>
+        </div>
+      ) : (
+        <form>
+          <button
+            className="rounded-md border  bg-yellow-400/30 p-2 hover:bg-yellow-500 "
+            onClick={handleDeleteClick}
+          >
+            <span className=" ">Deshabilitar User</span>
           </button>
         </form>
       )}
@@ -143,6 +201,65 @@ export function UpdatePass({ id }: { id: string }) {
             onClick={handleDeleteClick}
           >
             <span className="">Restablecer Contraseña</span>
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
+
+
+export function DeleteInvoice({ id }: { id: string }) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setConfirmDelete(true); // Mostrar confirmación de eliminación
+  };
+
+  const handleConfirmDelete = () => {
+    console.log(id);
+    //   deleteCandidato(id)
+    //     .then(() => {
+    //       window.location.reload(); // Recargar la página después de eliminar
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error eliminando el candidato: ', error);
+    //     }); // Llamar a la acción de eliminar
+    //   setConfirmDelete(false); // Ocultar confirmación
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmDelete(false); // Cancelar eliminación
+  };
+
+  return (
+    <div>
+      {confirmDelete ? (
+        <div className="flex items-center space-x-2">
+          <button
+            className="flex items-center rounded-md bg-red-500 px-4 py-2 text-sm text-white transition-colors hover:bg-red-400"
+            onClick={handleConfirmDelete}
+          >
+            <TrashIcon className="mr-2 w-5" />
+            Eliminar
+          </button>
+
+          <button
+            className="rounded-md border p-2 hover:bg-gray-100"
+            onClick={handleCancelDelete}
+          >
+            Cancelar
+          </button>
+        </div>
+      ) : (
+        <form>
+          <button
+            className="rounded-md border bg-red-200 p-2 hover:bg-red-300 "
+            onClick={handleDeleteClick}
+          >
+            <span className="hidden">Desahabilitar User</span>
+            <TrashIcon className=" w-5  " />
           </button>
         </form>
       )}

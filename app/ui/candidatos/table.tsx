@@ -3,6 +3,8 @@ import {
   UpdateInvoice,
   DeleteInvoice,
   UpdatePass,
+  Desabled,
+  Enable,
 } from '@/app/ui/candidatos/buttons';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredUsers, fetchFilteredUsersPage } from '@/app/lib/data';
@@ -11,14 +13,14 @@ import UserStatus from './status';
 export default async function InvoicesTable({
   query,
   currentPage,
-  status
+  status,
 }: {
   query: string;
   currentPage: number;
-  status:string;
+  status: string;
 }) {
-  const candidatos = await fetchFilteredUsers(query, currentPage,status);
-  
+  const candidatos = await fetchFilteredUsers(query, currentPage, status);
+
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -119,9 +121,18 @@ export default async function InvoicesTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-1 pr-3">
                     <div className="flex justify-end gap-1">
-                      {/* <UpdateInvoice id={candidatos.id} page={currentPage} />
-                      <UpdatePass id={candidatos.id} /> */}
-                      <DeleteInvoice id={candidatos.id} />
+                      {candidatos.statusprofile === 'Habilitado' && (
+                        <>
+                          <Desabled id={candidatos.id} />
+                          <DeleteInvoice id={candidatos.id} />
+                        </>
+                      )}
+                      {candidatos.statusprofile === 'Deshabilitado' && (
+                        <>
+                          <Enable id={candidatos.id} />
+                          <DeleteInvoice id={candidatos.id} />
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

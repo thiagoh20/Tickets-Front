@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export default function StatusButton() {
-  const [selectedStatus, setSelectedStatus] = useState<string | null>("Habilitado"); 
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(""); 
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -24,7 +24,7 @@ export default function StatusButton() {
   const getButtonClasses = (status: string) =>
     selectedStatus === status
       ? 'bg-blue-600 text-white' 
-      : 'bg-gray-400 text-gray-200 hover:bg-gray-500'; 
+      : 'bg-gray-400 text-gray-100 hover:bg-gray-500'; 
 
   return (
     <div className="relative flex flex-col items-start space-y-2 p-2 rounded-lg">
