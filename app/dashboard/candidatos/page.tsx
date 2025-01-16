@@ -10,7 +10,7 @@ import { Metadata } from 'next';
 import StatusButton from '@/app/ui/candidatos/statusButton';
 
 export const metadata: Metadata = {
-  title: 'Cero a Siempre | Bandura',
+  title: 'Metroparques',
 };
 export default async function Page({
   searchParams,
@@ -21,7 +21,7 @@ export default async function Page({
     statusPerfil?:string;
   };
 }) {
-  const grupo = "Cero a Siempre"
+  const grupo = "Metroparques"
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const validStatuses = ['Habilitado', 'Deshabilitado', 'Eliminado'];
