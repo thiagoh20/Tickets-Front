@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 
-const Page: React.FC<{ park: string }> = ({ park }: { park: string }) => {
+const Page = () => {
     const [data, setData] = useState([])
     const [date, setDate] = useState<any>(new Date().toISOString().split('T')[0])    
 
@@ -17,9 +17,8 @@ const Page: React.FC<{ park: string }> = ({ park }: { park: string }) => {
                 console.error("Error fetching disabled days: ", error);
             }
         };
-        console.log(data)
         fetchRedentionsByDate();
-    }, [date, data]);
+    }, [date]);
 
     // Definición de columnas
     const columns: any = [
@@ -67,7 +66,7 @@ return (
                     header: {
                     style: {
                         minHeight: '56px',
-                        backgroundColor: park == 'Parque Norte' ? '#2109a7' : '#28a745',  // Fondo azul o verde según el parque
+                        backgroundColor: '#28a745',  // Fondo azul o verde según el parque
                         color: 'white',  // Texto blanco para resaltar
                         fontSize: '1.2rem',  // Tamaño de fuente más grande
                         fontWeight: 'bold',  // Negrita en el texto
@@ -77,7 +76,7 @@ return (
                     },
                     headRow: {
                     style: {
-                        backgroundColor: park == 'Parque Norte' ? '#f0f8ff' : '#e9f7ef',  // Fondo diferente según el parque
+                        backgroundColor: '#e9f7ef',  // Fondo diferente según el parque
                         borderBottom: '2px solid #dee2e6',  // Línea separadora debajo de la cabecera
                     },
                     },
@@ -85,7 +84,7 @@ return (
                     style: {
                         fontWeight: 'bold',  // Negrita en las celdas de la cabecera
                         fontSize: '1rem',  // Fuente con tamaño adecuado
-                        color: park == 'Parque Norte' ? '#003366' : '#155724',  // Color verde oscuro o azul según el parque
+                        color: '#155724',  // Color verde oscuro o azul según el parque
                         paddingLeft: '15px',
                         paddingRight: '15px',  // Espaciado para las celdas de cabecera
                         textAlign: 'left',  // Alineación a la izquierda
@@ -100,8 +99,8 @@ return (
                         borderBottom: '1px solid #dee2e6',  // Línea separadora entre las filas
                     },
                     highlightOnHoverStyle: {
-                        backgroundColor: park == 'Parque Norte' ? '#cce5ff' : '#d4edda',  // Color de fondo al pasar el cursor según el parque
-                        borderBottomColor: park == 'Parque Norte' ? '#99c2ff' : '#c3e6cb',  // Cambio del borde al pasar el cursor según el parque
+                        backgroundColor: '#d4edda',  // Color de fondo al pasar el cursor según el parque
+                        borderBottomColor: '#c3e6cb',  // Cambio del borde al pasar el cursor según el parque
                         borderRadius: '10px',  // Bordes redondeados al pasar el cursor
                         outline: 'none',  // Eliminar outline del hover
                         boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',  // Sombra suave al pasar el cursor
