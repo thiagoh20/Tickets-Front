@@ -43,11 +43,13 @@ export const authConfig = {
           '/dashboard/portfolio',
           '/dashboard/candidatos',
           '/dashboard/candidatos/create',
+          '/dashboard/redenciones',
         ],
         taquillero: ['/dashboard', '/dashboard/tickets'],
         supervisor: [
           '/dashboard',
           '/dashboard/tickets',
+          '/dashboard/redenciones',
         ],
         marketing: [
           '/dashboard',

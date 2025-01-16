@@ -64,6 +64,12 @@ const links = [
     icon: UserGroupIcon,
     roles: ['administrador',],
   },
+  {
+    name: 'Redenciones',
+    href: '/dashboard/redenciones',
+    icon: DocumentDuplicateIcon,
+    roles: ['administrador',],
+  },
 ];
 
 export default function NavLinks(rol: any) {
