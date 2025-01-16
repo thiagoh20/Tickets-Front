@@ -46,7 +46,7 @@ const FormSchemaa = z.object({
     .nonempty({ message: 'Nombre de usuario es Requerido.' }),
   nombre: z.string().nonempty({ message: 'Nombre es Requerido.' }),
   rol: z.string().min(1, { message: 'Rol del usurio es requerido.' }),
-  parck: z.string().min(1, { message: 'Seleccione un parque.' }),
+  parck: z.string().nonempty( { message: 'Seleccione un parque.' }),
 });
 
 export type Statee = {
@@ -70,6 +70,7 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
     parck: formObject.parck,
   });
 
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -77,28 +78,27 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
     };
   }
   const { nombre, nombreUser, rol, parck } = validatedFields.data;
+
   try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/createUser`,
-      {
-        name: nombre,
-        email: nombreUser,
-        password: 'Metropaques300++',
-        rol: rol,
-        idparck: parck,
-      },
-    );
-    revalidatePath('/dashboard/candidatos');
-    redirect('/dashboard/candidatos');
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/createUser`,
+        {
+          name: nombre,
+          email: nombreUser,
+          password: 'metropaques300++',
+          rol: rol,
+          idparck: parck,
+        },
+      );
+
     return {
       message: response.data.message,
     };
   } catch (error) {
     return {
-      message: 'Database Error: error al crear el usuario.',
+      message: 'Database Error: error al crear el usuario.' + error,
     };
   }
- 
 }
 
 export async function validateTicket(ticketCode: any) {

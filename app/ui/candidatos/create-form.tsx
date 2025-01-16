@@ -34,15 +34,19 @@ export default function Form({
   const [state, dispatch] = useFormState(createCandidato, initialState);
   const [estadoProceso, setEstadoProceso] = useState<string>('');
   const [selectedRole, setSelectedRole] = useState<string>('');
+  const [selectedPark, setSelectedPark] = useState<string>('');
 
   const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedRole(event.target.value);
+  };
+  const handleParkChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPark(event.target.value);
   };
   const notify = (state: any) => {
     if (state.message === 'Faltan campos.') {
       toast.error(state.message, {
         position: 'top-center',
-        autoClose: 2000, // Increase autoClose for errors
+        autoClose: 3000, // Increase autoClose for errors
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -52,7 +56,7 @@ export default function Form({
     } else {
       toast.success(state.message, {
         position: 'top-center',
-        autoClose: 1000,
+        autoClose: 5000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -64,15 +68,28 @@ export default function Form({
 
   useEffect(() => {
     if (state?.message) {
-      notify(state); // Muestra la notificación si hay un mensaje
+      notify(state);
+
+      if (state?.message == 'Usuario creado con exito') {
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
     }
   }, [state]);
+
+  useEffect(() => {
+    if (selectedRole === 'Administrador' || selectedRole === 'marketing') {
+      setSelectedPark('3'); // 3 representa "Todos los parques"
+    } else {
+      setSelectedPark('');
+    }
+  }, [selectedRole]);
 
   return (
     <div>
       <ToastContainer />
       <form action={dispatch}>
-        <input type="hidden" name="parck" value={'3'} />
         <div className="rounded-md bg-gray-50 p-4 md:p-6">
           {/* Candidato Nombre */}
           <div className="mb-4">
@@ -148,7 +165,7 @@ export default function Form({
                 onChange={handleRoleChange}
               >
                 <option value="" disabled>
-                  Selecione Rol del Usuario
+                  Seleccione Rol del Usuario
                 </option>
                 <option key={'taquillero'} value={'taquillero'}>
                   Taquillero
@@ -175,7 +192,10 @@ export default function Form({
             </div>
           </div>
           {/* Lista de parques (solo para "taquillero" o "supervisor") */}
-          {(selectedRole === 'taquillero' || selectedRole === 'supervisor') && (
+          {(selectedRole === 'taquillero' ||
+            selectedRole === 'supervisor' ||
+            selectedRole === 'Administrador' ||
+            selectedRole === 'marketing') && (
             <div className="mb-4">
               <label htmlFor="parck" className="mb-2 block text-sm font-medium">
                 Seleccione el parque
@@ -185,19 +205,21 @@ export default function Form({
                   id="parck"
                   name="parck"
                   className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm"
-                  defaultValue=""
+                  value={selectedPark}
+                  onChange={handleParkChange}
                 >
                   <option value="" disabled>
                     Seleccione el Parque
                   </option>
                   <option value="1">Aero Parque Juan Pablo ll</option>
                   <option value="2">Parque Norte</option>
+                  <option value="3">Todos los parques</option>
                 </select>
                 <BuildingOffice2Icon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
               <div id="customer-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.parck &&
-                  state.errors.parck.map((error: string) => (
+                  state.errors?.parck.map((error: string) => (
                     <p className="mt-2 text-sm text-red-500" key={error}>
                       {error}
                     </p>
