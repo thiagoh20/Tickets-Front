@@ -197,13 +197,13 @@ export default function Form({
             selectedRole === 'administrador' ||
             selectedRole === 'marketing') && (
             <div className="mb-4">
-              <label htmlFor="parck" className="mb-2 block text-sm font-medium">
+              <label htmlFor="park" className="mb-2 block text-sm font-medium">
                 Seleccione el parque
               </label>
               <div className="relative">
                 <select
-                  id="parck"
-                  name="parck"
+                  id="park"
+                  name="park"
                   className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm"
                   value={selectedPark}
                   onChange={handleParkChange}
@@ -211,15 +211,15 @@ export default function Form({
                   <option value="" disabled>
                     Seleccione el Parque
                   </option>
-                  <option value="1">Aero Parque Juan Pablo ll</option>
-                  <option value="2">Parque Norte</option>
+                  <option value="1">Parque Norte</option>
+                  <option value="2">Aero Parque Juan Pablo ll</option>
                   <option value="3">Todos los parques</option>
                 </select>
                 <BuildingOffice2Icon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
               <div id="customer-error" aria-live="polite" aria-atomic="true">
-                {state.errors?.parck &&
-                  state.errors?.parck.map((error: string) => (
+                {state.errors?.park &&
+                  state.errors?.park.map((error: string) => (
                     <p className="mt-2 text-sm text-red-500" key={error}>
                       {error}
                     </p>

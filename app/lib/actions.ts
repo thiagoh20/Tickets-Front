@@ -46,7 +46,7 @@ const FormSchemaa = z.object({
     .nonempty({ message: 'Nombre de usuario es Requerido.' }),
   nombre: z.string().nonempty({ message: 'Nombre es Requerido.' }),
   rol: z.string().min(1, { message: 'Rol del usurio es requerido.' }),
-  parck: z.string().nonempty({ message: 'Seleccione un parque.' }),
+  park: z.string().nonempty({ message: 'Seleccione un parque.' }),
 });
 
 export type Statee = {
@@ -54,7 +54,7 @@ export type Statee = {
     nombre?: string[];
     nombreUser?: string[];
     rol?: string[];
-    parck?: string[];
+    park?: string[];
   };
   message?: string | null;
 };
@@ -67,7 +67,7 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
     nombre: formObject.nombre,
     nombreUser: formObject.nombreUser,
     rol: formObject.rol,
-    parck: formObject.parck,
+    park: formObject.park,
   });
 
   if (!validatedFields.success) {
@@ -76,7 +76,7 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
       message: 'Faltan campos.',
     };
   }
-  const { nombre, nombreUser, rol, parck } = validatedFields.data;
+  const { nombre, nombreUser, rol, park } = validatedFields.data;
 
   try {
     const response = await axios.post(
@@ -86,7 +86,7 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
         email: nombreUser,
         password: 'metropaques300++',
         rol: rol,
-        idparck: parck,
+        idpark: park,
       },
     );
 
