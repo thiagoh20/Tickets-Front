@@ -22,7 +22,7 @@ export default async function Page({
   };
 }) {
    const session = await auth();
-  const grupo = "Cero a Siempre"
+  const grupo = "Metroparques"
   const query = searchParams?.query && searchParams.query.length > 3 ? searchParams.query : '';
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchTicketsCount(query, session?.user||"");
