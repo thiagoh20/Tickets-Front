@@ -11,11 +11,13 @@ import UserStatus from './status';
 export default async function InvoicesTable({
   query,
   currentPage,
+  status
 }: {
   query: string;
   currentPage: number;
+  status:string;
 }) {
-  const candidatos = await fetchFilteredUsers(query, currentPage);
+  const candidatos = await fetchFilteredUsers(query, currentPage,status);
   
   return (
     <div className="mt-6 flow-root">

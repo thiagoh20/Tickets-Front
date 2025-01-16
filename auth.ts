@@ -58,7 +58,10 @@ export const { auth, signIn, signOut } = NextAuth({
 
           if (!response?.user) return null;
 
-          if (response.user.statusprofile === 'Disable') {
+          if (response.user.statusprofile === 'Deshabilitado') {
+            throw new Error('User is disabled.');
+          }
+          if (response.user.statusprofile === 'Eliminado') {
             throw new Error('User is disabled.');
           }
           return {

@@ -263,12 +263,13 @@ export async function fetchFilteredInvoices(
 
 export async function fetchTicketsCount(query: string, user: any) {
   noStore();
-  console.log(user);
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsTwo`;
     const { data: tickets } = await axios.post(apiUrl, {
       idpark: user?.park,
     });
+
+    console.log(tickets);
 
     const searchString = query.toLowerCase();
     const count = tickets.filter((ticket: Ticket) => {
@@ -294,14 +295,19 @@ export async function fetchTicketsCount(query: string, user: any) {
   }
 }
 
-export async function fetchFilteredUsers(query: string, currentPage: number) {
+export async function fetchFilteredUsers(query: string, currentPage: number, status: string = 'Habilitado',) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla`;
-    const { data: users } = await axios.get(apiUrl);
-
+    const effectiveStatus = status || 'Habilitado';
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla/${effectiveStatus}`;
+    const response = await axios.get(apiUrl);
+    if (response.data.message) {
+      console.warn(response.data.message); 
+      return 0;
+    }
+    const users = response.data;
     const filteredUsers = users.filter((user: UserProfile) => {
       const searchString = query.toLowerCase();
       return (
@@ -324,11 +330,22 @@ export async function fetchFilteredUsers(query: string, currentPage: number) {
   }
 }
 
-export async function fetchFilteredUsersPage(query: string) {
+export async function fetchFilteredUsersPage(
+  query: string,
+  status: string = 'Habilitado',
+) {
   noStore();
+
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla`;
-    const { data: users } = await axios.get(apiUrl);
+    
+    const effectiveStatus = status || 'Habilitado';
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla/${effectiveStatus}`;
+    const response = await axios.get(apiUrl);
+    if (response.data.message) {
+      console.warn(response.data.message); 
+      return 1;
+    }
+    const users = response.data;
 
     const count = users.filter((user: UserProfile) => {
       const searchString = query.toLowerCase();
@@ -344,6 +361,6 @@ export async function fetchFilteredUsersPage(query: string) {
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of Users.');
+    throw new Error('Failed to fetch total number of Users.'+error);
   }
 }
