@@ -20,7 +20,7 @@ export const links = [
     name: 'Home',
     href: '/dashboard',
     icon: HomeIcon,
-    roles: ['administrador', 'supervisor', 'marketing'],
+    roles: ['administrador', 'supervisor', 'marketing', 'taquillero'],
   },
   {
     name: 'Tickets',
@@ -32,7 +32,7 @@ export const links = [
     name: 'Ventas',
     href: '/dashboard/graphs-sales',
     icon: ChartBarIcon,
-    roles: ['administrador',  'marketing'],
+    roles: ['administrador', 'marketing'],
   },
   {
     name: 'Interacciones',
@@ -56,19 +56,19 @@ export const links = [
     name: 'Pasaportes',
     href: '/dashboard/portfolio',
     icon: CurrencyDollarIcon,
-    roles: [ 'administrador', 'marketing'],
+    roles: ['administrador', 'marketing'],
   },
   {
     name: 'Usuarios Sistema',
     href: '/dashboard/candidatos',
     icon: UserGroupIcon,
-    roles: ['administrador',],
+    roles: ['administrador'],
   },
   {
     name: 'Redenciones',
     href: '/dashboard/redenciones',
     icon: DocumentDuplicateIcon,
-    roles: ['administrador',],
+    roles: ['administrador', 'supervisor'],
   },
 ];
 
