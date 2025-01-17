@@ -32,7 +32,7 @@ const Passports = ({ park }: any) => {
   };
 
   const savePrice = async () => {
-    await axios.post(`${process.env.NEXT_PUBLIC_BACK_LINK}/api/tickets/porfolio`, { 
+    await axios.post(`/api/tickets/porfolio`, { 
         idpassport: selectedPassport.id_passport, 
         price_passport: Number(newPrice) 
     })
