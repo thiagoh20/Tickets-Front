@@ -71,7 +71,6 @@ const TicketControl = ({ park }: { park: string }) => {
         onDayClick={(day) => day && openModal(day)}
         startMonth={new Date()}
         locale={es}
-        disabled={disabledDays}
         modifiers={{
           booked: disabledDays,
         }}
@@ -101,18 +100,19 @@ const TicketControl = ({ park }: { park: string }) => {
                 : 'Este día está habilitado.'}
             </p>
             <div className="flex justify-around">
-              <button
-                className="mb-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-                onClick={() => handleBlock(selectedDay)}
-              >
-                Deshabilitar ventas
-              </button>
-              <button
+              {isDisabled(selectedDay) 
+              ? <button
                 className="mb-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
                 onClick={() => handleBlock(selectedDay)}
               >
                 Habilitar ventas
-              </button>
+              </button> 
+              : <button
+              className="mb-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+              onClick={() => handleBlock(selectedDay)}
+            >
+              Deshabilitar ventas
+            </button> }
             </div>
           </div>
         </div>

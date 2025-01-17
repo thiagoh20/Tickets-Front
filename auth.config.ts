@@ -45,7 +45,10 @@ export const authConfig = {
           '/dashboard/candidatos/create',
           '/dashboard/redenciones',
         ],
-        taquillero: ['/dashboard', '/dashboard/tickets'],
+        taquillero: [
+          '/dashboard', 
+          '/dashboard/tickets'
+        ],
         supervisor: [
           '/dashboard',
           '/dashboard/tickets',
@@ -55,8 +58,9 @@ export const authConfig = {
           '/dashboard',
           '/dashboard/graphs-sales',
           '/dashboard/graphs-interactions',
-          '/dashboard/portfolio',
           '/dashboard/invoices',
+          '/dashboard/parks',
+          '/dashboard/portfolio',
         ],
       };
       
