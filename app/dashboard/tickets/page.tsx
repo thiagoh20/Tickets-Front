@@ -10,7 +10,7 @@ import { Metadata } from 'next';
 import { auth } from '@/auth';
 
 export const metadata: Metadata = {
-  title: 'Crear Ticket | ',
+  title: 'Crear Ticket ',
 };
 export default async function Page({
   searchParams,
