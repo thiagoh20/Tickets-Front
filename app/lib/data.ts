@@ -108,33 +108,19 @@ export async function fetchCardData() {
 
 const ITEMS_PER_PAGE = 11;
 
-export async function fetchCandidatos() {
+export async function fetchInvoices(idpark: string, month: string) {
   noStore();
   try {
-    const data = await sql<CandidatosTable>`
-      SELECT
-        id,
-        nombre,
-        tipoid,
-        celular,
-        cargo,
-        correo,
-        motivo,
-        estado_proceso,
-        fecha_envio,
-        fecha_ingreso,
-        grupo,
-        estadoCandidato,
-        user_creo
-      FROM candidato
-      ORDER BY nombre ASC
-    `;
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/generateInovice`;
+    const { data: tickets } = await axios.post(apiUrl, {
+      idpark: idpark,
+      month: month,
+    });
 
-    const candidatos = data.rows;
-    return candidatos;
-  } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch all candidates.');
+    return tickets;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch facturas.');
   }
 }
 

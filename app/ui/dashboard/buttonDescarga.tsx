@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
-const DownloadExcelButton = () => {
+
+const DownloadExcelButton = (idpark: any, month: any) => {
     const [loading, setLoading] = useState(false);
 
     const handleDownload = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${window.location.origin}/dashboard/generar-excel`);
-           
+            console.log(idpark, month)
+            const response = await fetch(`${window.location.origin}/dashboard/generar-excel/${idpark}/${month}`);
+          
             if (!response.ok) {
                 throw new Error('Error al generar el archivo');
             }
@@ -17,7 +19,7 @@ const DownloadExcelButton = () => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'candidatos.xlsx'; 
+            a.download = 'InformeFacturas.xlsx'; 
             document.body.appendChild(a);
             a.click();
            
@@ -30,9 +32,9 @@ const DownloadExcelButton = () => {
     };
 
     return (
-        <button onClick={handleDownload} disabled={loading} className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md text-white bg-black p-3 text-sm font-medium hover:bg-slate-400/30 hover:text-gray-400 md:flex-none md:justify-start md:p-2 md:px-3">
-            <ArrowDownTrayIcon className="w-6" />
-            <div className="hidden md:block">{loading ? 'Descargando...' : 'Descargar Informe.'}</div>
+        <button onClick={handleDownload} disabled={loading} className=" flex mb-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700">
+            <ArrowDownTrayIcon className="w-6 mr-3" />
+            <div className="hidden md:block">{loading ? 'Descargando...' : 'Descargar'}</div>
         </button>
     );
 };

@@ -1,6 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import DownloadExcelButton from './invoices/buttonDescarga';
 
 const Modal = ({ closeModal, invoice, park }: { park: string, invoice: any, closeModal: () => void }) => {
 
@@ -80,12 +81,13 @@ const Modal = ({ closeModal, invoice, park }: { park: string, invoice: any, clos
           >
             Cerrar
           </button>
-          <button
+          {/* <button
             className="mb-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
             onClick={() => console.log('Descargando factura...')}
           >
             Descargar
-          </button>
+          </button> */}
+          <DownloadExcelButton idpark={ park == 'Parque Norte' ? 1 : 2} month={ invoice.Mes.split(' ')[0]}/>
         </div>
       </div>
     </div>
