@@ -1,10 +1,9 @@
 import Form from '@/app/ui/candidatos/create-form';
 import Breadcrumbs from '@/app/ui/tickets/breadcrumbs';
-import { fetchCandidatos } from '@/app/lib/data';
+
 
 export default async function Page() {
 
-  const candidato = await fetchCandidatos();
   const breadcrumbs = [
     { label: 'Usuarios del sistema', href: '/dashboard/candidatos' },
     {
@@ -18,7 +17,7 @@ export default async function Page() {
       <Breadcrumbs
         breadcrumbs={breadcrumbs}
       />
-      <Form candidato={candidato} breadcrumbs={breadcrumbs} />
+      <Form breadcrumbs={breadcrumbs} />
     </main>
   );
 }
