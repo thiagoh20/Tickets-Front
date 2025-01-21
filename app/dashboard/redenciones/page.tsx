@@ -28,7 +28,7 @@ const Page = () => {
             sortable: true,
         },
         { 
-            name: 'Nombre Usuario', 
+            name: 'Nombre', 
             selector: (row: any) => row.nombre_usuario, 
             sortable: true 
         },
@@ -38,15 +38,15 @@ const Page = () => {
             sortable: true 
         },
         { 
-            name: 'Total Redimidos', 
+            name: 'Redenciones', 
             selector: (row: any) => row.total_redimidos, 
             sortable: true 
         }
     ];
 
 return (
-    <div className='w-[80%] mx-auto flex flex-col justify-center items-center h-screen'>
-        <h1  className='text-2xl font-bold my-[2.5%] absolute top-[5rem]'> Verificar las redenciones por fecha </h1>
+    <div className='w-[100%] md:w-[50%] mx-auto flex flex-col justify-center items-center h-screen'>
+        <h1  className='text-2xl font-bold my-[2.5%] text-center md:absolute md:top-[5rem]'> Verificar las redenciones por fecha </h1>
         <div className="flex justify-center items-center gap-[2rem] mb-[2rem]">
             <label htmlFor="Date" className='font-semibold'>Selecciona la fecha</label>
             <input 
