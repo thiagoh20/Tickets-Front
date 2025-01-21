@@ -26,45 +26,43 @@ export default async function InvoicesTable({
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-100 p-2 md:pt-0">
           <div className="md:hidden">
-            {candidatos?.map((candidatos: any) => (
-              <div
-                key={candidatos.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
-              >
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <Image
-                        src={'/customers/emil-kowalski.png'}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`profile picture`}
-                      />
-                      <p>{candidatos.nombre}</p>
-                    </div>
-                    <p className="text-sm text-gray-500"> {candidatos.cargo}</p>
-                  </div>
-
-                  {/* <InvoiceStatus status={invoice.status} /> */}
-                </div>
-                <div className="flex w-full items-center justify-between pt-4">
-                  <div>
-                    <p>
-                      {'Ingreso: ' +
-                        formatDateToLocal(candidatos.fecha_ingreso)}
+          {candidatos?.map((candidato: any) => (
+            <div
+              key={candidato.id_user}
+              className="mb-2 w-full rounded-md bg-white p-4"
+            >
+              <div className="flex items-center justify-between border-b pb-4">
+                <div className='w-[100%] mx-auto rounded-md p-2'>
+                  <div className="mb-2 flex justify-between items-center">
+                    <p className='font-semibold'>
+                      {`${candidato.rol}`} &nbsp; &nbsp;
                     </p>
-                    <p>
-                      {'Envio: ' + formatDateToLocal(candidatos.fecha_envio)}
-                    </p>
+                    <UserStatus status={candidato.statusprofile} />
                   </div>
-                  <div className="flex justify-end gap-2">
-                    {/* <UpdateInvoice id={candidatos.id} grupo={grupo} page={currentPage} />
-                    <DeleteInvoice id={candidatos.id} /> */}
+                  <p className="text-sm text-gray-500">
+                      {candidato.name} &nbsp; &nbsp; 
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {candidato.email}
+                  </p>
+                  <div className="flex justify-between gap-1">
+                    {candidato.statusprofile === 'Habilitado' && (
+                      <>
+                        <Desabled id={candidato.id_user} />
+                        <DeleteInvoice id={candidato.id_user} />
+                      </>
+                    )}
+                    {candidato.statusprofile === 'Deshabilitado' && (
+                      <>
+                        <Enable id={candidato.id_user} />
+                        <DeleteInvoice id={candidato.id_user} />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
           </div>
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">

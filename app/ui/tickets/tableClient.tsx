@@ -89,34 +89,24 @@ export default function InvoicesTableClient({
                 <div
                   key={ticket.idticket}
                   className="mb-2 w-full rounded-md bg-white p-4"
+                  onClick={() => handleRowClick(ticket)}
                 >
                   <div className="flex items-center justify-between border-b pb-4">
                     <div>
-                      <div className="mb-2 flex items-center">
-                        <Image
-                          src={'/customers/emil-kowalski.png'}
-                          className="mr-2 rounded-full"
-                          width={28}
-                          height={28}
-                          alt={`profile picture`}
-                        />
-                        <p>{ticket.name}</p>
+                      <div className="mb-2 flex justify-between items-center">
+                        <p className='font-semibold'>{ticket.namepark} - {ticket?.id_operation } &nbsp; &nbsp; &nbsp; &nbsp; </p>
+                        <TicketStatus status={ticket.status} />
                       </div>
                       <p className="text-sm text-gray-500">
-                        {' '}
-                        {ticket.email_person}
+                        {`${ticket.name} ${ticket.lastname}`} &nbsp; &nbsp;
+                        {`${ticket.identity_type == 'CedulaDeCiudadania' ? 'CC' : 'OTRO' } : ${ticket.identity_number}`}
                       </p>
-                    </div>
-                    {/* <CandidatoStatus status={candidatos.estado_proceso} /> */}
-                    {/* <InvoiceStatus status={invoice.status} /> */}
-                  </div>
-                  <div className="flex w-full items-center justify-between pt-4">
-                    {/* <div>
-                    <p>{"Ingreso: " + formatDateToLocal(candidatos.fecha_ingreso)}</p>
-                    <p>{"Envio: " + formatDateToLocal(candidatos.fecha_envio)}</p>
-                  </div> */}
-                    <div className="flex justify-end gap-2">
-                      {/* <UpdateInvoice id={candidatos.id} grupo={grupo} page={currentPage} /> */}
+                      <p className="text-sm text-gray-500">
+                        {formatCurrency(ticket.price_ticket)}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {formatDateToLocal(ticket.date_ticket)}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -135,10 +125,10 @@ export default function InvoicesTableClient({
                     Identificación
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    # Orden
+                    Orden
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    Valor $
+                    Valor
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
                     Estado
@@ -174,9 +164,8 @@ export default function InvoicesTableClient({
                       {ticket.name + ' ' + ticket.lastname}
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                      {ticket.identity_type + ': ' + ticket.identity_number}
+                      {`${ticket.identity_type == 'CedulaDeCiudadania' ? 'CC' : 'OTRO' } : ${ticket.identity_number}`}
                     </td>
-
                     <td className="whitespace-nowrap px-3 py-3">
                     {ticket?.id_operation }
                     </td>
