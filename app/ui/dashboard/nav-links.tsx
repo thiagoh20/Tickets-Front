@@ -76,7 +76,7 @@ export default function NavLinks(rol: any) {
   const pathname = usePathname();
  
   return (
-    <div className="flex md:flex-col w-[90%] gap-2 mx-auto">
+    <div className="flex md:flex-col md:w-[90%] gap-1 mx-auto">
       {links
         .filter((link) => link.roles.includes(rol.rol)) // Filtra según el rol del usuario
         .map((link) => {

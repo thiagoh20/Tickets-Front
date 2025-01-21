@@ -38,7 +38,7 @@ const DownloadExcelButton = (idpark: any) => {
       className=" mb-2 flex rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
     >
       <ArrowDownTrayIcon className="mr-3 w-6" />
-      <div className="hidden md:block">
+      <div className="block">
         {loading ? 'Descargando...' : 'Descargar'}
       </div>
     </button>
