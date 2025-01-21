@@ -41,7 +41,7 @@ const Passports = ({ park }: any) => {
 
   return (
     <div className="p-6">
-      <div className={`grid ${passports.length == 3 ? 'grid-cols-3' : 'grid-cols-2'} gap-6`}>
+      <div className={`grid ${passports.length == 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'} grid-cols-1 gap-6`}>
         {passports.map((passport: any) => (
           <div
             key={passport.id_passport}
@@ -51,13 +51,13 @@ const Passports = ({ park }: any) => {
               <h2 className="text-xl font-semibold text-gray-800 mb-2">
                 {passport.name_passport}
               </h2>
-              <p className="text-gray-600 text-sm mb-4">
+              <p className="text-gray-600 text-sm mb-4 text-justify">
                 {passport.description_passport}
               </p>
             </div>
             <div className="border-t p-4 flex items-center justify-between">
               <p className="text-lg font-bold text-gray-700">
-                Precio: $ {passport.price_passport.toLocaleString()}
+                Precio: <br/> $ {passport.price_passport.toLocaleString()}
               </p>
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-300"

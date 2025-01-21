@@ -7,7 +7,7 @@ const Page = () => {
 
   return (
     <div className="h-full flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-2xl font-bold my-[2.5%]">{park == 'PN' ? 'Brazaletes del Parque Norte' : 'Pasaportes del Aeroparque'}</h1>
+      <h1 className="text-2xl font-bold my-[2.5%] text-center">{park == 'PN' ? 'Brazaletes del Parque Norte' : 'Pasaportes del Aeroparque'}</h1>
       <div className="flex items-center p-2 justify-between w-full max-w-sm mx-auto space-x-2">
         <button
           onClick={() => setPark('PN')}

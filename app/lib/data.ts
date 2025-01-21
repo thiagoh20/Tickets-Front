@@ -106,7 +106,7 @@ export async function fetchCardData() {
   }
 }
 
-const ITEMS_PER_PAGE = 11;
+const ITEMS_PER_PAGE = 9;
 
 export async function fetchInvoices(idpark: string, month: string) {
   noStore();

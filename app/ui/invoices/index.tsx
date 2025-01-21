@@ -79,7 +79,7 @@ const Invoices: React.FC<{ park: string }> = ({ park }: { park: string }) => {
   ];
 
 return (
-    <div>
+    <div className='w-[100%] md:w-full px-[1rem]'>
         {isModalOpen && <Modal closeModal={closeModal} invoice={invoice} park={park} />}
         <DataTable
                 columns={columns}

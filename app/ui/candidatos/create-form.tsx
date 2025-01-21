@@ -26,7 +26,7 @@ export default function Form({
   candidato,
   breadcrumbs,
 }: {
-  candidato: CandidatosTable[];
+  candidato?: CandidatosTable[];
 
   breadcrumbs: Breadcrumb[];
 }) {
@@ -87,7 +87,7 @@ export default function Form({
   }, [selectedRole]);
 
   return (
-    <div>
+    <div className='md:w-[50%] w-[100%] mx-auto h-screen flex flex-col justify-center'>
       <ToastContainer />
       <form action={dispatch}>
         <div className="rounded-md bg-gray-50 p-4 md:p-6">

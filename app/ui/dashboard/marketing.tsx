@@ -8,7 +8,7 @@ const Marketing = () => {
   const session = useSession();
 
   return (
-    <div className="grid w-[95%] grid-cols-3 gap-2">
+    <div className="grid w-[95%] grid-cols-1 md:grid-cols-3 gap-2">
       {
         links.filter(permisions => permisions.roles.includes(session.user.role)).map(element => 
           <Link href={`${element.href}`} key={element.href}>
