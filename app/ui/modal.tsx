@@ -2,6 +2,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DownloadExcelButton from './invoices/buttonDescarga';
+import { formatCurrency } from '../lib/utils';
 
 const Modal = ({
   closeModal,
@@ -78,7 +79,7 @@ const Modal = ({
                       {sale.type_pay}
                     </td>
                     <td className="md:text-md text-xs border border-gray-300 px-4 py-2">
-                      {sale.price_ticket}
+                      {formatCurrency(sale.price_ticket)}
                     </td>
                     <td className="md:text-md text-xs border border-gray-300 px-4 py-2">
                       {sale.status}
