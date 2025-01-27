@@ -17,13 +17,13 @@ import clsx from 'clsx';
 
 export const links = [
   {
-    name: 'Home',
+    name: 'Inicio',
     href: '/dashboard',
     icon: HomeIcon,
     roles: ['administrador', 'supervisor', 'marketing', 'taquillero'],
   },
   {
-    name: 'Tickets',
+    name: 'Entradas',
     href: '/dashboard/tickets',
     roles: ['administrador', 'taquillero', 'supervisor'],
     icon: TicketIcon,
