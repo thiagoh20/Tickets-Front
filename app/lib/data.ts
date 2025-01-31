@@ -6,6 +6,7 @@ import { User, CandidatosTable, Ticket, UserProfile } from './definitions';
 
 import { unstable_noStore as noStore } from 'next/cache';
 import axios from 'axios';
+import { formatCurrency } from './utils';
 
 export async function fetchCardDataCandidatos(grupo: string) {
   noStore();
@@ -281,7 +282,11 @@ export async function fetchTicketsCount(query: string, user: any) {
   }
 }
 
-export async function fetchFilteredUsers(query: string, currentPage: number, status: string = 'Habilitado',) {
+export async function fetchFilteredUsers(
+  query: string,
+  currentPage: number,
+  status: string = 'Habilitado',
+) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
@@ -290,7 +295,7 @@ export async function fetchFilteredUsers(query: string, currentPage: number, sta
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla/${effectiveStatus}`;
     const response = await axios.get(apiUrl);
     if (response.data.message) {
-      console.warn(response.data.message); 
+      console.warn(response.data.message);
       return 0;
     }
     const users = response.data;
@@ -323,12 +328,11 @@ export async function fetchFilteredUsersPage(
   noStore();
 
   try {
-    
     const effectiveStatus = status || 'Habilitado';
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla/${effectiveStatus}`;
     const response = await axios.get(apiUrl);
     if (response.data.message) {
-      console.warn(response.data.message); 
+      console.warn(response.data.message);
       return 1;
     }
     const users = response.data;
@@ -347,6 +351,33 @@ export async function fetchFilteredUsersPage(
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of Users.'+error);
+    throw new Error('Failed to fetch total number of Users.' + error);
+  }
+}
+
+export async function getTotalSales(idPark: string) {
+  noStore();
+
+  try {
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/data/totalsales`;
+    const response = await axios.post(apiUrl, {
+      idPark: idPark,
+      startDate: '2025-01-01',
+      endDate: '2025-12-31',
+    });
+
+    if (response.data.totalSales && response.data.totalSales.length > 0) {
+      const transformedData = response.data.totalSales.map((sale: any) => ({
+        date: `${sale.month} ${sale?.date || ""} week ${sale.week}`,
+        total_sales: parseFloat(sale.total_sales), // Convertir a número
+      }));
+      return transformedData;
+    }
+
+    console.warn('No hay registros de ventas.');
+    return [];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of Users.' + error);
   }
 }

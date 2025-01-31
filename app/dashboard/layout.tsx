@@ -8,7 +8,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const session = await auth();
- 
+
   return (
     <SessionProvider session={session}>
       <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
