@@ -10,6 +10,7 @@ import {
   ChartPieIcon,
   CurrencyDollarIcon,
   PlusCircleIcon,
+  ArrowUturnLeftIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -69,6 +70,12 @@ export const links = [
     href: '/dashboard/redenciones',
     icon: DocumentDuplicateIcon,
     roles: ['administrador', 'supervisor'],
+  },
+  {
+    name: 'Devoluciones',
+    href: '/dashboard/devoluciones',
+    icon: ArrowUturnLeftIcon,
+    roles: ['administrador'],
   },
 ];
 
