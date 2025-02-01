@@ -45,6 +45,7 @@ export const authConfig = {
           '/dashboard/candidatos/create',
           '/dashboard/redenciones',
           '/dashboard/generar-excel',
+          '/dashboard/devoluciones',
         ],
         taquillero: [
           '/dashboard', 
