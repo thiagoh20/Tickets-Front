@@ -6,10 +6,9 @@ import { AreaChart, TooltipProps } from '@/app/components/AreaChart';
 import { Card } from '@/app/components/Card';
 import { getTotalSales } from '@/app/lib/data';
 
-const numberFormatter = (number: number) =>
-  Intl.NumberFormat('es-CO').format(number).toString();
-
-
+const numberFormatter = (number: number) =>{
+  return `$${ Intl.NumberFormat('es-CO').format(number).toString()}`;
+  }
 
 type DataItem = {
   date: string;
@@ -39,6 +38,16 @@ const data: DataItem[] = [
 ];
 
 const categories: Category[] = [
+  {
+    name: 'Total ventas',
+    chartCategory: 'total_sales',
+    valueFormatter: numberFormatter,
+  },
+  {
+    name: 'Total ventas',
+    chartCategory: 'total_sales',
+    valueFormatter: numberFormatter,
+  },
   {
     name: 'Total ventas',
     chartCategory: 'total_sales',
@@ -126,13 +135,13 @@ const KpiCardNumber = ({
     if (selectedPeriod === 'day') return true; // Mostrar todo
     if (selectedPeriod === 'week') return item.date.includes('week');
     if (selectedPeriod === 'month') return item.date.length === 6; // Ejemplo simple
-    if (selectedPeriod === 'year') return false; // Año deshabilitado
+    if (selectedPeriod === 'year') return true; // Año deshabilitado
     return true;
   });
 
   return (
     <div className="obfuscate">
-      <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <dl className="mt-2 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((item) => (
           <KpiCard item={item} key={item.name} data={filteredData} />
         ))}

@@ -16,13 +16,15 @@ const ToggleGroup = React.forwardRef<
     ref={ref}
     className={cx(
       'inline-flex h-[38px] divide-x divide-gray-300 rounded-md border border-gray-300 bg-white shadow-sm dark:divide-gray-800 dark:border-gray-800 sm:h-[34px]',
-      className
+      className,
     )}
     {...props}
   >
     {children}
   </ToggleGroupPrimitive.Root>
 ));
+
+ToggleGroup.displayName = 'ToggleGroup';
 
 const ToggleGroupItem = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Item>,
@@ -35,8 +37,9 @@ const ToggleGroupItem = React.forwardRef<
         'flex items-center justify-center border-gray-300 bg-gray-100 px-2.5 py-1 text-base text-gray-700 transition-colors first:rounded-l-[5px] last:rounded-r-[5px] hover:bg-gray-50 focus:z-10 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 sm:text-sm',
         'data-[state=on]:text-semibold data-[state=on]:bg-white data-[state=on]:text-gray-950 dark:data-[state=on]:bg-gray-800 dark:data-[state=on]:text-gray-50',
         focusRing,
+        // disabled
         'disabled:pointer-events-none disabled:text-gray-400 dark:disabled:text-gray-600',
-        className
+        className,
       )}
       {...props}
     >
@@ -44,6 +47,9 @@ const ToggleGroupItem = React.forwardRef<
     </ToggleGroupPrimitive.Item>
   );
 });
+
+ToggleGroupItem.displayName = 'ToggleGroupItem';
+
 
 export default function PageShell() {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('day');
@@ -99,7 +105,6 @@ export default function PageShell() {
                   Month
                 </ToggleGroupItem>
                 <ToggleGroupItem
-                  disabled
                   className="w-full"
                   value="year"
                   aria-label="Year"

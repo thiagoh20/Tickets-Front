@@ -342,6 +342,8 @@ const ToggleGroup = React.forwardRef<
   </ToggleGroupPrimitive.Root>
 ));
 
+ToggleGroup.displayName = 'ToggleGroup';
+
 const ToggleGroupItem = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item>
@@ -363,6 +365,8 @@ const ToggleGroupItem = React.forwardRef<
     </ToggleGroupPrimitive.Item>
   );
 });
+
+ToggleGroupItem.displayName = 'ToggleGroupItem';
 
 const valueFormatter = (milliseconds: number) => {
   if (milliseconds < 1000) {
