@@ -1,31 +1,19 @@
 'use client';
-
-// Install: @radix-ui/react-toggle-group
 import React, { useEffect, useState } from 'react';
-import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
-import {
-  RiPauseLargeLine,
-  RiSendPlane2Line,
-  RiSettings3Line,
-  RiShieldLine,
-} from '@remixicon/react';
-
-import { cx, focusRing } from '@/app/lib/utils';
-
 import { AreaChart } from '@/app/components/AreaChart';
-import { Button } from '@/app/components/Button';
 import { Card } from '@/app/components/Card';
 import { Divider } from '@/app/components/Divider';
-import { Label } from '@/app/components/Label';
-import { SelectNative } from '@/app/components/SelectNative';
-import { getTotalSalesTipePasport } from '@/app/lib/data';
+import {
+  getTotalSalesNumTipePasport,
+  getTotalSalesTipePasport,
+} from '@/app/lib/data';
 
 const valueFormatter = (value: number) => {
   if (value >= 1000000) {
-    return `${(value / 1000000).toFixed(3)}M`;
+    return `${(value / 1000000).toFixed(1)}M`;
   }
   if (value >= 1000) {
-    return `${(value / 1000).toFixed(3)}K`;
+    return `${(value / 1000).toFixed(1)}K`;
   }
   return value.toString();
 };
@@ -48,7 +36,7 @@ const colorMap: Record<
   3: ['purple', 'blue', 'cyan', 'emerald', 'violet', 'pink', 'lime'],
 };
 
-export default function ChartComposition({
+export default function ChartSalesComposition({
   selectedPeriod,
   selectedPark,
 }: {
@@ -69,7 +57,6 @@ export default function ChartComposition({
           `${idPark}`,
           selectedPeriod,
         );
-        console.log(salesData);
         setDataSales(salesData.length ? salesData : []);
 
         if (salesData.length > 0) {
@@ -112,7 +99,7 @@ export default function ChartComposition({
       <Card className="mt-6 !p-0">
         <div className="px-6 py-3">
           <h1 className="text-base font-medium text-gray-900 dark:text-gray-50">
-            Ventas por tipo de pasaporte
+            Número de tickes Vendidos por pasaporte
           </h1>
         </div>
         <Divider className="!my-0 [&>div]:dark:!bg-gray-900" />

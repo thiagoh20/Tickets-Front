@@ -12,11 +12,14 @@ import {
 const numberFormatter = (number: number) => {
   return `$${Intl.NumberFormat('es-CO').format(number).toString()}`;
 };
+const numberFormatterNum = (number: number) => {
+  return `${Intl.NumberFormat().format(number).toString()}`;
+};
 
 type DataItem = {
   date: string;
   total_sales: number;
-  sessions: number;
+  total_tickets: number;
   churn: number;
 };
 
@@ -26,18 +29,18 @@ type Category = {
   valueFormatter: (number: number) => string;
 };
 const data: DataItem[] = [
-  { date: 'Jan 23 week 3', total_sales: 234, sessions: 1432, churn: 5.2 },
-  { date: 'Feb 23', total_sales: 431, sessions: 1032, churn: 4.3 },
-  { date: 'Mar 23', total_sales: 543, sessions: 1089, churn: 5.1 },
-  { date: 'Apr 23', total_sales: 489, sessions: 988, churn: 5.4 },
-  { date: 'May 23', total_sales: 391, sessions: 642, churn: 5.5 },
-  { date: 'Jun 23', total_sales: 582, sessions: 786, churn: 4.8 },
-  { date: 'Jul 23', total_sales: 482, sessions: 673, churn: 4.5 },
-  { date: 'Aug 23', total_sales: 389, sessions: 761, churn: 0 },
-  { date: 'Sep 23', total_sales: 521, sessions: 793, churn: 0 },
-  { date: 'Oct 23', total_sales: 434, sessions: 543, churn: 0 },
-  { date: 'Nov 23', total_sales: 332, sessions: 678, churn: 0 },
-  { date: 'Dec 23', total_sales: 275, sessions: 873, churn: 0 },
+  { date: 'Jan 23 week 3', total_sales: 234, total_tickets: 1432, churn: 5.2 },
+  { date: 'Feb 23', total_sales: 431, total_tickets: 1032, churn: 4.3 },
+  { date: 'Mar 23', total_sales: 543, total_tickets: 1089, churn: 5.1 },
+  { date: 'Apr 23', total_sales: 489, total_tickets: 988, churn: 5.4 },
+  { date: 'May 23', total_sales: 391, total_tickets: 642, churn: 5.5 },
+  { date: 'Jun 23', total_sales: 582, total_tickets: 786, churn: 4.8 },
+  { date: 'Jul 23', total_sales: 482, total_tickets: 673, churn: 4.5 },
+  { date: 'Aug 23', total_sales: 389, total_tickets: 761, churn: 0 },
+  { date: 'Sep 23', total_sales: 521, total_tickets: 793, churn: 0 },
+  { date: 'Oct 23', total_sales: 434, total_tickets: 543, churn: 0 },
+  { date: 'Nov 23', total_sales: 332, total_tickets: 678, churn: 0 },
+  { date: 'Dec 23', total_sales: 275, total_tickets: 873, churn: 0 },
 ];
 
 const categories: Category[] = [
@@ -48,12 +51,12 @@ const categories: Category[] = [
   },
   {
     name: 'Total cantidad tickets vendidos',
-    chartCategory: 'total_sales',
-    valueFormatter: numberFormatter,
+    chartCategory: 'total_tickets',
+    valueFormatter: numberFormatterNum,
   },
   {
-    name: 'Total ventas',
-    chartCategory: 'total_sales',
+    name: '-',
+    chartCategory: 'churn',
     valueFormatter: numberFormatter,
   },
 ];
@@ -122,12 +125,12 @@ const KpiCardNumber = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const salesData = await getTotalSales(selectedPark, selectedPeriod);
-        const DataToketsvendidos = await getTotalSalesTipePasportCantidad(
+        // const salesData = await getTotalSales(selectedPark, selectedPeriod);
+        const salesData = await getTotalSalesTipePasportCantidad(
           selectedPark,
           selectedPeriod,
         );
-        console.log(DataToketsvendidos);
+       
         setDataSales(salesData.length ? salesData : data);
       } catch (error) {
         console.error('Error al obtener los datos:', error);

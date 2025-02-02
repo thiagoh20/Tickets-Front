@@ -7,7 +7,10 @@ import { Label } from 'recharts';
 import React, { useState } from 'react';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { cx, focusRing } from '@/app/lib/utils';
-import ChartComposition from './chartComposition';
+import ChartComposition from './chartSalesComposition';
+import BarChartSales from './barChart';
+import ChartSalesComposition from './chartSalesComposition';
+import ChartCantiComposition from './chartCantiComposition';
 
 const ToggleGroup = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Root>,
@@ -61,7 +64,7 @@ export default function PageShell() {
         <header>
           <div className="sm:flex sm:items-center sm:justify-between">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
-              Dashboard
+              Dashboard Ventas
             </h3>
             <div className="mt-4 items-center sm:mt-0 sm:flex sm:space-x-2">
               {/* Selector de parque */}
@@ -122,7 +125,16 @@ export default function PageShell() {
             selectedPeriod={selectedPeriod}
             selectedPark={selectedPark}
           />
-          <ChartComposition
+          {/* <BarChartSales
+            selectedPeriod={selectedPeriod}
+            selectedPark={selectedPark}
+          /> */}
+          <ChartSalesComposition
+            selectedPeriod={selectedPeriod}
+            selectedPark={selectedPark}
+            
+          />
+          <ChartCantiComposition
             selectedPeriod={selectedPeriod}
             selectedPark={selectedPark}
           />
