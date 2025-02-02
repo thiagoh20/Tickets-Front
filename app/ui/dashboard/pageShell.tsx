@@ -7,6 +7,7 @@ import { Label } from 'recharts';
 import React, { useState } from 'react';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { cx, focusRing } from '@/app/lib/utils';
+import ChartComposition from './chartComposition';
 
 const ToggleGroup = React.forwardRef<
   React.ElementRef<typeof ToggleGroupPrimitive.Root>,
@@ -50,77 +51,83 @@ const ToggleGroupItem = React.forwardRef<
 
 ToggleGroupItem.displayName = 'ToggleGroupItem';
 
-
 export default function PageShell() {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('day');
   const [selectedPark, setSelectedPark] = useState<string>('3');
 
   return (
     <div className="obfuscate">
-    <div className="p-4 sm:p-6 lg:p-8">
-      <header>
-        <div className="sm:flex sm:items-center sm:justify-between">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
-            Dashboard
-          </h3>
-          <div className="mt-4 items-center sm:mt-0 sm:flex sm:space-x-2">
-            {/* Selector de parque */}
-            <SelectNative
-              className="w-full sm:w-fit"
-              value={selectedPark} // Asigna el valor seleccionado
-              onChange={(e) => setSelectedPark(e.target.value)} // Actualiza el estado
-            >
-              <option value="3">Todos los parques</option>
-              <option value="1">Parque Norte</option>
-              <option value="2">Aeroparque Juanpablo II</option>
-            </SelectNative>
-
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <ToggleGroup
-                type="single"
-                defaultValue={selectedPeriod}
-                aria-label="Time period selection"
+      <div className="p-4 sm:p-6 lg:p-8">
+        <header>
+          <div className="sm:flex sm:items-center sm:justify-between">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
+              Dashboard
+            </h3>
+            <div className="mt-4 items-center sm:mt-0 sm:flex sm:space-x-2">
+              {/* Selector de parque */}
+              <SelectNative
                 className="w-full sm:w-fit"
-                onValueChange={(value) => value && setSelectedPeriod(value)}
+                value={selectedPark}
+                onChange={(e) => setSelectedPark(e.target.value)}
               >
-                <ToggleGroupItem
-                  className="w-full"
-                  value="day"
-                  aria-label="Day"
+                <option value="3">Todos los parques</option>
+                <option value="1">Parque Norte</option>
+                <option value="2">Aeroparque Juanpablo II</option>
+              </SelectNative>
+
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <ToggleGroup
+                  type="single"
+                  defaultValue={selectedPeriod}
+                  aria-label="Time period selection"
+                  className="w-full sm:w-fit"
+                  onValueChange={(value) => value && setSelectedPeriod(value)}
                 >
-                  Day
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  className="w-full"
-                  value="week"
-                  aria-label="Week"
-                >
-                  Week
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  className="w-full"
-                  value="month"
-                  aria-label="Month"
-                >
-                  Month
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  className="w-full"
-                  value="year"
-                  aria-label="Year"
-                >
-                  Year
-                </ToggleGroupItem>
-              </ToggleGroup>
+                  <ToggleGroupItem
+                    className="w-full"
+                    value="day"
+                    aria-label="Day"
+                  >
+                    Días
+                  </ToggleGroupItem>
+                  <ToggleGroupItem
+                    className="w-full"
+                    value="week"
+                    aria-label="Week"
+                  >
+                    Semanas
+                  </ToggleGroupItem>
+                  <ToggleGroupItem
+                    className="w-full"
+                    value="month"
+                    aria-label="Month"
+                  >
+                    Meses
+                  </ToggleGroupItem>
+                  <ToggleGroupItem
+                    className="w-full"
+                    value="year"
+                    aria-label="Year"
+                  >
+                    Años
+                  </ToggleGroupItem>
+                </ToggleGroup>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
-      <main>
-        {/* Pasar los valores seleccionados a KpiCardNumber */}
-        <KpiCardNumber selectedPeriod={selectedPeriod} selectedPark={selectedPark} />
-      </main>
+        </header>
+        <main>
+          {/* Pasar los valores seleccionados a KpiCardNumber */}
+          <KpiCardNumber
+            selectedPeriod={selectedPeriod}
+            selectedPark={selectedPark}
+          />
+          <ChartComposition
+            selectedPeriod={selectedPeriod}
+            selectedPark={selectedPark}
+          />
+        </main>
+      </div>
     </div>
-  </div>
   );
 }

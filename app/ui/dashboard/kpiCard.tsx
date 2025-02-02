@@ -4,11 +4,14 @@ import React, { useEffect, useState } from 'react';
 
 import { AreaChart, TooltipProps } from '@/app/components/AreaChart';
 import { Card } from '@/app/components/Card';
-import { getTotalSales } from '@/app/lib/data';
+import {
+  getTotalSales,
+  getTotalSalesTipePasportCantidad,
+} from '@/app/lib/data';
 
-const numberFormatter = (number: number) =>{
-  return `$${ Intl.NumberFormat('es-CO').format(number).toString()}`;
-  }
+const numberFormatter = (number: number) => {
+  return `$${Intl.NumberFormat('es-CO').format(number).toString()}`;
+};
 
 type DataItem = {
   date: string;
@@ -44,7 +47,7 @@ const categories: Category[] = [
     valueFormatter: numberFormatter,
   },
   {
-    name: 'Total ventas',
+    name: 'Total cantidad tickets vendidos',
     chartCategory: 'total_sales',
     valueFormatter: numberFormatter,
   },
@@ -116,11 +119,15 @@ const KpiCardNumber = ({
 }) => {
   const [dataSales, setDataSales] = useState<DataItem[]>([]);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const salesData = await getTotalSales(selectedPark);
+        const salesData = await getTotalSales(selectedPark, selectedPeriod);
+        const DataToketsvendidos = await getTotalSalesTipePasportCantidad(
+          selectedPark,
+          selectedPeriod,
+        );
+        console.log(DataToketsvendidos);
         setDataSales(salesData.length ? salesData : data);
       } catch (error) {
         console.error('Error al obtener los datos:', error);
@@ -128,22 +135,13 @@ const KpiCardNumber = ({
     };
 
     fetchData();
-  }, [selectedPark]);
-
-  // Filtrar los datos según la selección
-  const filteredData = dataSales.filter((item) => {
-    if (selectedPeriod === 'day') return true; // Mostrar todo
-    if (selectedPeriod === 'week') return item.date.includes('week');
-    if (selectedPeriod === 'month') return item.date.length === 6; // Ejemplo simple
-    if (selectedPeriod === 'year') return true; // Año deshabilitado
-    return true;
-  });
+  }, [selectedPark, selectedPeriod]);
 
   return (
     <div className="obfuscate">
       <dl className="mt-2 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((item) => (
-          <KpiCard item={item} key={item.name} data={filteredData} />
+          <KpiCard item={item} key={item.name} data={dataSales} />
         ))}
       </dl>
     </div>
