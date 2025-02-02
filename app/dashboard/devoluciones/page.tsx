@@ -1,4 +1,5 @@
 "use client";
+import { formatCurrency } from '@/app/lib/utils';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
@@ -33,9 +34,10 @@ const Page = () => {
         width: "10%",
     },
     { 
-        name: 'Moneda', 
-        selector: (row: any) => row.type_money, 
+        name: 'Precio', 
+        selector: (row: any) => `${formatCurrency(row.price_ticket)} ${row.type_money}`, 
         sortable: true,
+        width: "15%"
     },
     { 
         name: 'Nombre', 
