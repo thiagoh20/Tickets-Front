@@ -164,7 +164,7 @@ export async function validateTicket(ticketCode: any) {
 
 export async function updateUser(user: any) {
   try {
-    console.log(user);
+    
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/updateUserByIdTaquilla`,
       user,
