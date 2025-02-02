@@ -9,7 +9,7 @@ const DownloadExcelButton = (idpark: any, month: any) => {
     const handleDownload = async () => {
         setLoading(true);
         try {
-            console.log(idpark, month)
+           
             const response = await fetch(`${window.location.origin}/dashboard/generar-excel/${idpark}/${month}`);
           
             if (!response.ok) {

@@ -256,7 +256,7 @@ export async function fetchTicketsCount(query: string, user: any) {
       idpark: user?.park,
     });
 
-    console.log(tickets);
+
 
     const searchString = query.toLowerCase();
     const count = tickets.filter((ticket: Ticket) => {
@@ -387,7 +387,7 @@ export async function getTotalSalesTipePasport(idPark: string, filter: string) {
   noStore();
 
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/data/totalsalestipepasport`;
+    const apiUrl = `/api/data/totalsalestipepasport`;
     const response = await axios.post(apiUrl, {
       idPark: idPark,
       filterType: filter,
@@ -475,7 +475,7 @@ export async function getTotalSalesTipePasport(idPark: string, filter: string) {
         };
       });
 
-      console.log(transformedData);
+      
       return transformedData;
     }
 
@@ -490,7 +490,7 @@ export async function getTotalSalesNumTipePasport(idPark: string, filter: string
   noStore();
 
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/data/totalsalestipepasport`;
+    const apiUrl = `/api/data/totalsalestipepasport`;
     const response = await axios.post(apiUrl, {
       idPark: idPark,
       filterType: filter,
@@ -578,7 +578,7 @@ export async function getTotalSalesNumTipePasport(idPark: string, filter: string
         };
       });
 
-      console.log(transformedData);
+  
       return transformedData;
     }
 
@@ -596,7 +596,7 @@ export async function getTotalSalesTipePasportCantidad(
   noStore();
 
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/data/totalsalestipepasport`;
+    const apiUrl = `/api/data/totalsalestipepasport`;
     const response = await axios.post(apiUrl, {
       idPark: idPark,
       filterType: filter,
