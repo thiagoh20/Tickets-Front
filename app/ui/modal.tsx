@@ -40,7 +40,7 @@ const Modal = ({
           <XMarkIcon width={25} />
         </button>
         {invoiceInfo && (
-          <div className="rounded-lg border overflow-auto mx-auto bg-white p-6 shadow-md">
+          <div className="rounded-lg border mx-auto bg-white p-6 shadow-md">
             <h2 className="mb-4 text-lg font-bold">Factura Electrónica</h2>
             <div className="mb-6">
               <p>
@@ -52,8 +52,9 @@ const Modal = ({
               </p>
             </div>
             <hr className="mb-6" />
+            <div className='overflow-auto h-[30rem]'>
             <table className="w-full border-collapse border border-gray-300">
-              <thead className="bg-gray-100">
+              <thead className="bg-gray-100 sticky top-0">
                 <tr>
                   <th className="md:text-lg text-xs border border-gray-300 px-4 py-2">Código Ticket</th>
                   <th className="md:text-lg text-xs border border-gray-300 px-4 py-2">Cliente</th>
@@ -63,7 +64,7 @@ const Modal = ({
                   <th className="md:text-lg text-xs border border-gray-300 px-4 py-2">Estado</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className='h-[50%]'>
                 {invoiceInfo?.map((sale: any) => (
                   <tr key={sale.idticket}>
                     <td className="md:text-md text-xs border border-gray-300 px-4 py-2">
@@ -88,6 +89,8 @@ const Modal = ({
                 ))}
               </tbody>
             </table>
+            </div>
+
             <div className="mt-4">
               <p>
                 <strong>Total Amount:</strong> &nbsp; {invoice.Total} COP

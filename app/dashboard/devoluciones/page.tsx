@@ -146,7 +146,7 @@ const Page = () => {
                     },
                     },
                 }}                        
-        /> : <p className='text-lg text-red-300 mt-4'> No hay devoluciones del parque {park == 'PN' ? 'Parque Norte' : 'Aeroparque'} </p>}
+        /> : <p className='text-lg text-red-300 mt-4 text-center'> No hay devoluciones del parque {park == 'PN' ? 'Parque Norte' : 'Aeroparque'} </p>}
       </div>
     </div>
   );
