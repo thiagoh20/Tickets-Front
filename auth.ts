@@ -41,7 +41,7 @@ async function getUser(
   }
 }
 
-export const { auth, signIn, signOut } = NextAuth({
+export const {handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   secret: process.env.NEXTAUTH_SECRET || 'some-random-secret-key',
   providers: [
