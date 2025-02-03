@@ -82,7 +82,7 @@ export default function Form({
     if (selectedRole === 'administrador' || selectedRole === 'marketing') {
       setSelectedPark('3'); // 3 representa "Todos los parques"
     } else {
-      setSelectedPark('');
+      setSelectedPark('3');
     }
   }, [selectedRole]);
 
@@ -223,11 +223,8 @@ export default function Form({
             </div>
           </div>
           {/* Lista de parques (solo para "taquillero" o "supervisor") */}
-          {(selectedRole === 'taquillero' ||
-            selectedRole === 'supervisor' ||
-            selectedRole === 'administrador' ||
-            selectedRole === 'marketing') && (
-            <div className="mb-4">
+          {true && (
+            <div className="mb-4" hidden>
               <label htmlFor="park" className="mb-2 block text-sm font-medium">
                 Seleccione el parque
               </label>
@@ -235,22 +232,16 @@ export default function Form({
                 <select
                   id="park"
                   name="park"
-                  className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm"
-                  value={selectedPark}
-                  onChange={handleParkChange}
+                  className="peer block w-full cursor-not-allowed rounded-md border border-gray-200 py-2 pl-10 text-sm"
+                  value={'3'}
                 >
-                  <option value="" disabled>
-                    Seleccione el Parque
-                  </option>
-                  <option value="1">Parque Norte</option>
-                  <option value="2">Aero Parque Juan Pablo ll</option>
                   <option value="3">Todos los parques</option>
                 </select>
                 <BuildingOffice2Icon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
               </div>
               <div id="customer-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.park &&
-                  state.errors?.park.map((error: string) => (
+                  state.errors?.park?.map((error: string) => (
                     <p className="mt-2 text-sm text-red-500" key={error}>
                       {error}
                     </p>

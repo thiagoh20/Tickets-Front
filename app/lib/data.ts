@@ -121,7 +121,7 @@ export async function fetchInvoices(idpark: string, month: string) {
     return tickets;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch facturas.');
+    throw new Error('Failed to fetch Informes.');
   }
 }
 
