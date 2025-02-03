@@ -6,7 +6,7 @@ import { string } from 'zod';
 export async function GET(request: any, { params }: any) {
   try {
     const url = new URL(request.url);
-    const idpark = url.searchParams.get('idpark'); 
+    const idpark = url.searchParams.get('idpark');
     const month = url.searchParams.get('month');
 
     const tickets = await fetchInvoices(idpark || '', month || '');

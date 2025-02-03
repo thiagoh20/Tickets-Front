@@ -112,7 +112,7 @@ const ITEMS_PER_PAGE = 9;
 export async function fetchInvoices(idpark: string, month: string) {
   noStore();
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/generateInovice`;
+    const apiUrl = `/api/marketing/generateInovice`;
     const { data: tickets } = await axios.post(apiUrl, {
       idpark: idpark,
       month: month,
