@@ -195,6 +195,7 @@ export async function fetchFilteredCandidatos(
         ticket.phone_number?.toLowerCase().includes(searchString) ||
         ticket.date_ticket?.toLowerCase().includes(searchString) ||
         ticket.status?.toLowerCase().includes(searchString) ||
+        ticket.id_operation?.toLowerCase().includes(searchString) ||
         ticket.identity_number?.toLowerCase().includes(searchString)
       );
     });
@@ -270,6 +271,7 @@ export async function fetchTicketsCount(query: string, user: any) {
         ticket.phone_number?.toLowerCase().includes(searchString) ||
         ticket.date_ticket?.toLowerCase().includes(searchString) ||
         ticket.status?.toLowerCase().includes(searchString) ||
+        ticket.id_operation?.toLowerCase().includes(searchString) ||
         ticket.identity_number?.toLowerCase().includes(searchString)
       );
     }).length;

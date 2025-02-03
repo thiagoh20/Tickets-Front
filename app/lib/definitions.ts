@@ -20,7 +20,7 @@ export type Ticket = {
   created_at: string;
   ticket_info: TicketInfo[];
   price_ticket: number;
-  id_operation:number;
+  id_operation:string;
 };
 export type TicketInfo = {
   type: string;
