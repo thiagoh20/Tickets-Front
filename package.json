@@ -18,7 +18,7 @@
     "@tremor/react": "^3.18.7",
     "@types/node": "20.5.7",
     "@types/xlsx-populate": "git+https://github.com/JanLoebel/types-xlsx-populate.git",
-    "@vercel/postgres": "^0.5.1",
+    "@vercel/postgres": "^0.10.0",
     "autoprefixer": "10.4.15",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
