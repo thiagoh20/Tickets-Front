@@ -19,7 +19,7 @@ const DownloadExcelButton = (idpark: any) => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'InformeFacturas.xlsx'; 
+      a.download = `Informe_${idpark.month}_${idpark.idpark == 1 ? 'PN' : 'AP'}.xlsx`; 
       document.body.appendChild(a);
       a.click();
    
