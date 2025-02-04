@@ -112,7 +112,7 @@ const ITEMS_PER_PAGE = 9;
 export async function fetchInvoices(idpark: string, month: string) {
   noStore();
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/generateInovice`;
+    const apiUrl = `/api/marketing/generateInovice`;
     const { data: tickets } = await axios.post(apiUrl, {
       idpark: idpark,
       month: month,
@@ -257,8 +257,6 @@ export async function fetchTicketsCount(query: string, user: any) {
       idpark: user?.park,
     });
 
-
-
     const searchString = query.toLowerCase();
     const count = tickets.filter((ticket: Ticket) => {
       if (user?.role === 'taquillero' && !query.trim()) {
@@ -298,7 +296,7 @@ export async function fetchFilteredUsers(
     const response = await axios.get(apiUrl);
     if (response.data.message) {
       console.warn(response.data.message);
-      return 0;
+      return [];
     }
     const users = response.data;
     const filteredUsers = users.filter((user: UserProfile) => {
@@ -431,7 +429,7 @@ export async function getTotalSalesTipePasport(idPark: string, filter: string) {
             'Pasaporte Fusión',
             'Ingreso Sin Atracciones',
           ];
-          pasaportePrices = [48600, 37000, 32000, 7600];
+          pasaportePrices = [34000, 26000, 22500, 7600];
         } else if (sale.id_park === 2) {
           pasaporteNames = [
             'Pasaporte Acuático Adultos',
@@ -439,7 +437,7 @@ export async function getTotalSalesTipePasport(idPark: string, filter: string) {
             'Ingreso General',
             'N/A',
           ];
-          pasaportePrices = [19200, 14200, 7600, 0];
+          pasaportePrices = [13800, 10000, 7600, 0];
         } else {
           pasaporteNames = [
             'Pasaporte Tipo 1',
@@ -477,7 +475,6 @@ export async function getTotalSalesTipePasport(idPark: string, filter: string) {
         };
       });
 
-      
       return transformedData;
     }
 
@@ -488,7 +485,10 @@ export async function getTotalSalesTipePasport(idPark: string, filter: string) {
     throw new Error('Failed to fetch total number of Users.' + error);
   }
 }
-export async function getTotalSalesNumTipePasport(idPark: string, filter: string) {
+export async function getTotalSalesNumTipePasport(
+  idPark: string,
+  filter: string,
+) {
   noStore();
 
   try {
@@ -525,7 +525,6 @@ export async function getTotalSalesNumTipePasport(idPark: string, filter: string
         }
 
         let pasaporteNames: string[];
-       
 
         if (sale.id_park === 1) {
           pasaporteNames = [
@@ -534,7 +533,6 @@ export async function getTotalSalesNumTipePasport(idPark: string, filter: string
             'Pasaporte Fusión',
             'Ingreso Sin Atracciones',
           ];
-       
         } else if (sale.id_park === 2) {
           pasaporteNames = [
             'Pasaporte Acuático Adultos',
@@ -542,7 +540,6 @@ export async function getTotalSalesNumTipePasport(idPark: string, filter: string
             'Ingreso General',
             'N/A',
           ];
-         
         } else {
           pasaporteNames = [
             'Pasaporte Tipo 1',
@@ -550,17 +547,12 @@ export async function getTotalSalesNumTipePasport(idPark: string, filter: string
             'Pasaporte Tipo 3',
             'Pasaporte Tipo 4',
           ];
-         
         }
 
-        groupedData[date][pasaporteNames[0]] +=
-          parseFloat(sale?.pastype1) 
-        groupedData[date][pasaporteNames[1]] +=
-          parseFloat(sale?.pastype2) 
-        groupedData[date][pasaporteNames[2]] +=
-          parseFloat(sale?.pastype3)
-        groupedData[date][pasaporteNames[3]] +=
-          parseFloat(sale?.pastype4)
+        groupedData[date][pasaporteNames[0]] += parseFloat(sale?.pastype1);
+        groupedData[date][pasaporteNames[1]] += parseFloat(sale?.pastype2);
+        groupedData[date][pasaporteNames[2]] += parseFloat(sale?.pastype3);
+        groupedData[date][pasaporteNames[3]] += parseFloat(sale?.pastype4);
       });
 
       const transformedData = Object.values(groupedData).map((group: any) => {
@@ -580,7 +572,6 @@ export async function getTotalSalesNumTipePasport(idPark: string, filter: string
         };
       });
 
-  
       return transformedData;
     }
 

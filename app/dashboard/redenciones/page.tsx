@@ -48,7 +48,7 @@ return (
     <div className='w-[100%] md:w-[50%] mx-auto flex flex-col justify-center items-center h-screen'>
         <h1  className='text-2xl font-bold my-[2.5%] text-center md:absolute md:top-[5rem]'> Verificar las redenciones por fecha </h1>
         <div className="flex justify-center items-center gap-[2rem] mb-[2rem]">
-            <label htmlFor="Date" className='font-semibold'>Selecciona la fecha</label>
+            <label id="Date" className='font-semibold'>Selecciona la fecha</label>
             <input 
             type='date'
             value={date} 

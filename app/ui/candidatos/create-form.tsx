@@ -93,7 +93,7 @@ export default function Form({
         <div className="rounded-md bg-gray-50 p-4 md:p-6">
           {/* Candidato Nombre */}
           <div className="mb-4">
-            <label htmlFor="nombre" className="mb-2 block text-sm font-medium">
+            <label id="nombre" className="mb-2 block text-sm font-medium">
               Nombre completo
             </label>
             <div className="relative mt-2 rounded-md">
@@ -122,7 +122,7 @@ export default function Form({
           {/* Candidato Cargo */}
           <div className="mb-4">
             <label
-              htmlFor="nombreUser"
+             id="nombreUser"
               className="mb-2 block text-sm font-medium"
             >
               Nombre de Usuario
@@ -153,7 +153,7 @@ export default function Form({
           {/* Candidato Password */}
           <div className="mb-4">
             <label
-              htmlFor="password"
+             id="password"
               className="mb-2 block text-sm font-medium"
             >
               Contraseña
@@ -183,7 +183,7 @@ export default function Form({
           </div>
           {/* Candidato tipo de identificacion */}
           <div className="mb-4">
-            <label htmlFor="rol" className="mb-2 block text-sm font-medium">
+            <label id="rol" className="mb-2 block text-sm font-medium">
               Rol del Perfil
             </label>
             <div className="relative">
@@ -225,7 +225,7 @@ export default function Form({
           {/* Lista de parques (solo para "taquillero" o "supervisor") */}
           {true && (
             <div className="mb-4" hidden>
-              <label htmlFor="park" className="mb-2 block text-sm font-medium">
+              <label id="park" className="mb-2 block text-sm font-medium">
                 Seleccione el parque
               </label>
               <div className="relative">
