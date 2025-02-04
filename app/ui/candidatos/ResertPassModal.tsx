@@ -26,8 +26,8 @@ export default function ResetPasswordModal({
       return;
     }
 
-    if (password.length < 5) {
-      setError('La contraseña debe tener al menos 8 caracteres');
+    if (password.length <=4) {
+      setError('La contraseña debe tener al menos 4 caracteres');
       return;
     }
 
