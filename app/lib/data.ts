@@ -618,9 +618,9 @@ export async function getTotalSalesTipePasportCantidad(
         let pasaportePrices: number[];
 
         if (sale.id_park === 1) {
-          pasaportePrices = [48600, 37000, 32000, 7600];
+          pasaportePrices = [34000, 26000, 22500, 7600];
         } else if (sale.id_park === 2) {
-          pasaportePrices = [19200, 14200, 7600, 0];
+          pasaportePrices = [13800, 10000, 7600, 0];
         } else {
           pasaportePrices = [0, 0, 0, 0];
         }
