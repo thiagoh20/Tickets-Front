@@ -47,7 +47,7 @@ export default function ResetPasswordModal({
         <h2 className="text-lg font-semibold">Restablecer Contraseña</h2>
         <div className="mt-4">
           <div className="mb-4">
-            <label htmlFor="nombre" className="mb-2 block text-sm font-medium">
+            <label id="nombre" className="mb-2 block text-sm font-medium">
               Nueva contraseña
             </label>
             <div className="relative mt-2 rounded-md">
@@ -69,7 +69,7 @@ export default function ResetPasswordModal({
         </div>
         <div className="mt-2">
           <div className="mb-4">
-            <label htmlFor="nombre" className="mb-2 block text-sm font-medium">
+            <label id="nombre" className="mb-2 block text-sm font-medium">
               Confirmar contraseña
             </label>
             <div className="relative mt-2 rounded-md">

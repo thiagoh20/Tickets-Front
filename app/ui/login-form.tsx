@@ -18,7 +18,7 @@ export default function LoginForm() {
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="email"
+             id="email"
             >
               Nombre de usuario
             </label>
@@ -37,7 +37,7 @@ export default function LoginForm() {
           <div className="mt-4">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-              htmlFor="password"
+             id="password"
             >
               Constraseña
             </label>
