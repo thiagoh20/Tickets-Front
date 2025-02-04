@@ -134,9 +134,6 @@ export default function InvoicesTableClient({
                     Estado
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    Factura Electrónica
-                  </th>
-                  <th scope="col" className="px-3 py-5 font-medium">
                     Fecha
                   </th>
                 </tr>
@@ -176,9 +173,6 @@ export default function InvoicesTableClient({
                     <TicketStatus status={ticket.status} />
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                      {!!ticket.invoice_electronic ? 'Sí' : 'No'}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-3">
                       {formatDateToLocal(ticket.date_ticket)}
                     </td>
                   </tr>
@@ -197,17 +191,20 @@ export default function InvoicesTableClient({
         selectedTicket={selectedTicket || null}
         onValidate={handleValidateTicket}
       >
-        <h2 className="text-lg font-bold">Detalles del Ticket</h2>
+        <div className="flex justify-between">
+          <h2 className="text-lg font-bold">Detalles del Ticket - {selectedTicket?.id_operation}</h2>
+          <TicketStatus status={selectedTicket?.status || ''} />
+        </div>
         <div className="mt-4">
           {/* Datos del cliente */}
-          <h3 className="text-md font-semibold">Datos del Cliente</h3>
+          <h3 className="text-md font-semibold"> 👨🏼 Datos del Cliente</h3>
           <ul className="mt-2 text-sm text-gray-700">
             <li>
               <strong>Nombre:</strong>{' '}
               {selectedTicket?.name + ' ' + selectedTicket?.lastname}
             </li>
             <li>
-              <strong>Tipo de Identificación:</strong>
+              <strong>Tipo de Identificación:</strong>{' '}
               {selectedTicket?.identity_type}
             </li>
             <li>
@@ -215,7 +212,7 @@ export default function InvoicesTableClient({
               {selectedTicket?.identity_number}
             </li>
             <li>
-              <strong>Email:</strong>
+              <strong>Email:</strong>{' '}
               {selectedTicket?.email_person}
             </li>
             <li>
@@ -223,25 +220,19 @@ export default function InvoicesTableClient({
             </li>
           </ul>
           {/* Detalles del ticket */}
-          <h3 className="text-md mt-4 font-semibold">Detalles del Ticket</h3>
+          <h3 className="text-md mt-4 font-semibold"> 📄 Detalles del Ticket</h3>
           <ul className="mt-2 text-sm text-gray-700">
             <li>
-              <strong>ID del Ticket:</strong> {selectedTicket?.ticket_code}
+              <strong>Parque: </strong>{' '}
+              {selectedTicket?.namepark}
             </li>
             <li>
-              <strong>Parque: </strong> {selectedTicket?.namepark}
-            </li>
-            <li>
-              <strong>Fecha: </strong>
+              <strong>Fecha: </strong>{' '}
               {formatDateToLocal(selectedTicket?.date_ticket || '')}
-            </li>
-            <li>
-              <strong>Estado: </strong>{' '}
-              <TicketStatus status={selectedTicket?.status || ''} />
             </li>
           </ul>
           {/* Resumen */}
-          <h3 className="text-md mt-4 font-semibold">Resumen</h3>
+          <h3 className="text-md mt-4 font-semibold">🟢 Resumen</h3>
           <ul className="mt-2 text-sm text-gray-700">
             {selectedTicket?.ticket_info?.map((info, index) => (
               <li key={index}>
@@ -251,9 +242,8 @@ export default function InvoicesTableClient({
                 </span>
               </li>
             ))}
-            <li className="mt-2">
-              <strong>Factura Electrónica:</strong>{' '}
-              {selectedTicket?.invoice_electronic === 1 ? 'Sí' : 'No'}
+            <li className="mt-2 text-center">
+              <strong>⚠️ Pregunta al usuario si requiere facturación electrónica </strong>{' '}
             </li>
           </ul>
         </div>
