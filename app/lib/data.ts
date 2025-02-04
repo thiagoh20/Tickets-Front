@@ -668,7 +668,7 @@ export async function getTotalSalesTipePasportCantidadNuevo(
   noStore();
 
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/data/getTotalSalesTipePasportNuevo`;
+    const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
     const response = await axios.post(apiUrl, {
       idPark: idPark,
       filterType: filter,
