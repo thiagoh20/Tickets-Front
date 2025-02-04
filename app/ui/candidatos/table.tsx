@@ -120,9 +120,11 @@ export default async function InvoicesTable({
                   <td className="whitespace-nowrap py-3 pl-1 pr-3">
                     <div className="flex justify-end gap-1">
                       {candidatos.statusprofile === 'Habilitado' && (
-                        <>
+                        <> 
+                          <UpdatePass  id={candidatos.id_user} />
                           <Desabled id={candidatos.id_user} />
                           <DeleteInvoice id={candidatos.id_user} />
+                         
                         </>
                       )}
                       {candidatos.statusprofile === 'Deshabilitado' && (
