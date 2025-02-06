@@ -660,3 +660,50 @@ export async function getTotalSalesTipePasportCantidad(
     throw new Error('Failed to fetch total number of Users.' + error);
   }
 }
+
+export async function getTotalSalesTipePasportCantidadNuevo(
+  idPark: string,
+  filter: string,
+) {
+  noStore();
+
+  try {
+    const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
+    const response = await axios.post(apiUrl, {
+      idPark: idPark,
+      filterType: filter,
+    });
+
+    const data = response.data.TotalSalesTipePasport;
+
+    // Agrupar por fecha y sumar los valores
+    const groupedData = data.reduce((acc: any, item: any) => {
+      const date = item.date;
+      if (!acc[date]) {
+        acc[date] = {
+          date,
+          total_sales: 0,
+          total_value: 0,
+        };
+      }
+      acc[date].total_sales += parseInt(item.total_sales, 10);
+      acc[date].total_value += parseInt(item.total_value, 10);
+      return acc;
+    }, {});
+
+    // Transformar los datos agrupados
+    const transformedData = Object.values(groupedData).map((item: any) => ({
+      date:filter === 'day'
+      ? formatDateToLocal(item?.date) || item?.date
+      : item?.date, 
+      total_sales: item.total_sales,
+      total_value: item.total_value,
+      churn: item.churn ?? 0, // Si no tienes un campo `churn`, puedes eliminarlo
+    }));
+
+    return transformedData;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of Users.' + error);
+  }
+}
