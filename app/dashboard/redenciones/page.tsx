@@ -5,7 +5,8 @@ import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 
 const Page = () => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState<any>([])
+    const [taquillero, setTaquillero] = useState<any>(null)    
     const [initialDate, setInitialDate] = useState<any>("2025-01-01")    
     const [finalDate, setFinalDate] = useState<any>(new Date().toISOString().split('T')[0])    
 
@@ -25,40 +26,58 @@ const Page = () => {
     // Definición de columnas
     const columns: any = [
         { 
+            name: 'Usuario', 
+            selector: (row: any) => row.Nombre_Usuario, 
+            sortable: true,
+            width: '20%'
+        },
+        { 
             name: 'Parque', 
             selector: (row: any) => row.idpark == 1 ? 'Parque Norte' : 'Aeroparque Juan Pablo II', 
-            sortable: true 
+            sortable: true,
+            width: '20%'
         },
         { 
             name: 'Descripción', 
             selector: (row: any) => row.Referencia_Pasaporte, 
-            sortable: true 
+            sortable: true,
+            width: '40%'
         },
         { 
-            name: 'Cantidad Ingresos', 
+            name: 'Cantidad', 
             selector: (row: any) => row.Cantidad_Usada, 
-            sortable: true, 
-            width: '25%'
+            sortable: true,
+            width: '10%' 
         }
     ];
 
 return (
     <>
-        <div className='w-[100%] md:w-[50%] mx-auto flex flex-col justify-center items-center h-screen'>
+        <div className='w-[100%] md:w-[70%] mx-auto flex flex-col justify-center items-center h-screen'>
             <h1  className='text-2xl font-bold my-[2.5%] text-center md:absolute md:top-[5rem]'> Verificar las redenciones por fecha </h1>
             <div className="flex md:flex-row flex-col justify-center items-center gap-[2rem] mb-[2rem]">
+                <label id="taquillero" className='font-semibold'>Selecciona el taquillero</label>
+                <select 
+                value={taquillero} 
+                className='border-2 pr-[2rem] border-gray-300 rounded-lg p-2 text-md focus:outline-none focus:ring-2 focus:ring-blue-500' 
+                onChange={(e) => setTaquillero(e.target.value)} 
+                >
+                    {Array.from(new Set(data))?.map((x: any) => 
+                        <option key={x.Nombre_Usuario}  value="">{x?.Nombre_Usuario}</option>
+                    )}
+                </select>
                 <label id="initialDate" className='font-semibold'>Selecciona la fecha inicial</label>
                 <input 
                 type='date'
                 value={initialDate} 
-                className='border-2 border-gray-300 rounded-lg p-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+                className='border-2 border-gray-300 rounded-lg p-2 text-md focus:outline-none focus:ring-2 focus:ring-blue-500' 
                 onChange={(e) => setInitialDate(e.target.value)} 
                 />
                 <label id="initialDate" className='font-semibold'>Selecciona la fecha final</label>
                 <input 
                 type='date'
                 value={finalDate} 
-                className='border-2 border-gray-300 rounded-lg p-2 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+                className='border-2 border-gray-300 rounded-lg p-2 text-md focus:outline-none focus:ring-2 focus:ring-blue-500' 
                 onChange={(e) => setFinalDate(e.target.value)} 
                 />
             </div>
