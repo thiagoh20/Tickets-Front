@@ -12,7 +12,7 @@ const Page = () => {
     useEffect(() => {
         const fetchRedentionsByDate = async () => {
             try {
-                await axios.post(`http://localhost:80/api/taquilla/redentionsByDate`, { initialDate: initialDate, finalDate: finalDate })
+                await axios.post(`/api/taquilla/redentionsByDate`, { initialDate: initialDate, finalDate: finalDate })
                 .then((response) => setData(response.data))
                 .catch((error) => { setData([]) });
             } catch (error) {
@@ -46,7 +46,7 @@ return (
     <>
         <div className='w-[100%] md:w-[50%] mx-auto flex flex-col justify-center items-center h-screen'>
             <h1  className='text-2xl font-bold my-[2.5%] text-center md:absolute md:top-[5rem]'> Verificar las redenciones por fecha </h1>
-            <div className="flex justify-center items-center gap-[2rem] mb-[2rem]">
+            <div className="flex md:flex-row flex-col justify-center items-center gap-[2rem] mb-[2rem]">
                 <label id="initialDate" className='font-semibold'>Selecciona la fecha inicial</label>
                 <input 
                 type='date'
