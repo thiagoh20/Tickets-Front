@@ -4,8 +4,7 @@ import { AreaChart } from '@/app/components/AreaChart';
 import { Card } from '@/app/components/Card';
 import { Divider } from '@/app/components/Divider';
 import {
-  getTotalSalesNumTipePasport,
-  getTotalSalesTipePasport,
+  getTotalSalesTipePasportNuevo,
 } from '@/app/lib/data';
 
 const valueFormatter = (value: number) => {
@@ -26,14 +25,14 @@ const colorMap: Record<
     | 'cyan'
     | 'emerald'
     | 'violet'
-    | 'pink'
+    | 'orange'
     | 'lime'
     | 'gray'
   )[]
 > = {
   1: ['purple', 'blue', 'cyan', 'emerald'],
-  2: ['violet', 'pink', 'lime', 'gray'],
-  3: ['purple', 'blue', 'cyan', 'emerald', 'violet', 'pink', 'lime'],
+  2: ['violet', 'orange', 'lime', 'gray'],
+  3: ['purple', 'blue', 'cyan', 'emerald', 'orange', 'violet', 'lime'],
 };
 
 export default function ChartSalesComposition({
@@ -53,7 +52,7 @@ export default function ChartSalesComposition({
     const fetchData = async () => {
       try {
         const idPark: any = Number(selectedPark);
-        const salesData = await getTotalSalesTipePasport(
+        const salesData = await getTotalSalesTipePasportNuevo(
           `${idPark}`,
           selectedPeriod,
         );

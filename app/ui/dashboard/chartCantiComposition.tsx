@@ -4,8 +4,7 @@ import { AreaChart } from '@/app/components/AreaChart';
 import { Card } from '@/app/components/Card';
 import { Divider } from '@/app/components/Divider';
 import {
-  getTotalSalesNumTipePasport,
-  getTotalSalesTipePasport,
+  getTotalSalesNumTipePasportNuevo,
 } from '@/app/lib/data';
 
 const valueFormatter = (value: number) => {
@@ -53,12 +52,11 @@ export default function ChartCantiComposition({
     const fetchData = async () => {
       try {
         const idPark: any = Number(selectedPark);
-        const salesData = await getTotalSalesNumTipePasport(
+        const salesData = await getTotalSalesNumTipePasportNuevo(
           `${idPark}`,
           selectedPeriod,
         );
         setDataSales(salesData.length ? salesData : []);
-
         if (salesData.length > 0) {
           const categoryMap: Record<number, string[]> = {
             1: [

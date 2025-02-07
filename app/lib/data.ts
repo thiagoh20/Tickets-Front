@@ -336,7 +336,6 @@ export async function fetchFilteredUsersPage(
       return 1;
     }
     const users = response.data;
-
     const count = users.filter((user: UserProfile) => {
       const searchString = query.toLowerCase();
       return (
@@ -346,7 +345,6 @@ export async function fetchFilteredUsersPage(
         user.statusprofile?.toLowerCase().includes(searchString)
       );
     }).length;
-
     const totalPages = Math.ceil(count / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
@@ -357,7 +355,6 @@ export async function fetchFilteredUsersPage(
 
 export async function getTotalSales(idPark: string, filter: string) {
   noStore();
-
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/data/totalsales`;
     const response = await axios.post(apiUrl, {
@@ -374,285 +371,6 @@ export async function getTotalSales(idPark: string, filter: string) {
       }));
       return transformedData;
     }
-
-    console.warn('No hay registros de ventas.');
-    return [];
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of Users.' + error);
-  }
-}
-
-export async function getTotalSalesTipePasport(idPark: string, filter: string) {
-  noStore();
-
-  try {
-    const apiUrl = `/api/data/totalsalestipepasport`;
-    const response = await axios.post(apiUrl, {
-      idPark: idPark,
-      filterType: filter,
-    });
-
-    if (
-      response.data.TotalSalesTipePasport &&
-      response.data.TotalSalesTipePasport.length > 0
-    ) {
-      const groupedData: { [key: string]: any } = {};
-
-      response.data.TotalSalesTipePasport.forEach((sale: any) => {
-        const date = sale.date;
-
-        if (!groupedData[date]) {
-          groupedData[date] = {
-            date:
-              filter === 'day'
-                ? formatDateToLocal(sale?.date) || sale?.date
-                : sale?.date,
-            'Pasaporte Extremo': 0,
-            'Pasaporte Aventura': 0,
-            'Pasaporte Fusión': 0,
-            'Ingreso Sin Atracciones': 0,
-            'Pasaporte Acuático Adultos': 0,
-            'Pasaporte Acuático Niños': 0,
-            'Ingreso General': 0,
-            'N/A': 0,
-          };
-        }
-
-        let pasaporteNames: string[];
-        let pasaportePrices: number[];
-
-        if (sale.id_park === 1) {
-          pasaporteNames = [
-            'Pasaporte Extremo',
-            'Pasaporte Aventura',
-            'Pasaporte Fusión',
-            'Ingreso Sin Atracciones',
-          ];
-          pasaportePrices = [34000, 26000, 22500, 7600];
-        } else if (sale.id_park === 2) {
-          pasaporteNames = [
-            'Pasaporte Acuático Adultos',
-            'Pasaporte Acuático Niños',
-            'Ingreso General',
-            'N/A',
-          ];
-          pasaportePrices = [13800, 10000, 7600, 0];
-        } else {
-          pasaporteNames = [
-            'Pasaporte Tipo 1',
-            'Pasaporte Tipo 2',
-            'Pasaporte Tipo 3',
-            'Pasaporte Tipo 4',
-          ];
-          pasaportePrices = [0, 0, 0, 0];
-        }
-
-        groupedData[date][pasaporteNames[0]] +=
-          parseFloat(sale?.pastype1) * pasaportePrices[0];
-        groupedData[date][pasaporteNames[1]] +=
-          parseFloat(sale?.pastype2) * pasaportePrices[1];
-        groupedData[date][pasaporteNames[2]] +=
-          parseFloat(sale?.pastype3) * pasaportePrices[2];
-        groupedData[date][pasaporteNames[3]] +=
-          parseFloat(sale?.pastype4) * pasaportePrices[3];
-      });
-
-      const transformedData = Object.values(groupedData).map((group: any) => {
-        return {
-          date: group.date,
-          'Pasaporte Extremo': group['Pasaporte Extremo'].toString(),
-          'Pasaporte Aventura': group['Pasaporte Aventura'].toString(),
-          'Pasaporte Fusión': group['Pasaporte Fusión'].toString(),
-          'Ingreso Sin Atracciones':
-            group['Ingreso Sin Atracciones'].toString(),
-          'Pasaporte Acuático Adultos':
-            group['Pasaporte Acuático Adultos'].toString(),
-          'Pasaporte Acuático Niños':
-            group['Pasaporte Acuático Niños'].toString(),
-          'Ingreso General': group['Ingreso General'].toString(),
-          'N/A': group['N/A'].toString(),
-        };
-      });
-
-      return transformedData;
-    }
-
-    console.warn('No hay registros de ventas.');
-    return [];
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of Users.' + error);
-  }
-}
-export async function getTotalSalesNumTipePasport(
-  idPark: string,
-  filter: string,
-) {
-  noStore();
-
-  try {
-    const apiUrl = `/api/data/totalsalestipepasport`;
-    const response = await axios.post(apiUrl, {
-      idPark: idPark,
-      filterType: filter,
-    });
-
-    if (
-      response.data.TotalSalesTipePasport &&
-      response.data.TotalSalesTipePasport.length > 0
-    ) {
-      const groupedData: { [key: string]: any } = {};
-
-      response.data.TotalSalesTipePasport.forEach((sale: any) => {
-        const date = sale.date;
-
-        if (!groupedData[date]) {
-          groupedData[date] = {
-            date:
-              filter === 'day'
-                ? formatDateToLocal(sale?.date) || sale?.date
-                : sale?.date,
-            'Pasaporte Extremo': 0,
-            'Pasaporte Aventura': 0,
-            'Pasaporte Fusión': 0,
-            'Ingreso Sin Atracciones': 0,
-            'Pasaporte Acuático Adultos': 0,
-            'Pasaporte Acuático Niños': 0,
-            'Ingreso General': 0,
-            'N/A': 0,
-          };
-        }
-
-        let pasaporteNames: string[];
-
-        if (sale.id_park === 1) {
-          pasaporteNames = [
-            'Pasaporte Extremo',
-            'Pasaporte Aventura',
-            'Pasaporte Fusión',
-            'Ingreso Sin Atracciones',
-          ];
-        } else if (sale.id_park === 2) {
-          pasaporteNames = [
-            'Pasaporte Acuático Adultos',
-            'Pasaporte Acuático Niños',
-            'Ingreso General',
-            'N/A',
-          ];
-        } else {
-          pasaporteNames = [
-            'Pasaporte Tipo 1',
-            'Pasaporte Tipo 2',
-            'Pasaporte Tipo 3',
-            'Pasaporte Tipo 4',
-          ];
-        }
-
-        groupedData[date][pasaporteNames[0]] += parseFloat(sale?.pastype1);
-        groupedData[date][pasaporteNames[1]] += parseFloat(sale?.pastype2);
-        groupedData[date][pasaporteNames[2]] += parseFloat(sale?.pastype3);
-        groupedData[date][pasaporteNames[3]] += parseFloat(sale?.pastype4);
-      });
-
-      const transformedData = Object.values(groupedData).map((group: any) => {
-        return {
-          date: group.date,
-          'Pasaporte Extremo': group['Pasaporte Extremo'].toString(),
-          'Pasaporte Aventura': group['Pasaporte Aventura'].toString(),
-          'Pasaporte Fusión': group['Pasaporte Fusión'].toString(),
-          'Ingreso Sin Atracciones':
-            group['Ingreso Sin Atracciones'].toString(),
-          'Pasaporte Acuático Adultos':
-            group['Pasaporte Acuático Adultos'].toString(),
-          'Pasaporte Acuático Niños':
-            group['Pasaporte Acuático Niños'].toString(),
-          'Ingreso General': group['Ingreso General'].toString(),
-          'N/A': group['N/A'].toString(),
-        };
-      });
-
-      return transformedData;
-    }
-
-    console.warn('No hay registros de ventas.');
-    return [];
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of Users.' + error);
-  }
-}
-export async function getTotalSalesTipePasportCantidad(
-  idPark: string,
-  filter: string,
-) {
-  noStore();
-
-  try {
-    const apiUrl = `/api/data/totalsalestipepasport`;
-    const response = await axios.post(apiUrl, {
-      idPark: idPark,
-      filterType: filter,
-    });
-
-    if (
-      response.data.TotalSalesTipePasport &&
-      response.data.TotalSalesTipePasport.length > 0
-    ) {
-      const groupedData: { [key: string]: any } = {};
-
-      response.data.TotalSalesTipePasport.forEach((sale: any) => {
-        const date = sale.date;
-
-        if (!groupedData[date]) {
-          groupedData[date] = {
-            date:
-              filter === 'day'
-                ? formatDateToLocal(sale?.date) || sale?.date
-                : sale?.date,
-            total_sales: 0,
-            totalTickets: 0,
-          };
-        }
-
-        let pasaportePrices: number[];
-
-        if (sale.id_park === 1) {
-          pasaportePrices = [34000, 26000, 22500, 7600];
-        } else if (sale.id_park === 2) {
-          pasaportePrices = [13800, 10000, 7600, 0];
-        } else {
-          pasaportePrices = [0, 0, 0, 0];
-        }
-
-        // Calcular total ventas
-        const total_sales =
-          parseFloat(sale?.pastype1) * pasaportePrices[0] +
-          parseFloat(sale?.pastype2) * pasaportePrices[1] +
-          parseFloat(sale?.pastype3) * pasaportePrices[2] +
-          parseFloat(sale?.pastype4) * pasaportePrices[3];
-
-        // Calcular total de tickets vendidos
-        const totalTickets =
-          parseFloat(sale?.pastype1) +
-          parseFloat(sale?.pastype2) +
-          parseFloat(sale?.pastype3) +
-          parseFloat(sale?.pastype4);
-
-        groupedData[date].total_sales += total_sales;
-        groupedData[date].totalTickets += totalTickets;
-      });
-
-      const transformedData = Object.values(groupedData).map((item: any) => ({
-        date: item.date,
-        total_sales: item.total_sales,
-        total_tickets: item.totalTickets,
-        churn: item.churn ?? 0,
-      }));
-
-      return transformedData;
-    }
-
     console.warn('No hay registros de ventas.');
     return [];
   } catch (error) {
@@ -673,10 +391,7 @@ export async function getTotalSalesTipePasportCantidadNuevo(
       idPark: idPark,
       filterType: filter,
     });
-
     const data = response.data.TotalSalesTipePasport;
-
-    // Agrupar por fecha y sumar los valores
     const groupedData = data.reduce((acc: any, item: any) => {
       const date = item.date;
       if (!acc[date]) {
@@ -690,20 +405,112 @@ export async function getTotalSalesTipePasportCantidadNuevo(
       acc[date].total_value += parseInt(item.total_value, 10);
       return acc;
     }, {});
-
-    // Transformar los datos agrupados
     const transformedData = Object.values(groupedData).map((item: any) => ({
-      date:filter === 'day'
-      ? formatDateToLocal(item?.date) || item?.date
-      : item?.date, 
+      date:
+        filter === 'day'
+          ? formatDateToLocal(item?.date) || item?.date
+          : item?.date,
       total_sales: item.total_sales,
       total_value: item.total_value,
-      churn: item.churn ?? 0, // Si no tienes un campo `churn`, puedes eliminarlo
+      churn: item.churn ?? 0,
     }));
-
     return transformedData;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of Users.' + error);
+  }
+}
+
+export async function getTotalSalesTipePasportNuevo(
+  idPark: string,
+  filter: string,
+) {
+  noStore();
+  try {
+    const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
+    const response = await axios.post(apiUrl, { idPark, filterType: filter });
+    if (
+      response.data.TotalSalesTipePasport &&
+      response.data.TotalSalesTipePasport.length > 0
+    ) {
+      const groupedData: { [key: string]: any } = {};
+      response.data.TotalSalesTipePasport.forEach((sale: any) => {
+        const date = sale.date;
+        if (!groupedData[date]) {
+          groupedData[date] = {
+            date:
+              filter === 'day'
+                ? formatDateToLocal(sale.date) || sale.date
+                : sale.date,
+          };
+        }
+        groupedData[date][sale.name_passport] = sale.total_value;
+      });
+      const transformedData = Object.values(groupedData).map((group: any) => ({
+        date: group.date,
+        'Pasaporte Extremo': group['Pasaporte Extremo'] || '0',
+        'Pasaporte Aventura': group['Pasaporte Aventura'] || '0',
+        'Pasaporte Fusión': group['Pasaporte Fusión'] || '0',
+        'Ingreso Sin Atracciones': group['Ingreso Sin Atracciones'] || '0',
+        'Pasaporte Acuático Adultos':
+          group['Pasaporte Acuático Adultos'] || '0',
+        'Pasaporte Acuático Niños': group['Pasaporte Acuático Niños'] || '0',
+        'Ingreso General': group['Ingreso General'] || '0',
+        'N/A': group['N/A'] || '0',
+      }));
+      return transformedData;
+    }
+    console.warn('No hay registros de ventas.');
+    return [];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of Users. ' + error);
+  }
+}
+
+export async function getTotalSalesNumTipePasportNuevo(
+  idPark: string,
+  filter: string,
+) {
+  noStore();
+  try {
+    const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
+    const response = await axios.post(apiUrl, { idPark, filterType: filter });
+    if (
+      response.data.TotalSalesTipePasport &&
+      response.data.TotalSalesTipePasport.length > 0
+    ) {
+      const groupedData: { [key: string]: any } = {};
+      response.data.TotalSalesTipePasport.forEach((sale: any) => {
+        const date = sale.date;
+        if (!groupedData[date]) {
+          groupedData[date] = {
+            date:
+              filter === 'day'
+                ? formatDateToLocal(sale.date) || sale.date
+                : sale.date,
+          };
+        }
+        groupedData[date][sale.name_passport] = sale.total_sales;
+      });
+      const transformedData = Object.values(groupedData).map((group: any) => ({
+        date: group.date,
+        'Pasaporte Extremo': group['Pasaporte Extremo'] || '0',
+        'Pasaporte Aventura': group['Pasaporte Aventura'] || '0',
+        'Pasaporte Fusión': group['Pasaporte Fusión'] || '0',
+        'Ingreso Sin Atracciones': group['Ingreso Sin Atracciones'] || '0',
+        'Pasaporte Acuático Adultos':
+          group['Pasaporte Acuático Adultos'] || '0',
+        'Pasaporte Acuático Niños': group['Pasaporte Acuático Niños'] || '0',
+        'Ingreso General': group['Ingreso General'] || '0',
+        'N/A': group['N/A'] || '0',
+      }));
+      return transformedData;
+    }
+    console.warn('No hay registros de ventas.');
+    return [];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of Users. ' + error);
   }
 }
