@@ -6,22 +6,27 @@ import DataTable from 'react-data-table-component';
 
 const Page = () => {
     const [data, setData] = useState<any>([])
-    const [taquillero, setTaquillero] = useState<any>(null)    
+    const [taquillero, setTaquillero] = useState<any>("")    
+    const [taquilleros, setTaquilleros] = useState<any>([])    
     const [initialDate, setInitialDate] = useState<any>("2025-01-01")    
     const [finalDate, setFinalDate] = useState<any>(new Date().toISOString().split('T')[0])    
 
     useEffect(() => {
         const fetchRedentionsByDate = async () => {
             try {
+                await axios.get(`/api/taquilla/returnsTaquilleros`)
+                .then((response) => setTaquilleros(response.data))
+                .catch((error) => { setTaquilleros(null) });
+
                 await axios.post(`/api/taquilla/redentionsByDate`, { initialDate: initialDate, finalDate: finalDate })
-                .then((response) => setData(response.data))
+                .then((response) => setData(response.data.filter((x: any) => x.Usuario == taquillero)))
                 .catch((error) => { setData([]) });
             } catch (error) {
                 console.error("Error fetching disabled days: ", error);
             }
         };
         fetchRedentionsByDate();
-    }, [initialDate, finalDate]);
+    }, [initialDate, finalDate, taquillero]);
 
     // Definición de columnas
     const columns: any = [
@@ -59,11 +64,13 @@ return (
                 <label id="taquillero" className='font-semibold'>Selecciona el taquillero</label>
                 <select 
                 value={taquillero} 
+                multiple={false}
                 className='border-2 pr-[2rem] border-gray-300 rounded-lg p-2 text-md focus:outline-none focus:ring-2 focus:ring-blue-500' 
                 onChange={(e) => setTaquillero(e.target.value)} 
                 >
-                    {Array.from(new Set(data))?.map((x: any) => 
-                        <option key={x.Nombre_Usuario}  value="">{x?.Nombre_Usuario}</option>
+                        <option value={""}>Selecciona</option>
+                    {taquilleros.map((x: any) => 
+                        <option key={x.id_user}  value={x.id_user}>{x?.name}</option>
                     )}
                 </select>
                 <label id="initialDate" className='font-semibold'>Selecciona la fecha inicial</label>
