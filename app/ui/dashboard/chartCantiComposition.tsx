@@ -57,6 +57,7 @@ export default function ChartCantiComposition({
           selectedPeriod,
         );
         setDataSales(salesData.length ? salesData : []);
+
         if (salesData.length > 0) {
           const categoryMap: Record<number, string[]> = {
             1: [

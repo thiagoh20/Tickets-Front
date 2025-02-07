@@ -1,12 +1,8 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
-
 import { AreaChart, TooltipProps } from '@/app/components/AreaChart';
 import { Card } from '@/app/components/Card';
 import {
-  getTotalSales,
-  getTotalSalesTipePasportCantidad,
   getTotalSalesTipePasportCantidadNuevo,
 } from '@/app/lib/data';
 
