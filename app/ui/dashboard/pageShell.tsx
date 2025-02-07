@@ -7,8 +7,7 @@ import { Label } from 'recharts';
 import React, { useState } from 'react';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { cx, focusRing } from '@/app/lib/utils';
-import ChartComposition from './chartSalesComposition';
-import BarChartSales from './barChart';
+
 import ChartSalesComposition from './chartSalesComposition';
 import ChartCantiComposition from './chartCantiComposition';
 
