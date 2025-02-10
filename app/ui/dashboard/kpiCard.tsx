@@ -123,11 +123,6 @@ const KpiCardNumber = ({
           selectedPeriod,
         );
         
-        // const salesData = await getTotalSales(selectedPark, selectedPeriod);
-        // const salesData = await getTotalSalesTipePasportCantidad(
-        //   selectedPark,
-        //   selectedPeriod,
-        // );
 
         setDataSales(salesData.length ? salesData : data);
       } catch (error) {

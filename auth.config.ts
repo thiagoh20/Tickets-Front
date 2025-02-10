@@ -12,6 +12,7 @@ export const authConfig = {
         token.role = user.role;
         token.park = user.park;
         token.changePass = user.changePass;
+        token.accessToken = user.token;
       }
       return token;
     },
@@ -23,9 +24,9 @@ export const authConfig = {
         (session.user as any).idUser = token.idUser;
         (session.user as any).changePass = token.changePass;
       }
+      session.accessToken = token.accessToken as string | undefined; // Asegurar el tipo
       return session;
     },
-
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');

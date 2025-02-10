@@ -27,7 +27,7 @@ export type TicketInfo = {
   type: string;
   count: number;
 };
-export type LoginResponse = { user?: User; message: string };
+export type LoginResponse = { user?: User; message: string ; token?: string; };
 
 export type User = {
   idUser: string;
@@ -38,6 +38,7 @@ export type User = {
   park: string;
   changePass?: string;
   statusprofile?: string;
+  token?: string;
 };
 
 export type ApiResponse = {
@@ -53,6 +54,7 @@ export type ApiResponse = {
     statusprofile?: string;
   }; 
    message: string;
+   token?: string;
 };
 
 export type UserProfile = {
