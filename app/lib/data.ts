@@ -371,10 +371,7 @@ export async function getTotalSalesTipePasportCantidadNuevo(
   filter: string,
 ) {
   noStore();
-
   try {
-    const session = await auth();
-    const token = session?.accessToken;
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
     const response = await axios.post(
       apiUrl,
@@ -382,12 +379,10 @@ export async function getTotalSalesTipePasportCantidadNuevo(
         idPark: idPark,
         filterType: filter,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Agregar el token en los headers
-        },
-      },
+      
     );
+    console.log(response);
+
     const data = response.data.TotalSalesTipePasport;
     const groupedData = data.reduce((acc: any, item: any) => {
       const date = item.date;
@@ -424,17 +419,12 @@ export async function getTotalSalesTipePasportNuevo(
 ) {
   noStore();
   try {
-    const session = await auth();
-    const token = session?.accessToken;
+   
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
     const response = await axios.post(
       apiUrl,
       { idPark, filterType: filter },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Agregar el token en los headers
-        },
-      },
+      
     );
     if (
       response.data.TotalSalesTipePasport &&
@@ -481,17 +471,12 @@ export async function getTotalSalesNumTipePasportNuevo(
 ) {
   noStore();
   try {
-    const session = await auth();
-    const token = session?.accessToken;
+
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
     const response = await axios.post(
       apiUrl,
       { idPark, filterType: filter },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Agregar el token en los headers
-        },
-      },
+      
     );
     if (
       response.data.TotalSalesTipePasport &&
