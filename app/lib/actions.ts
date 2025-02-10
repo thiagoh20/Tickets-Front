@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { signIn } from '@/auth';
+import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import axios from 'axios';
 import dotenv from 'dotenv';
@@ -105,9 +105,12 @@ export async function createCandidato(prevState: Statee, formData: FormData) {
 
 export async function validateTicket(ticketCode: any) {
   try {
+    const session = await auth();
+    const token = session?.accessToken;
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/validateTicket`,
-      ticketCode,
+      { ticketCode },
+      { headers: { Authorization: `Bearer ${token}` } },
     );
     return response.data.message;
   } catch (error) {
@@ -146,7 +149,8 @@ export async function updateCandidato(
   }
   try {
     const { nombre, nombreUser, rol } = validatedFields.data;
-    
+    const session = await auth();
+    const token = session?.accessToken;
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/updateUserByIdTaquilla`,
       {
@@ -157,6 +161,7 @@ export async function updateCandidato(
           rol: rol,
         },
       },
+      { headers: { Authorization: `Bearer ${token}` } },
     );
     revalidatePath('/dashboard/candidatos');
     redirect('/dashboard/candidatos');
@@ -167,9 +172,12 @@ export async function updateCandidato(
 
 export async function updateUser(user: any) {
   try {
+    const session = await auth();
+    const token = session?.accessToken;
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/updateUserByIdTaquilla`,
-      user,
+      { user },
+      { headers: { Authorization: `Bearer ${token}` } },
     );
     revalidatePath('/dashboard/candidatos');
   } catch (error) {

@@ -7,6 +7,7 @@ import { User, CandidatosTable, Ticket, UserProfile } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
 import axios from 'axios';
 import { formatCurrency, formatDateToLocal } from './utils';
+import { auth } from '@/auth';
 
 export async function fetchCardDataCandidatos(grupo: string) {
   noStore();
@@ -139,10 +140,14 @@ export async function fetchUserByIdTaquilla(
   id: string,
 ): Promise<UserProfile | null> {
   try {
+    const session = await auth();
+    const token = session?.accessToken;
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getUserByIdTaquilla`;
-    const response = await axios.post(apiUrl, {
-      id: id,
-    });
+    const response = await axios.post(
+      apiUrl,
+      { id: id },
+      { headers: { Authorization: `Bearer ${token}` } },
+    );
 
     if (response.data.message) {
       return null;
@@ -164,10 +169,15 @@ export async function fetchFilteredCandidatos(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
+    const session = await auth();
+    const token = session?.accessToken;
+
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsTwo`;
-    const { data: tickets } = await axios.post(apiUrl, {
-      idpark: user?.park,
-    });
+    const { data: tickets } = await axios.post(
+      apiUrl,
+      { idpark: user?.park }, // 🔹 Cuerpo de la petición
+      { headers: { Authorization: `Bearer ${token}` } }, // 🔹 Headers en el tercer parámetro
+    );
 
     const filteredTickets = tickets.filter((ticket: Ticket) => {
       if (user?.role === 'taquillero' && !query.trim()) {
@@ -239,10 +249,15 @@ export async function fetchFilteredInvoices(
 export async function fetchTicketsCount(query: string, user: any) {
   noStore();
   try {
+    const session = await auth();
+    const token = session?.accessToken;
+
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsTwo`;
-    const { data: tickets } = await axios.post(apiUrl, {
-      idpark: user?.park,
-    });
+    const { data: tickets } = await axios.post(
+      apiUrl,
+      { idpark: user?.park }, // 🔹 Cuerpo de la petición
+      { headers: { Authorization: `Bearer ${token}` } }, // 🔹 Headers en el tercer parámetro
+    );
 
     const searchString = query.toLowerCase();
     const count = tickets.filter((ticket: Ticket) => {
@@ -276,11 +291,16 @@ export async function fetchFilteredUsers(
 ) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
+  const session = await auth();
+  const token = session?.accessToken;
   try {
     const effectiveStatus = status || 'Habilitado';
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla/${effectiveStatus}`;
-    const response = await axios.get(apiUrl);
+    const response = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Agregar el token en los headers
+      },
+    });
     if (response.data.message) {
       console.warn(response.data.message);
       return [];
@@ -313,11 +333,17 @@ export async function fetchFilteredUsersPage(
   status: string = 'Habilitado',
 ) {
   noStore();
+  const session = await auth();
+  const token = session?.accessToken;
 
   try {
     const effectiveStatus = status || 'Habilitado';
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getAllUsersTaquilla/${effectiveStatus}`;
-    const response = await axios.get(apiUrl);
+    const response = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Agregar el token en los headers
+      },
+    });
     if (response.data.message) {
       console.warn(response.data.message);
       return 1;
@@ -340,32 +366,6 @@ export async function fetchFilteredUsersPage(
   }
 }
 
-export async function getTotalSales(idPark: string, filter: string) {
-  noStore();
-  try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/data/totalsales`;
-    const response = await axios.post(apiUrl, {
-      idPark: idPark,
-      filterType: filter,
-    });
-    if (response.data.totalSales && response.data.totalSales.length > 0) {
-      const transformedData = response.data.totalSales.map((sale: any) => ({
-        date:
-          filter === 'day'
-            ? formatDateToLocal(sale?.date) || sale?.date
-            : sale?.date,
-        total_sales: parseFloat(sale?.total_sales),
-      }));
-      return transformedData;
-    }
-    console.warn('No hay registros de ventas.');
-    return [];
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of Users.' + error);
-  }
-}
-
 export async function getTotalSalesTipePasportCantidadNuevo(
   idPark: string,
   filter: string,
@@ -373,11 +373,21 @@ export async function getTotalSalesTipePasportCantidadNuevo(
   noStore();
 
   try {
+    const session = await auth();
+    const token = session?.accessToken;
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
-    const response = await axios.post(apiUrl, {
-      idPark: idPark,
-      filterType: filter,
-    });
+    const response = await axios.post(
+      apiUrl,
+      {
+        idPark: idPark,
+        filterType: filter,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Agregar el token en los headers
+        },
+      },
+    );
     const data = response.data.TotalSalesTipePasport;
     const groupedData = data.reduce((acc: any, item: any) => {
       const date = item.date;
@@ -414,8 +424,18 @@ export async function getTotalSalesTipePasportNuevo(
 ) {
   noStore();
   try {
+    const session = await auth();
+    const token = session?.accessToken;
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
-    const response = await axios.post(apiUrl, { idPark, filterType: filter });
+    const response = await axios.post(
+      apiUrl,
+      { idPark, filterType: filter },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Agregar el token en los headers
+        },
+      },
+    );
     if (
       response.data.TotalSalesTipePasport &&
       response.data.TotalSalesTipePasport.length > 0
@@ -461,8 +481,18 @@ export async function getTotalSalesNumTipePasportNuevo(
 ) {
   noStore();
   try {
+    const session = await auth();
+    const token = session?.accessToken;
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
-    const response = await axios.post(apiUrl, { idPark, filterType: filter });
+    const response = await axios.post(
+      apiUrl,
+      { idPark, filterType: filter },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Agregar el token en los headers
+        },
+      },
+    );
     if (
       response.data.TotalSalesTipePasport &&
       response.data.TotalSalesTipePasport.length > 0
