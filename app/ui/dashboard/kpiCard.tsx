@@ -51,11 +51,7 @@ const categories: Category[] = [
     chartCategory: 'total_sales',
     valueFormatter: numberFormatterNum,
   },
-  {
-    name: '-',
-    chartCategory: 'churn',
-    valueFormatter: numberFormatter,
-  },
+  
 ];
 
 const KpiCard = ({ item, data }: { item: Category; data: DataItem[] }) => {

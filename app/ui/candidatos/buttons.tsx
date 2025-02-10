@@ -2,7 +2,9 @@
 
 import {
   BackspaceIcon,
+  KeyIcon,
   PencilIcon,
+  PencilSquareIcon,
   PlusIcon,
   TrashIcon,
   UserMinusIcon,
@@ -305,13 +307,26 @@ export function UpdatePass({ id }: { id: string }) {
       ) : (
         <form>
           <button
-            className="rounded-md border bg-blue-200 p-2 hover:bg-blue-300"
+            className="rounded-md border p-2 hover:bg-blue-100"
             onClick={handleDeleteClick}
           >
-            <span className="">Restablecer Contraseña</span>
+            <KeyIcon className="w-5" />
           </button>
         </form>
       )}
     </div>
+  );
+}
+
+
+
+export function UpdateUser({ id, page }: { id: string, page: number }) {
+  const href ='/dashboard/candidatos/' + id + '/edit?page=' + page;
+  return (
+    <Link
+      href={href}
+      className="rounded-md border p-2 hover:bg-gray-100">
+     <PencilSquareIcon className="w-5" />
+    </Link>
   );
 }

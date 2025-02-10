@@ -98,7 +98,7 @@ export default function ChartSalesComposition({
       <Card className="mt-6 !p-0">
         <div className="px-6 py-3">
           <h1 className="text-base font-medium text-gray-900 dark:text-gray-50">
-            Número de tickes Vendidos por pasaporte
+            Número de Ventas por Pasaporte
           </h1>
         </div>
         <Divider className="!my-0 [&>div]:dark:!bg-gray-900" />
