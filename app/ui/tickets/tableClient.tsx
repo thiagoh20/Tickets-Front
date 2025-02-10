@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import TicketStatus from '@/app/ui/tickets/status';
 import { Ticket } from '@/app/lib/definitions';
-import { formatCurrency, formatDateToLocal } from '@/app/lib/utils';
+import { formatCurrency, formatDateToLocal, formatFullDateToLocal } from '@/app/lib/utils';
 import Modal from './modalTicket';
 import { validateTicket } from '@/app/lib/actions';
 import { toast, ToastContainer } from 'react-toastify';
@@ -243,7 +243,15 @@ export default function InvoicesTableClient({
               </li>
             ))}
             <li className="mt-2 text-center">
-              <strong>⚠️ Pregunta al usuario si requiere facturación electrónica </strong>{' '}
+              <strong>⚠️ Pregunta al usuario si requiere facturación electrónica </strong>{' '} <br/>
+              {selectedTicket?.status == 'Usado' && 
+              <div className='flex my-[1rem]'>
+                <strong> Fecha de redención: &nbsp; </strong>
+                <p>
+                  {formatFullDateToLocal(selectedTicket?.updated_at)} 
+                </p>
+              </div>
+                }
             </li>
           </ul>
         </div>

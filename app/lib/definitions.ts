@@ -18,6 +18,7 @@ export type Ticket = {
   count_kid: number;
   invoice_electronic: number;
   created_at: string;
+  updated_at: string;
   ticket_info: TicketInfo[];
   price_ticket: number;
   id_operation:string;
