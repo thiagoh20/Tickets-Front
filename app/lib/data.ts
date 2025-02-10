@@ -135,36 +135,23 @@ export async function getUser(email: string) {
   }
 }
 
-export async function fetchCandidatoById(id: string) {
-  noStore();
+export async function fetchUserByIdTaquilla(
+  id: string,
+): Promise<UserProfile | null> {
   try {
-    const data = await sql<CandidatosTable>`
-      SELECT
-        candidato.id,
-        candidato.tipoid,
-        candidato.nombre,
-        candidato.celular,
-        candidato.cargo,
-        candidato.correo,
-        candidato.motivo,
-        candidato.estado_proceso,
-        candidato.fecha_envio,
-        candidato.fecha_ingreso,
-        candidato.grupo,
-        candidato.estadoCandidato,
-        candidato.user_creo
-      FROM candidato
-      WHERE candidato.id = ${id};
-    `;
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/getUserByIdTaquilla`;
+    const response = await axios.post(apiUrl, {
+      id: id,
+    });
 
-    const candidato = data.rows.map((candidato) => ({
-      ...candidato,
-    }));
-
-    return candidato[0];
+    if (response.data.message) {
+      return null;
+    }
+    const user: UserProfile = response.data as UserProfile;
+    return user;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch candidate.');
+    console.error('API Error:', error);
+    throw new Error('Failed to fetch user.');
   }
 }
 

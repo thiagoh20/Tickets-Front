@@ -64,7 +64,7 @@ export type UserProfile = {
   updated_at: string;
   idpark: number;
   changepassword: number;
-  statusprofile: 'Enable' | 'Disable';  // solo "Enable" o "Disable"
+  statusprofile: 'Habilitado' | 'Desahbilitado';  // solo "Enable" o "Disable"
 };
 
 export type CandidatosTable = {

@@ -5,6 +5,7 @@ import {
   UpdatePass,
   Desabled,
   Enable,
+  UpdateUser,
 } from '@/app/ui/candidatos/buttons';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredUsers, fetchFilteredUsersPage } from '@/app/lib/data';
@@ -53,6 +54,7 @@ export default async function InvoicesTable({
                         <div className="flex justify-between gap-1">
                           {candidato.statusprofile === 'Habilitado' && (
                             <>
+                            <UpdateUser id={candidato.id_user} page={1} />
                               <Desabled id={candidato.id_user} />
                               <DeleteInvoice id={candidato.id_user} />
                             </>
@@ -127,6 +129,7 @@ export default async function InvoicesTable({
                           {candidato.statusprofile === 'Habilitado' && (
                             <>
                               <UpdatePass id={candidato.id_user} />
+                              <UpdateUser id={candidato.id_user} page={1} />
                               <Desabled id={candidato.id_user} />
                               <DeleteInvoice id={candidato.id_user} />
                             </>
