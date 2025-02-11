@@ -69,7 +69,7 @@ const TicketControl = ({ park }: { park: string }) => {
       <DayPicker
         mode="single"
         onDayClick={(day) => day && openModal(day)}
-        startMonth={new Date()}
+        defaultMonth={new Date()}
         locale={es}
         modifiers={{
           booked: disabledDays,
