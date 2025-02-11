@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DownloadExcelButton from './invoices/buttonDescarga';
 import { formatCurrency } from '../lib/utils';
+import { formatMonth } from '../utils/formatMonth';
 
 const Modal = ({
   closeModal,
@@ -18,8 +19,9 @@ const Modal = ({
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
+        console.log(invoice)
         const response = await axios.post(`/api/marketing/generateInovice`, {
-          month: invoice.Mes.split(' ')[0],
+          month: formatMonth(invoice.Mes),
         });
         setInvoiceInfo(response.data);
       } catch (err: any) {
