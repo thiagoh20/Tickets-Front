@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import XlsxPopulate from 'xlsx-populate';
 import { fetchInvoices } from '@/app/lib/data';
 import { string } from 'zod';
+import { formatMonth } from '@/app/utils/formatMonth';
 
 export async function GET(request: any, { params }: any) {
   try {
@@ -9,7 +10,7 @@ export async function GET(request: any, { params }: any) {
     const idpark = url.searchParams.get('idpark');
     const month = url.searchParams.get('month');
 
-    const tickets = await fetchInvoices(idpark || '', month || '');
+    const tickets = await fetchInvoices(idpark || '', formatMonth(`${month} de 2025`) || '');
 
     const workbook = await XlsxPopulate.fromBlankAsync();
     const sheet = workbook.sheet(0);
