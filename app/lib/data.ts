@@ -543,3 +543,39 @@ export async function getTotalCantTipePasportNuevo(
     throw new Error('Failed to fetch total number of Users. ' + error);
   }
 }
+
+export async function getAllTicketsByStatus() {
+  noStore();
+  try {
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsByStatus`;
+    const response = await axios.get(apiUrl);
+    const totalTickets = response.data.reduce(
+      (acc: any, item: any) => acc + item.total_tickets,
+      0,
+    );
+
+    const formattedData = response.data.map((item: any) => ({
+      name: item.status,
+      amount: item.total_tickets,
+      share: `${((item.total_tickets / totalTickets) * 100).toFixed(1)}%`,
+      color: getColor(item.status),
+    }));
+
+    return formattedData;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of Users. ' + error);
+  }
+}
+
+function getColor(status: string): string {
+  const colors: Record<string, string> = {
+    Usado: 'bg-blue-500 dark:bg-green-500',
+    Pendiente: 'bg-gray-500 dark:bg-gray-500',
+    'No exitoso': 'bg-violet-500 dark:bg-red-500',
+    Valido: 'bg-green-500 dark:bg-blue-500',
+    Devolucion: 'bg-yellow-500 dark:bg-gray-500',
+    Cancelado: 'bg-red-500 dark:bbg-red-500',
+  };
+  return colors[status] || 'bg-gray-300 dark:bg-gray-300';
+}
