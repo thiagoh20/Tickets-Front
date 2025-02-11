@@ -31,7 +31,7 @@ import { Calendar as CalendarPrimitive, type Matcher } from "./Calendar"
 
 const isBrowserLocaleClockType24h = () => {
   const language =
-    typeof window !== "undefined" ? window.navigator.language : "en-US"
+    typeof window !== "undefined" ? window.navigator.language : "es-ES"
 
   const hr = new Intl.DateTimeFormat(language, {
     hour: "numeric",
