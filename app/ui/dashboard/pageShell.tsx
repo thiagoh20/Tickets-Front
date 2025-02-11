@@ -142,7 +142,6 @@ export default function PageShell() {
             selectedPeriod={selectedPeriod}
             selectedPark={selectedPark}
           />
-          
           <BarListComponent/>
         </main>
       </div>
