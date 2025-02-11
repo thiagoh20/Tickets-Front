@@ -83,7 +83,7 @@ export const DateRangePickerPresetsExample: React.FC<DateRangePickerProps> = ({ 
       <p className="flex items-center rounded-md bg-gray-100 mx-2 p-2 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-300">
         Rango seleccionado:{" "}
         {dateRange
-          ? `${dateRange.to?.toLocaleDateString() ?? ""} – ${dateRange.to?.toLocaleDateString() ?? ""}`
+          ? `${dateRange.from?.toLocaleDateString() ?? ""} – ${dateRange.to?.toLocaleDateString() ?? ""}`
           : "None"}
       </p>
     </div>
