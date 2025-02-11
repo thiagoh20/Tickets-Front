@@ -24,7 +24,7 @@ const Invoices: React.FC<{ park: string }> = ({ park }: { park: string }) => {
     useEffect(() => {
         const fetchDisabledDays = async () => {
             try {
-                await axios.post(`/api/marketing/getInvoicesPark`, { idpark: park == 'Parque Norte' ? 1 : 2 })
+                await axios.post(`/api/marketing/getInvoicesPark`)
                 .then((response) => setData(response.data))
                 .catch((error) => { console.error("Error fetching disabled days: ", error); });
             } catch (error) {
@@ -44,19 +44,13 @@ const Invoices: React.FC<{ park: string }> = ({ park }: { park: string }) => {
     },
     { 
         name: 'Factura', 
-        selector: (row: any) => park == 'Parque Norte' ? `PN_${formatInvoice(row.Mes)}` : `AP_${formatInvoice(row.Mes)}`, 
-        sortable: true 
-    },
-    { 
-        name: 'Categoría', 
-        selector: (row: any) => park, 
+        selector: (row: any) => formatInvoice(row.Mes), 
         sortable: true 
     },
     { 
         name: 'Fecha', 
         selector: (row: any) => `15 de ${row.Mes}`, 
         sortable: true, 
-        width: '180px'
     },
     { 
         name: 'Cantidad', 
@@ -66,8 +60,6 @@ const Invoices: React.FC<{ park: string }> = ({ park }: { park: string }) => {
     { 
         name: 'Ver', 
         selector: (row: any) => <EyeIcon cursor={'pointer'} width={25} onClick={() => openModal(row)} />, 
-        sortable: false,
-        width: '120px'
     },
     { 
         name: 'Descargar', 
