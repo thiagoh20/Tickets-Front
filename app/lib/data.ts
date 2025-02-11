@@ -372,14 +372,10 @@ export async function getTotalSalesTipePasportCantidadNuevo(
   noStore();
   try {
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
-    const response = await axios.post(
-      apiUrl,
-      {
-        idPark: idPark,
-        filterType: filter,
-      },
-      
-    );
+    const response = await axios.post(apiUrl, {
+      idPark: idPark,
+      filterType: filter,
+    });
     console.log(response);
 
     const data = response.data.TotalSalesTipePasport;
@@ -418,13 +414,8 @@ export async function getTotalSalesTipePasportNuevo(
 ) {
   noStore();
   try {
-   
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
-    const response = await axios.post(
-      apiUrl,
-      { idPark, filterType: filter },
-      
-    );
+    const response = await axios.post(apiUrl, { idPark, filterType: filter });
     if (
       response.data.TotalSalesTipePasport &&
       response.data.TotalSalesTipePasport.length > 0
@@ -470,13 +461,8 @@ export async function getTotalSalesNumTipePasportNuevo(
 ) {
   noStore();
   try {
-
     const apiUrl = `/api/data/getTotalSalesTipePasportNuevo`;
-    const response = await axios.post(
-      apiUrl,
-      { idPark, filterType: filter },
-      
-    );
+    const response = await axios.post(apiUrl, { idPark, filterType: filter });
     if (
       response.data.TotalSalesTipePasport &&
       response.data.TotalSalesTipePasport.length > 0
@@ -507,6 +493,48 @@ export async function getTotalSalesNumTipePasportNuevo(
         'N/A': group['N/A'] || '0',
       }));
       return transformedData;
+    }
+    console.warn('No hay registros de ventas.');
+    return [];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of Users. ' + error);
+  }
+}
+
+export async function getTotalCantTipePasportNuevo(
+  initialDate: string,
+  finalDate: string,
+) {
+  noStore();
+  try {
+    const apiUrl = `/api/data/getTotalSalesByDates`;
+    const response = await axios.post(apiUrl, {
+      initialDate: initialDate,
+      finalDate: finalDate,
+    });
+    if (
+      response.data.TotalSalesTipePasport &&
+      response.data.TotalSalesTipePasport.length > 0
+    ) {
+      const totalSalesByPassport: { [key: string]: number } = {
+        'Pasaporte Extremo': 0,
+        'Pasaporte Aventura': 0,
+        'Pasaporte Fusión': 0,
+        'Ingreso Sin Atracciones': 0,
+        'Pasaporte Acuático Adultos': 0,
+        'Pasaporte Acuático Niños': 0,
+        'Ingreso General': 0,
+      };
+
+      response.data.TotalSalesTipePasport.forEach((sale: any) => {
+        const totalSales = Number(sale.total_sales) || 0; // Convertir a número
+        if (sale.name_passport in totalSalesByPassport) {
+          totalSalesByPassport[sale.name_passport] += totalSales;
+        }
+      });
+
+      return totalSalesByPassport;
     }
     console.warn('No hay registros de ventas.');
     return [];
