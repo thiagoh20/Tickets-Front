@@ -19,7 +19,6 @@ const Modal = ({
     const fetchInvoice = async () => {
       try {
         const response = await axios.post(`/api/marketing/generateInovice`, {
-          idpark: park == 'Parque Norte' ? 1 : 2,
           month: invoice.Mes.split(' ')[0],
         });
         setInvoiceInfo(response.data);
