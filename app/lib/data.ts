@@ -547,7 +547,7 @@ export async function getTotalCantTipePasportNuevo(
 export async function getAllTicketsByStatus() {
   noStore();
   try {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/getAllTicketsByStatus`;
+    const apiUrl = `/api/marketing/getAllTicketsByStatus`;
     const response = await axios.get(apiUrl);
     const totalTickets = response.data.reduce(
       (acc: any, item: any) => acc + item.total_tickets,
