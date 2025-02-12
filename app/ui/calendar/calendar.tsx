@@ -56,7 +56,8 @@ const TicketControl = ({ park }: { park: string }) => {
         });
       await axios
         .post(`/api/paymentsway/webhook/sendBlockParkEmail`, {
-          date: day
+          date: day,
+          idpark: park == 'Parque Norte' ? 1 : 2
         })
         .then(() => closeModal())
         .catch((error) => {
