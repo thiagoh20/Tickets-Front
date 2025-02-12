@@ -50,9 +50,17 @@ const TicketControl = ({ park }: { park: string }) => {
           idpark: park == 'Parque Norte' ? 1 : 2,
           blockDate: day.toISOString().split('T')[0],
         })
-        .then(() => closeModal())
+        .then(() => {})
         .catch((error) => {
           console.error('Error blocking date: ', error);
+        });
+      await axios
+        .post(`/api/paymentsway/webhook/sendBlockParkEmail`, {
+          date: day
+        })
+        .then(() => closeModal())
+        .catch((error) => {
+          console.error('Error sending emails: ', error);
         });
     } catch (error) {
       console.error('Error fetching disabled days: ', error);
