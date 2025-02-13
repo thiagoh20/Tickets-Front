@@ -63,7 +63,7 @@ const Invoices: React.FC<{ park: string }> = ({ park }: { park: string }) => {
     },
     { 
         name: 'Descargar', 
-        selector: (row: any) => <DownloadExcelButton idpark={park == 'Parque Norte' ? 1 : 2} month={row.Mes.split(' ')[0]} />, 
+        selector: (row: any) => <DownloadExcelButton initialDate={"2025-02-01"} finalDate={"2025-02-09"} />, 
         sortable: false,
         width: '200px'
     },

@@ -7,10 +7,10 @@ import { formatMonth } from '@/app/utils/formatMonth';
 export async function GET(request: any, { params }: any) {
   try {
     const url = new URL(request.url);
-    const idpark = url.searchParams.get('idpark');
-    const month = url.searchParams.get('month');
+    const initialDate = url.searchParams.get('initialDate');
+    const finalDate = url.searchParams.get('finalDate');
 
-    const tickets = await fetchInvoices(idpark || '', formatMonth(`${month} de 2025`) || '');
+    const tickets = await fetchInvoices(initialDate, finalDate)
 
     const workbook = await XlsxPopulate.fromBlankAsync();
     const sheet = workbook.sheet(0);
@@ -23,8 +23,8 @@ export async function GET(request: any, { params }: any) {
       'Celular',
       'Tipo ID',
       'Número ID',
+      'Fecha de Compra',
       'Fecha del Ticket',
-      'Estado',
       'Precio del Ticket',
       'Método de Pago',
       'Moneda',
@@ -32,7 +32,8 @@ export async function GET(request: any, { params }: any) {
       'ID Operación',
       'ID Usuario',
       'Canal',
-      'Descripción'
+      'Descripción',
+      'Estado'
     ];
 
     // Recorrer la cabecera y agregarla al archivo Excel
@@ -50,6 +51,7 @@ export async function GET(request: any, { params }: any) {
       sheet.cell(rowIndex + 2, 5).value(ticket.phone_number);
       sheet.cell(rowIndex + 2, 6).value(ticket.identity_type);
       sheet.cell(rowIndex + 2, 7).value(ticket.identity_number);
+      sheet.cell(rowIndex + 2, 9).value(new Date(ticket.createdAt).toISOString().slice(0, 10));
       sheet
         .cell(rowIndex + 2, 8)
         .value(
@@ -57,7 +59,6 @@ export async function GET(request: any, { params }: any) {
             ? new Date(ticket.date_ticket).toISOString().slice(0, 10)
             : '',
         );
-      sheet.cell(rowIndex + 2, 9).value(ticket.status);
       sheet.cell(rowIndex + 2, 10).value(ticket.price_ticket);
       sheet.cell(rowIndex + 2, 11).value(ticket.type_pay);
       sheet.cell(rowIndex + 2, 12).value(ticket.type_money);
@@ -66,6 +67,7 @@ export async function GET(request: any, { params }: any) {
       sheet.cell(rowIndex + 2, 15).value(ticket.user_id);
       sheet.cell(rowIndex + 2, 16).value(ticket.channel);
       sheet.cell(rowIndex + 2, 17).value(ticket.details);
+      sheet.cell(rowIndex + 2, 18).value(ticket.status);
     });
     const arrayBuffer = await workbook.outputAsync();
     return new Response(arrayBuffer, {

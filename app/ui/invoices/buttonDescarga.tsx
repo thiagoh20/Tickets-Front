@@ -3,15 +3,15 @@
 import { useState } from 'react';
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 
-const DownloadExcelButton = (idpark: any) => {
+const DownloadExcelButton = ({ initialDate, finalDate }: any) => {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${window.location.origin}/dashboard/generar-excel/?idpark=${idpark.idpark}&month=${idpark.month}`,
-      );
+        `${window.location.origin}/dashboard/generar-excel/?initialDate=${initialDate}&finalDate=${finalDate}`,
+      )
       if (!response.ok) {
         throw new Error('Error al generar el archivo');
       }
@@ -19,7 +19,7 @@ const DownloadExcelButton = (idpark: any) => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Informe_${idpark.month}_${idpark.idpark == 1 ? 'PN' : 'AP'}.xlsx`; 
+      a.download = `Informe_Ventas.xlsx`; 
       document.body.appendChild(a);
       a.click();
    
