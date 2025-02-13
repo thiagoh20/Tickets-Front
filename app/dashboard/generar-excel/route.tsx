@@ -31,6 +31,8 @@ export async function GET(request: any, { params }: any) {
       'Código del Ticket',
       'ID Operación',
       'ID Usuario',
+      'Canal',
+      'Descripción'
     ];
 
     // Recorrer la cabecera y agregarla al archivo Excel
@@ -62,6 +64,8 @@ export async function GET(request: any, { params }: any) {
       sheet.cell(rowIndex + 2, 13).value(ticket.ticket_code);
       sheet.cell(rowIndex + 2, 14).value(ticket.id_operation);
       sheet.cell(rowIndex + 2, 15).value(ticket.user_id);
+      sheet.cell(rowIndex + 2, 16).value(ticket.channel);
+      sheet.cell(rowIndex + 2, 17).value(ticket.details);
     });
     const arrayBuffer = await workbook.outputAsync();
     return new Response(arrayBuffer, {
