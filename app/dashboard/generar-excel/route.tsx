@@ -51,14 +51,14 @@ export async function GET(request: any, { params }: any) {
       sheet.cell(rowIndex + 2, 5).value(ticket.phone_number);
       sheet.cell(rowIndex + 2, 6).value(ticket.identity_type);
       sheet.cell(rowIndex + 2, 7).value(ticket.identity_number);
-      sheet.cell(rowIndex + 2, 9).value(new Date(ticket.createdAt).toISOString().slice(0, 10));
+      sheet.cell(rowIndex + 2, 8).value(new Date(ticket.createdAt).toISOString().slice(0, 10));
       sheet
-        .cell(rowIndex + 2, 8)
-        .value(
-          ticket.date_ticket
-            ? new Date(ticket.date_ticket).toISOString().slice(0, 10)
-            : '',
-        );
+      .cell(rowIndex + 2, 9)
+      .value(
+        ticket.date_ticket
+        ? new Date(ticket.date_ticket).toISOString().slice(0, 10)
+        : '',
+      );
       sheet.cell(rowIndex + 2, 10).value(ticket.price_ticket);
       sheet.cell(rowIndex + 2, 11).value(ticket.type_pay);
       sheet.cell(rowIndex + 2, 12).value(ticket.type_money);

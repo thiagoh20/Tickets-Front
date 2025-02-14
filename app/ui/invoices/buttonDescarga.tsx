@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 
-const DownloadExcelButton = ({ initialDate, finalDate }: any) => {
+const DownloadExcelButton = ({ initialDate, finalDate, disabled }: any) => {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
@@ -33,9 +33,9 @@ const DownloadExcelButton = ({ initialDate, finalDate }: any) => {
 
   return (
     <button
-      onClick={handleDownload}
+      onClick={!disabled ? handleDownload : () => {}}
       disabled={loading}
-      className=" mb-2 flex rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+      className={` mb-2 flex rounded ${!disabled ? 'bg-green-500 cursor-pointer hover:bg-green-700' : 'bg-red-500 cursor-not-allowed hover:bg-gray-700'} px-4 py-2 font-bold text-white `}
     >
       <ArrowDownTrayIcon className="mr-3 w-6" />
       <div className="block">

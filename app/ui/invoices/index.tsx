@@ -1,69 +1,54 @@
-import { formatInvoice } from '@/app/utils/formatInvoice';
-import { EyeIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import Modal from '@/app/ui/modal';
 import DownloadExcelButton from './buttonDescarga';
 import { formatCurrency } from '@/app/lib/utils';
 
 const Invoices: React.FC<{ park: string }> = ({ park }: { park: string }) => {
-    const [data, setData] = useState([])
-    const [invoice, setInvoice] = useState<any>();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    
-      const openModal = (row: any) => {
-        setInvoice(row);
-        setIsModalOpen(true);
-      };
-    
-      const closeModal = () => {
-        setIsModalOpen(false);
-      };
+    const [data, setData] = useState<any>([])
+    const [initialDate, setInitialDate] = useState<any>(null)    
+    const [finalDate, setFinalDate] = useState<any>(null)    
 
     useEffect(() => {
         const fetchDisabledDays = async () => {
             try {
-                await axios.post(`/api/marketing/getInvoicesPark`)
+                await axios.post(`/api/marketing/getInvoicesPark`, { initialDate, finalDate })
                 .then((response) => setData(response.data))
-                .catch((error) => { console.error("Error fetching disabled days: ", error); });
+                .catch((error) => setData([{ Mes: "",Total: "0"}]));
             } catch (error) {
+                setData([{ Mes: "",Total: "0"}])
                 console.error("Error fetching disabled days: ", error);
             }
         };
         fetchDisabledDays();
-    }, [park]);
+    }, [initialDate, finalDate]);
 
   // Definición de columnas
   const columns: any = [
     { 
         name: 'Estado', 
-        selector: (row: any) => '🟢', 
+        selector: (row: any) => (initialDate && finalDate) ? '🟢' : '🔴', 
         sortable: false,
         width: '90px'
     },
     { 
-        name: 'Factura', 
-        selector: (row: any) => formatInvoice(row.Mes), 
-        sortable: true 
-    },
-    { 
-        name: 'Fecha', 
-        selector: (row: any) => `15 de ${row.Mes}`, 
+        name: 'Fecha inicial', 
+        selector: (row: any) => initialDate ?? 'No seleccionada', 
         sortable: true, 
     },
     { 
-        name: 'Cantidad', 
+        name: 'Fecha Final', 
+        selector: (row: any) => finalDate ?? 'No seleccionada', 
+        sortable: true, 
+    },
+    { 
+        name: 'Valor', 
         selector: (row: any) => formatCurrency(row.Total), 
         sortable: true 
     },
     { 
-        name: 'Ver', 
-        selector: (row: any) => <EyeIcon cursor={'pointer'} width={25} onClick={() => openModal(row)} />, 
-    },
-    { 
         name: 'Descargar', 
-        selector: (row: any) => <DownloadExcelButton initialDate={"2025-02-01"} finalDate={"2025-02-09"} />, 
+        selector: (row: any) => <DownloadExcelButton initialDate={initialDate} finalDate={finalDate} disabled={!(initialDate && finalDate)} />, 
         sortable: false,
         width: '200px'
     },
@@ -71,10 +56,25 @@ const Invoices: React.FC<{ park: string }> = ({ park }: { park: string }) => {
 
 return (
     <div className='w-[100%] md:w-full px-[1rem]'>
-        {isModalOpen && <Modal closeModal={closeModal} invoice={invoice} park={park} />}
+        <div className="flex md:flex-row flex-col justify-center items-center gap-[2rem] mb-[2rem]">
+                <label id="initialDate" className='font-semibold'>Selecciona la fecha inicial</label>
+                <input 
+                type='date'
+                value={initialDate} 
+                className='border-2 border-gray-300 rounded-lg p-2 text-md focus:outline-none focus:ring-2 focus:ring-blue-500' 
+                onChange={(e) => setInitialDate(e.target.value)} 
+                />
+                <label id="initialDate" className='font-semibold'>Selecciona la fecha final</label>
+                <input 
+                type='date'
+                value={finalDate} 
+                className='border-2 border-gray-300 rounded-lg p-2 text-md focus:outline-none focus:ring-2 focus:ring-blue-500' 
+                onChange={(e) => setFinalDate(e.target.value)} 
+                />
+            </div>
         <DataTable
             columns={columns}
-            data={data}
+            data={data || [{ Total: '0' }]}
             pagination
             paginationPerPage={5} // Número de filas por página
             paginationRowsPerPageOptions={[5, 10]} // Opciones de filas por página
