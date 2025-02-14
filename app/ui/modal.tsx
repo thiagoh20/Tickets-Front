@@ -107,8 +107,8 @@ const Modal = ({
             Cerrar
           </button>
           <DownloadExcelButton
-            idpark={park == 'Parque Norte' ? 1 : 2}
-            month={invoice.Mes.split(' ')[0]}
+            initialDate={"2025-02-01"}
+            finalDate={"2025-02-09"}
           />
         </div>
       </div>

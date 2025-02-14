@@ -110,12 +110,13 @@ export async function fetchCardData() {
 
 const ITEMS_PER_PAGE = 9;
 
-export async function fetchInvoices(idpark: string, month: string) {
+export async function fetchInvoices(initialDate: any, finalDate: any) {
   noStore();
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_BACK_LINK}/api/marketing/generateInovice`;
     const { data: tickets } = await axios.post(apiUrl, {
-      month: month,
+      initialDate: initialDate,
+      finalDate: finalDate,
     });
 
     return tickets;
