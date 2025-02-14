@@ -108,8 +108,8 @@ export async function validateTicket(ticketCode: any) {
     const session = await auth();
     const token = session?.accessToken;
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/validateTicket`,
-      { ticketCode },
+      `${process.env.NEXT_PUBLIC_BACK_LINK}/api/taquilla/validateTicketNew`,
+      ticketCode,
       { headers: { Authorization: `Bearer ${token}` } },
     );
     return response.data.message;

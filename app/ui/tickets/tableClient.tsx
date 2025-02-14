@@ -35,9 +35,7 @@ export default function InvoicesTableClient({
     if (selectedTicket) {
       try {
         const data = {
-          type_document: selectedTicket.identity_type,
-          document: selectedTicket.identity_number,
-          park:user?.park,
+          id_operation: selectedTicket.id_operation,
           id_user:user?.idUser,
         };
         const response = await validateTicket(data);
