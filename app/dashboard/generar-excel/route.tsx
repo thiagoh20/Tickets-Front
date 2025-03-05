@@ -85,5 +85,5 @@ export async function GET(request: any, { params }: any) {
       { error: 'Error al generar el archivo Excel' },
       { status: 500 },
     );
-  }
-}
+  };
+};
