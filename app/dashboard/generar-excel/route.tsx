@@ -53,7 +53,7 @@ export async function GET(request: any, { params }: any) {
       sheet.cell(rowIndex + 2, 6).value(ticket.phone_number);
       sheet.cell(rowIndex + 2, 7).value(ticket.identity_type);
       sheet.cell(rowIndex + 2, 8).value(ticket.identity_number);
-      sheet.cell(rowIndex + 2, 9).value(new Date(ticket.createdAt).toISOString().slice(0, 10));
+      sheet.cell(rowIndex + 2, 9).value(new Date(ticket.local_date).toISOString().slice(0, 10));
       sheet
       .cell(rowIndex + 2, 10)
       .value(
@@ -61,15 +61,15 @@ export async function GET(request: any, { params }: any) {
         ? new Date(ticket.date_ticket).toISOString().slice(0, 11)
         : '',
       );
-      sheet.cell(rowIndex + 2, 12).value(ticket.price_ticket);
-      sheet.cell(rowIndex + 2, 13).value(ticket.type_pay);
-      sheet.cell(rowIndex + 2, 14).value(ticket.type_money);
-      sheet.cell(rowIndex + 2, 15).value(ticket.ticket_code);
-      sheet.cell(rowIndex + 2, 16).value(ticket.id_operation);
-      sheet.cell(rowIndex + 2, 17).value(ticket.user_id);
-      sheet.cell(rowIndex + 2, 18).value(ticket.channel);
-      sheet.cell(rowIndex + 2, 19).value(ticket.details);
-      sheet.cell(rowIndex + 2, 20).value(ticket.status);
+      sheet.cell(rowIndex + 2, 11).value(ticket.price_ticket);
+      sheet.cell(rowIndex + 2, 12).value(ticket.type_pay);
+      sheet.cell(rowIndex + 2, 13).value(ticket.type_money);
+      sheet.cell(rowIndex + 2, 14).value(ticket.ticket_code);
+      sheet.cell(rowIndex + 2, 15).value(ticket.id_operation);
+      sheet.cell(rowIndex + 2, 16).value(ticket.user_id);
+      sheet.cell(rowIndex + 2, 17).value(ticket.channel);
+      sheet.cell(rowIndex + 2, 18).value(ticket.details);
+      sheet.cell(rowIndex + 2, 19).value(ticket.status);
     });
     const arrayBuffer = await workbook.outputAsync();
     return new Response(arrayBuffer, {
