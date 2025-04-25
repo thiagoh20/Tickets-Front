@@ -24,7 +24,7 @@
     "@types/xlsx-populate": "git+https://github.com/JanLoebel/types-xlsx-populate.git",
     "@vercel/postgres": "^0.10.0",
     "autoprefixer": "10.4.15",
-    "axios": "^1.7.9",
+    "axios": "^1.8.2",
     "bcrypt": "^5.1.1",
     "caniuse-lite": "^1.0.30001653",
     "chart.js": "^4.4.7",
