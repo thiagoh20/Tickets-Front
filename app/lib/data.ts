@@ -440,9 +440,9 @@ export async function getTotalSalesTipePasportNuevo(
         'Pasaporte Aventura': group['Pasaporte Aventura'] || '0',
         'Pasaporte Fusión': group['Pasaporte Fusión'] || '0',
         'Ingreso Sin Atracciones': group['Ingreso Sin Atracciones'] || '0',
-        'Pasaporte Acuático Adultos':
-          group['Pasaporte Acuático Adultos'] || '0',
+        'Pasaporte Acuático Adultos': group['Pasaporte Acuático Adultos'] || '0',
         'Pasaporte Acuático Niños': group['Pasaporte Acuático Niños'] || '0',
+        'Zona Acuática': group['Zona Acuática'] || '0',
         'Ingreso General': group['Ingreso General'] || '0',
         'N/A': group['N/A'] || '0',
       }));
@@ -487,9 +487,9 @@ export async function getTotalSalesNumTipePasportNuevo(
         'Pasaporte Aventura': group['Pasaporte Aventura'] || '0',
         'Pasaporte Fusión': group['Pasaporte Fusión'] || '0',
         'Ingreso Sin Atracciones': group['Ingreso Sin Atracciones'] || '0',
-        'Pasaporte Acuático Adultos':
-          group['Pasaporte Acuático Adultos'] || '0',
+        'Pasaporte Acuático Adultos':group['Pasaporte Acuático Adultos'] || '0',
         'Pasaporte Acuático Niños': group['Pasaporte Acuático Niños'] || '0',
+        'Zona Acuática': group['Zona Acuática'] || '0',
         'Ingreso General': group['Ingreso General'] || '0',
         'N/A': group['N/A'] || '0',
       }));
@@ -525,6 +525,7 @@ export async function getTotalCantTipePasportNuevo(
         'Ingreso Sin Atracciones': 0,
         'Pasaporte Acuático Adultos': 0,
         'Pasaporte Acuático Niños': 0,
+        'Zona Acuática': 0,
         'Ingreso General': 0,
       };
 

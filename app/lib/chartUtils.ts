@@ -85,7 +85,7 @@ export const chartColors = {
     bg: "bg-red-500",
     stroke: "stroke-red-500",
     fill: "fill-red-500",
-    text: "text-white",
+    text: "text-red-500",
   },
   amberStatus: {
     bg: "bg-amber-500",

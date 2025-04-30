@@ -28,11 +28,13 @@ const colorMap: Record<
     | 'pink'
     | 'lime'
     | 'gray'
+    | 'orange'
+    | 'redStatus'
   )[]
 > = {
   1: ['purple', 'blue', 'cyan', 'emerald'],
-  2: ['violet', 'pink', 'lime', 'gray'],
-  3: ['purple', 'blue', 'cyan', 'emerald', 'violet', 'pink', 'lime'],
+  2: ['violet', 'orange','lime','blue'],
+  3: ['purple', 'blue', 'cyan', 'lime','emerald', 'redStatus','orange','gray'],
 };
 
 export default function ChartCantiComposition({
@@ -67,6 +69,7 @@ export default function ChartCantiComposition({
               'Ingreso Sin Atracciones',
             ],
             2: [
+              'Zona Acuática',
               'Pasaporte Acuático Adultos',
               'Pasaporte Acuático Niños',
               'Ingreso General',
@@ -76,6 +79,7 @@ export default function ChartCantiComposition({
               'Pasaporte Aventura',
               'Pasaporte Fusión',
               'Ingreso Sin Atracciones',
+              'Zona Acuática',
               'Pasaporte Acuático Adultos',
               'Pasaporte Acuático Niños',
               'Ingreso General',
