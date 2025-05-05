@@ -22,6 +22,7 @@ export type Ticket = {
   ticket_info: TicketInfo[];
   price_ticket: number;
   id_operation:string;
+  motive:string;
 };
 export type TicketInfo = {
   type: string;

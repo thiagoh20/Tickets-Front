@@ -36,7 +36,7 @@ export default function InvoicesTableClient({
       try {
         const data = {
           id_operation: selectedTicket.id_operation,
-          id_user:user?.idUser,
+          id_user: user?.idUser,
         };
         const response = await validateTicket(data);
         notify({ message: response });
@@ -92,12 +92,12 @@ export default function InvoicesTableClient({
                   <div className="flex items-center justify-between border-b pb-4">
                     <div>
                       <div className="mb-2 flex justify-between items-center">
-                        <p className='font-semibold'>{ticket.namepark} - {ticket?.id_operation } &nbsp; &nbsp; &nbsp; &nbsp; </p>
+                        <p className='font-semibold'>{ticket.namepark} - {ticket?.id_operation} &nbsp; &nbsp; &nbsp; &nbsp; </p>
                         <TicketStatus status={ticket.status} />
                       </div>
                       <p className="text-sm text-gray-500">
                         {`${ticket.name} ${ticket.lastname}`} &nbsp; &nbsp;
-                        {`${ticket.identity_type == 'CedulaDeCiudadania' ? 'CC' : 'OTRO' } : ${ticket.identity_number}`}
+                        {`${ticket.identity_type == 'CedulaDeCiudadania' ? 'CC' : 'OTRO'} : ${ticket.identity_number}`}
                       </p>
                       <p className="text-sm text-gray-500">
                         {formatCurrency(ticket.price_ticket)}
@@ -156,19 +156,19 @@ export default function InvoicesTableClient({
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                      {ticket.name + ' ' + ticket.lastname}
+                      {ticket?.motive + ticket.name + ' ' + ticket.lastname}
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                      {`${ticket.identity_type == 'CedulaDeCiudadania' ? 'CC' : 'OTRO' } : ${ticket.identity_number}`}
+                      {`${ticket.identity_type == 'CedulaDeCiudadania' ? 'CC' : 'OTRO'} : ${ticket.identity_number}`}
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                    {ticket?.id_operation }
+                      {ticket?.id_operation}
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                       {formatCurrency(ticket.price_ticket)}
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                    <TicketStatus status={ticket.status} />
+                      <TicketStatus status={ticket.status} />
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                       {formatDateToLocal(ticket.date_ticket)}
@@ -193,6 +193,11 @@ export default function InvoicesTableClient({
           <h2 className="text-lg font-bold">Detalles del Ticket - {selectedTicket?.id_operation}</h2>
           <TicketStatus status={selectedTicket?.status || ''} />
         </div>
+        {selectedTicket?.motive && selectedTicket.motive.toLowerCase() !== 'ninguno' && (
+          <h1 className="text-left font-bold bg-red-500 text-white inline-flex items-center rounded-full px-2 py-1 text-xs">
+            Motivo - {selectedTicket?.motive}
+          </h1>
+      )} 
         <div className="mt-4">
           {/* Datos del cliente */}
           <h3 className="text-md font-semibold"> 👨🏼 Datos del Cliente</h3>
@@ -241,15 +246,15 @@ export default function InvoicesTableClient({
               </li>
             ))}
             <li className="mt-2 text-center">
-              <strong>⚠️ Pregunta al usuario si requiere facturación electrónica </strong>{' '} <br/>
-              {selectedTicket?.status == 'Usado' && 
-              <div className='flex my-[1rem]'>
-                <strong> Fecha de redención: &nbsp; </strong>
-                <p>
-                  {formatFullDateToLocal(selectedTicket?.updated_at)} 
-                </p>
-              </div>
-                }
+              <strong>⚠️ Pregunta al usuario si requiere facturación electrónica </strong>{' '} <br />
+              {selectedTicket?.status == 'Usado' &&
+                <div className='flex my-[1rem]'>
+                  <strong> Fecha de redención: &nbsp; </strong>
+                  <p>
+                    {formatFullDateToLocal(selectedTicket?.updated_at)}
+                  </p>
+                </div>
+              }
             </li>
           </ul>
         </div>
