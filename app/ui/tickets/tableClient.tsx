@@ -156,7 +156,7 @@ export default function InvoicesTableClient({
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
-                      {ticket?.motive + ticket.name + ' ' + ticket.lastname}
+                      {ticket.name + ' ' + ticket.lastname}
                     </td>
                     <td className="whitespace-nowrap px-3 py-3">
                       {`${ticket.identity_type == 'CedulaDeCiudadania' ? 'CC' : 'OTRO'} : ${ticket.identity_number}`}
